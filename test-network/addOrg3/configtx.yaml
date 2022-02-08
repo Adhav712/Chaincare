@@ -1,0 +1,38 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+################################################################################
+#
+#   Section: Organizations
+#
+#   - This section defines the different organizational identities which will
+#   be referenced later in the configuration.
+#
+################################################################################
+Organizations:
+    - &hosp3
+        # DefaultOrg defines the organization which is used in the sampleconfig
+        # of the fabric.git development environment
+        Name: hosp3stanleyMSP
+
+        # ID to load the MSP definition as
+        ID: hosp3stanleyMSP
+
+        MSPDir: ../organizations/peerOrganizations/hosp3stanley.chaincare.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('hosp3stanleyMSP.admin', 'hosp3stanleyMSP.peer', 'hosp3stanleyMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('hosp3stanleyMSP.admin', 'hosp3stanleyMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('hosp3stanleyMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('hosp3stanleyMSP.peer')"
