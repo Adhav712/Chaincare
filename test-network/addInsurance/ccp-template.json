@@ -1,0 +1,49 @@
+{
+    "name": "chaincare-network-Ins${ORG}",
+    "version": "1.0.0",
+    "client": {
+        "organization": "Ins${ORG}",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                }
+            }
+        }
+    },
+    "organizations": {
+        "Ins${ORG}": {
+            "mspid": "Ins${ORG}MSP",
+            "peers": [
+                "peer0.Ins${ORG}.chaincare.com"
+            ],
+            "certificateAuthorities": [
+                "ca.Ins${ORG}.chaincare.com"
+            ]
+        }
+    },
+    "peers": {
+        "peer0.Ins${ORG}.chaincare.com": {
+            "url": "grpcs://localhost:${P0PORT}",
+            "tlsCACerts": {
+                "pem": "${PEERPEM}"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.Ins${ORG}.chaincare.com",
+                "hostnameOverride": "peer0.Ins${ORG}.chaincare.com"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca.Ins${ORG}.chaincare.com": {
+            "url": "https://localhost:${CAPORT}",
+            "caName": "ca-Ins${ORG}",
+            "tlsCACerts": {
+                "pem": "${CAPEM}"
+            },
+            "httpOptions": {
+                "verify": false
+            }
+        }
+    }
+}

@@ -1,0 +1,38 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+################################################################################
+#
+#   Section: Organizations
+#
+#   - This section defines the different organizational identities which will
+#   be referenced later in the configuration.
+#
+################################################################################
+Organizations:
+    - &Ins1
+        # DefaultOrg defines the organization which is used in the sampleconfig
+        # of the fabric.git development environment
+        Name: Ins1starhealthMSP
+
+        # ID to load the MSP definition as
+        ID: Ins1starhealthMSP
+
+        MSPDir: ../organizations/peerOrganizations/Ins1starhealth.chaincare.com/msp
+
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('Ins1starhealthMSP.admin', 'Ins1starhealthMSP.peer', 'Ins1starhealthMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('Ins1starhealthMSP.admin', 'Ins1starhealthMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('Ins1starhealthMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('Ins1starhealthMSP.peer')"

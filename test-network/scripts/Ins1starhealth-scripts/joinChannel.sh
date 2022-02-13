@@ -24,7 +24,7 @@ MAX_RETRY=5
 
 # import environment variables
 echo ${PWD}
-. scripts/envVar.sh
+. scripts/Ins1starhealth-scripts/envVar.sh
 echo ${PWD}
 
 # joinChannel ORG
@@ -43,15 +43,15 @@ joinChannel() {
     COUNTER=$(expr $COUNTER + 1)
 	done
 	cat log.txt
-	verifyResult $res "After $MAX_RETRY attempts, peer0.hosp${ORG} has failed to join channel '$CHANNEL_NAME' "
+	verifyResult $res "After $MAX_RETRY attempts, peer0.Ins${ORG} has failed to join channel '$CHANNEL_NAME' "
 }
 
 setAnchorPeer() {
   ORG=$1
-  scripts/setAnchorPeer.sh $ORG $CHANNEL_NAME
+  scripts/Ins1starhealth-scripts/setAnchorPeer.sh $ORG $CHANNEL_NAME
 }
 
-setGlobalsCLI 3
+setGlobalsCLI 1
 BLOCKFILE="${CHANNEL_NAME}.block"
 
 echo "Fetching channel config block from orderer..."
@@ -62,11 +62,11 @@ res=$?
 cat log.txt
 verifyResult $res "Fetching config block from orderer has failed"
 
-infoln "Joining org3 peer to the channel..."
-joinChannel 3
+infoln "Joining Ins1 peer to the channel..."
+joinChannel 1
 
-infoln "Setting anchor peer for org3..."
-setAnchorPeer 3
+infoln "Setting anchor peer for Ins1starhealth..."
+setAnchorPeer 1
 
 successln "Channel '$CHANNEL_NAME' joined"
-successln "Org3 peer successfully added to network"
+successln "Ins1 peer successfully added to network"
