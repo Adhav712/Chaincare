@@ -6,3 +6,4 @@ cd  ./addInsurance
 # echo ${PWD}
 
 ./addInsurance.sh up -ca -s couchdb
+

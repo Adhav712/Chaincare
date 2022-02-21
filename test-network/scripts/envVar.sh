@@ -91,9 +91,15 @@ parsePeerConnectionParameters() {
     fi
     PEER_CONN_PARMS=("${PEER_CONN_PARMS[@]}" --peerAddresses $CORE_PEER_ADDRESS)
     ## Set path to TLS certificate
-    CA=PEER0_hosp$1_CA
-    TLSINFO=(--tlsRootCertFiles "${!CA}")
-    PEER_CONN_PARMS=("${PEER_CONN_PARMS[@]}" "${TLSINFO[@]}")
+    if [ "$1" -eq 1 ]; then
+        CA=PEER0_hosp$1apollo_CA
+        TLSINFO=(--tlsRootCertFiles "${!CA}")
+        PEER_CONN_PARMS=("${PEER_CONN_PARMS[@]}" "${TLSINFO[@]}")
+    else    
+        CA=PEER0_hosp$1vijaya_CA
+        TLSINFO=(--tlsRootCertFiles "${!CA}")
+        PEER_CONN_PARMS=("${PEER_CONN_PARMS[@]}" "${TLSINFO[@]}")
+    fi    
     # shift by one to get to the next organization
     shift
   done

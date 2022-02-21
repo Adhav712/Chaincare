@@ -11,7 +11,7 @@ networks:
 
 services:
   couchdb4:
-    container_name: couchdb4
+    container_name: couchdb3
     image: couchdb:3.1.1
     labels:
       service: hyperledger-fabric
