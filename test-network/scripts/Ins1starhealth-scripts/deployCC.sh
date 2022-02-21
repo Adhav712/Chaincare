@@ -1,14 +1,19 @@
 #!/bin/bash
 
-source scripts/utils.sh
+source ../utils.sh
+
+
+CC_SRC_LANGUAGE="javascript"
+CC_SRC_PATH="../../../chaincode/chaincare-contract"
+# ./deployCC.sh -ccn chaincare -ccv 1 -cci initLedger -ccl javascript -ccp ../../../chaincode/chaincare-contract
 
 CHANNEL_NAME=${1:-"hospitalchannel"}
-CC_NAME=${2}
-CC_SRC_PATH=${3}
-CC_SRC_LANGUAGE=${4}
+CC_NAME=${2:-"chaincare"}
+CC_SRC_PATH=${3:-"../../../chaincode/chaincare-contract"}
+CC_SRC_LANGUAGE=${4:-"javascript"}
 CC_VERSION=${5:-"1.0"}
-CC_SEQUENCE=${6:-"1"}
-CC_INIT_FCN=${7:-"NA"}
+CC_SEQUENCE=${6:-"2"}
+CC_INIT_FCN=${7:-"initLedger"}
 CC_END_POLICY=${8:-"NA"}
 CC_COLL_CONFIG=${9:-"NA"}
 DELAY=${10:-"3"}
@@ -29,60 +34,14 @@ println "- DELAY: ${C_GREEN}${DELAY}${C_RESET}"
 println "- MAX_RETRY: ${C_GREEN}${MAX_RETRY}${C_RESET}"
 println "- VERBOSE: ${C_GREEN}${VERBOSE}${C_RESET}"
 
-FABRIC_CFG_PATH=$PWD/../config/
-
-#User has not provided a name
-if [ -z "$CC_NAME" ] || [ "$CC_NAME" = "NA" ]; then
-  fatalln "No chaincode name was provided. Valid call example: ./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-go -ccl go"
-
-# User has not provided a path
-elif [ -z "$CC_SRC_PATH" ] || [ "$CC_SRC_PATH" = "NA" ]; then
-  fatalln "No chaincode path was provided. Valid call example: ./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-go -ccl go"
-
-# User has not provided a language
-elif [ -z "$CC_SRC_LANGUAGE" ] || [ "$CC_SRC_LANGUAGE" = "NA" ]; then
-  fatalln "No chaincode language was provided. Valid call example: ./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-go -ccl go"
-
-## Make sure that the path to the chaincode exists
-elif [ ! -d "$CC_SRC_PATH" ]; then
-  fatalln "Path to chaincode does not exist. Please provide different path."
-fi
+export FABRIC_CFG_PATH=$PWD/../../../config/
+export PATH=${PWD}/../../../bin:$PATH
 
 CC_SRC_LANGUAGE=$(echo "$CC_SRC_LANGUAGE" | tr [:upper:] [:lower:])
 
 # do some language specific preparation to the chaincode before packaging
-if [ "$CC_SRC_LANGUAGE" = "go" ]; then
-  CC_RUNTIME_LANGUAGE=golang
-
-  infoln "Vendoring Go dependencies at $CC_SRC_PATH"
-  pushd $CC_SRC_PATH
-  GO111MODULE=on go mod vendor
-  popd
-  successln "Finished vendoring Go dependencies"
-
-elif [ "$CC_SRC_LANGUAGE" = "java" ]; then
-  CC_RUNTIME_LANGUAGE=java
-
-  rm -rf $CC_SRC_PATH/build/install/
-  infoln "Compiling Java code..."
-  pushd $CC_SRC_PATH
-  ./gradlew installDist
-  popd
-  successln "Finished compiling Java code"
-  CC_SRC_PATH=$CC_SRC_PATH/build/install/$CC_NAME
-
-elif [ "$CC_SRC_LANGUAGE" = "javascript" ]; then
+if [ "$CC_SRC_LANGUAGE" = "javascript" ]; then
   CC_RUNTIME_LANGUAGE=node
-
-elif [ "$CC_SRC_LANGUAGE" = "typescript" ]; then
-  CC_RUNTIME_LANGUAGE=node
-
-  infoln "Compiling TypeScript code into JavaScript..."
-  pushd $CC_SRC_PATH
-  npm install
-  npm run build
-  popd
-  successln "Finished compiling TypeScript code into JavaScript"
 
 else
   fatalln "The chaincode language ${CC_SRC_LANGUAGE} is not supported by this script. Supported chaincode languages are: go, java, javascript, and typescript"
@@ -108,22 +67,33 @@ else
 fi
 
 # import utils
-. scripts/envVar.sh
+. envVar.sh
 
-packageChaincode() {
-  set -x
-  peer lifecycle chaincode package ${CC_NAME}.tar.gz --path ${CC_SRC_PATH} --lang ${CC_RUNTIME_LANGUAGE} --label ${CC_NAME}_${CC_VERSION} >&log.txt
-  res=$?
-  { set +x; } 2>/dev/null
-  cat log.txt
-  verifyResult $res "Chaincode packaging has failed"
-  successln "Chaincode is packaged"
-}
+# packageChaincode() {
+#   set -x
+#   peer lifecycle chaincode package ${CC_NAME}.tar.gz --path ${CC_SRC_PATH} --lang ${CC_RUNTIME_LANGUAGE} --label ${CC_NAME}_${CC_VERSION} >&log.txt
+#   res=$?
+#   { set +x; } 2>/dev/null
+#   cat log.txt
+#   verifyResult $res "Chaincode packaging has failed"
+#   successln "Chaincode is packaged"
+# }
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_LOCALMSPID="Ins1starhealthMSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/../../organizations/peerOrganizations/Ins1starhealth.chaincare.com/peers/peer0.Ins1starhealth.chaincare.com/tls/ca.crt
+export CORE_PEER_MSPCONFIGPATH=${PWD}/../../organizations/peerOrganizations/Ins1starhealth.chaincare.com/users/Admin@Ins1starhealth.chaincare.com/msp
+export CORE_PEER_ADDRESS=localhost:12051
+
+export ORDERER_CA=${PWD}/../../organizations/ordererOrganizations/chaincare.com/orderers/orderer.chaincare.com/msp/tlscacerts/tlsca.chaincare.com-cert.pem
+export PEER0_Ins1starhealth_CA=${PWD}/../../organizations/peerOrganizations/Ins1starhealth.chaincare.com/peers/peer0.Ins1starhealth.chaincare.com/tls/ca.crt
+export ORDERER_ADMIN_TLS_SIGN_CERT=${PWD}/../../organizations/ordererOrganizations/chaincare.com/orderers/orderer.chaincare.com/tls/server.crt
+export ORDERER_ADMIN_TLS_PRIVATE_KEY=${PWD}/../../organizations/ordererOrganizations/chaincare.com/orderers/orderer.chaincare.com/tls/server.key
+
 
 # installChaincode PEER ORG
 installChaincode() {
   ORG=$1
-  setGlobals $ORG
+  # setGlobals $ORG
   set -x
   peer lifecycle chaincode install ${CC_NAME}.tar.gz >&log.txt
   res=$?
@@ -136,7 +106,7 @@ installChaincode() {
 # queryInstalled PEER ORG
 queryInstalled() {
   ORG=$1
-  setGlobals $ORG
+  # setGlobals $ORG
   set -x
   peer lifecycle chaincode queryinstalled >&log.txt
   res=$?
@@ -150,9 +120,9 @@ queryInstalled() {
 # approveForMyOrg VERSION PEER ORG
 approveForMyOrg() {
   ORG=$1
-  setGlobals $ORG
+  # setGlobals $ORG
   set -x
-  peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" --channelID $CHANNEL_NAME --name ${CC_NAME} --version ${CC_VERSION} --package-id ${PACKAGE_ID} --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG} >&log.txt
+  peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" --channelID $CHANNEL_NAME --name ${CC_NAME} --version ${CC_VERSION} --package-id chaincare_1:961fee299d142ec1642c4e8cf98cb69e6d1b802cacb5b3317f5d719d9f03e0ef --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG} >&log.txt
   res=$?
   { set +x; } 2>/dev/null
   cat log.txt
@@ -164,7 +134,7 @@ approveForMyOrg() {
 checkCommitReadiness() {
   ORG=$1
   shift 1
-  setGlobals $ORG
+  # setGlobals $ORG
   infoln "Checking the commit readiness of the chaincode definition on peer0.org${ORG} on channel '$CHANNEL_NAME'..."
   local rc=1
   local COUNTER=1
@@ -284,15 +254,11 @@ chaincodeQuery() {
 }
 
 ## package the chaincode
-packageChaincode
+# packageChaincode
 
 ## Install chaincode on peer0.hosp1 and peer0.hosp2
 infoln "Installing chaincode on peer0.hosp1..."
 installChaincode 1
-infoln "Install chaincode on peer0.hosp2..."
-installChaincode 2
-infoln "Install chaincode on peer0.hosp3..."
-installChaincode 3
 
 ## query whether the chaincode is installed
 queryInstalled 1
@@ -303,39 +269,20 @@ approveForMyOrg 1
 ## check whether the chaincode definition is ready to be committed
 ## expect hosp1 to have approved and hosp2 not to
 checkCommitReadiness 1 "\"hosp1apolloMSP\": true" "\"hosp2vijayaMSP\": false" "\"hosp3stanleyMSP\": false" 
-checkCommitReadiness 2 "\"hosp1apolloMSP\": true" "\"hosp2vijayaMSP\": false" "\"hosp3stanleyMSP\": false" 
-checkCommitReadiness 3 "\"hosp1apolloMSP\": true" "\"hosp2vijayaMSP\": false" "\"hosp3stanleyMSP\": false"
-## now approve also for hosp2
-approveForMyOrg 2
-
-## check whether the chaincode definition is ready to be committed
-## expect them both to have approved
-checkCommitReadiness 1 "\"hosp1apolloMSP\": true" "\"hosp2vijayaMSP\": true" "\"hosp3stanleyMSP\": false" 
-checkCommitReadiness 2 "\"hosp1apolloMSP\": true" "\"hosp2vijayaMSP\": true" "\"hosp3stanleyMSP\": false"
-checkCommitReadiness 3 "\"hosp1apolloMSP\": true" "\"hosp2vijayaMSP\": true" "\"hosp3stanleyMSP\": false"  
-
-approveForMyOrg 3
-
-## check whether the chaincode definition is ready to be committed
-## expect them both to have approved
-checkCommitReadiness 1 "\"hosp1apolloMSP\": true" "\"hosp2vijayaMSP\": true" "\"hosp3stanleyMSP\": true" 
-checkCommitReadiness 2 "\"hosp1apolloMSP\": true" "\"hosp2vijayaMSP\": true" "\"hosp3stanleyMSP\": true"
-checkCommitReadiness 3 "\"hosp1apolloMSP\": true" "\"hosp2vijayaMSP\": true" "\"hosp3stanleyMSP\": true" 
 
 ## now that we know for sure both orgs have approved, commit the definition
-commitChaincodeDefinition 1 2 3
+commitChaincodeDefinition 1
 
 ## query on both orgs to see that the definition committed successfully
 queryCommitted 1
-queryCommitted 2
-queryCommitted 3
+
 
 ## Invoke the chaincode - this does require that the chaincode have the 'initLedger'
 ## method defined
 if [ "$CC_INIT_FCN" = "NA" ]; then
   infoln "Chaincode initialization is not required"
 else
-  chaincodeInvokeInit 1 2 3
+  chaincodeInvokeInit 1
 fi
 
 exit 0

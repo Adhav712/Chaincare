@@ -95,8 +95,12 @@ parsePeerConnectionParameters() {
         CA=PEER0_hosp$1apollo_CA
         TLSINFO=(--tlsRootCertFiles "${!CA}")
         PEER_CONN_PARMS=("${PEER_CONN_PARMS[@]}" "${TLSINFO[@]}")
-    else    
+    elif [ "$1" -eq 2 ]; then
         CA=PEER0_hosp$1vijaya_CA
+        TLSINFO=(--tlsRootCertFiles "${!CA}")
+        PEER_CONN_PARMS=("${PEER_CONN_PARMS[@]}" "${TLSINFO[@]}")
+    else
+        CA=PEER0_hosp$1stanley_CA
         TLSINFO=(--tlsRootCertFiles "${!CA}")
         PEER_CONN_PARMS=("${PEER_CONN_PARMS[@]}" "${TLSINFO[@]}")
     fi    

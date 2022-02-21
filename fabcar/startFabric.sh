@@ -38,8 +38,16 @@ rm -rf go/wallet/*
 
 # launch network; create channel and join peer to channel
 pushd ../test-network
+
 ./network.sh down
 ./network.sh up createChannel -ca -s couchdb
+
+cd addOrg3
+./addOrg3.sh up -ca -s couchdb
+
+echo ${PWD}
+cd ../
+
 ./network.sh deployCC -ccn chaincare -ccv 1 -cci initLedger -ccl ${CC_SRC_LANGUAGE} -ccp ${CC_SRC_PATH}
 popd
 

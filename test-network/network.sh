@@ -296,6 +296,7 @@ function networkDown() {
     docker run --rm -v "$(pwd):/data" busybox sh -c 'cd /data && rm -rf addOrg3/fabric-ca/hosp3stanley/msp addOrg3/fabric-ca/hosp3stanley/tls-cert.pem addOrg3/fabric-ca/hosp3stanley/ca-cert.pem addOrg3/fabric-ca/hosp3stanley/IssuerPublicKey addOrg3/fabric-ca/hosp3stanley/IssuerRevocationPublicKey addOrg3/fabric-ca/hosp3stanley/fabric-ca-server.db'
     # remove channel and script artifacts
     docker run --rm -v "$(pwd):/data" busybox sh -c 'cd /data && rm -rf channel-artifacts log.txt *.tar.gz'
+    
     #if orphan containers still exits this command remove every docker images from the network
     cd ./docker
     docker-compose -f docker-compose-test-net.yaml down -v
@@ -303,6 +304,10 @@ function networkDown() {
     cd ../addOrg3/docker
     docker-compose -f docker-compose-ca-hosp3stanley.yaml down -v
     #docker system prune --volumes
+
+    # #Removing Insurance credential
+    # cd ../../addInsurance
+    # ./addInsurance.sh down 
 
   fi
 }

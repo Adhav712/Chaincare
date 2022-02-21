@@ -36,14 +36,14 @@ function printHelp () {
   echo "Typically, one would first generate the required certificates and "
   echo "genesis block, then bring up the network. e.g.:"
   echo
-  echo "	addIns.sh generate"
-  echo "	addIns.sh up"
-  echo "	addIns.sh up -c mychannel -s couchdb"
-  echo "	addIns.sh down"
+  echo "	addInsurance.sh generate"
+  echo "	addInsurance.sh up"
+  echo "	addInsurance.sh up -c mychannel -s couchdb"
+  echo "	addInsurance.sh down"
   echo
   echo "Taking all defaults:"
-  echo "	addIns.sh up"
-  echo "	addIns.sh down"
+  echo "	addInssurance.sh up"
+  echo "	addInssurance.sh down"
 }
 
 # We use the cryptogen tool to generate the cryptographic material
