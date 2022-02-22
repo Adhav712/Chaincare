@@ -49,6 +49,7 @@ echo ${PWD}
 cd ../
 
 ./network.sh deployCC -ccn chaincare -ccv 1 -cci initLedger -ccl ${CC_SRC_LANGUAGE} -ccp ${CC_SRC_PATH}
+# ./network.sh deployCC -ccn chaincare -ccv 1 -cci initLedger -ccl javascript -ccp ../chaincode/chaincare-contract
 popd
 
 cat <<EOF

@@ -1,0 +1,63 @@
+---
+name: test-network-hosp2vijaya
+version: 1.0.0
+client:
+  organization: hosp2vijaya
+  connection:
+    timeout:
+      peer:
+        endorser: '300'
+organizations:
+  hosp2vijaya:
+    mspid: hosp2vijayaMSP
+    peers:
+    - peer0.hosp2vijaya.hospital.com
+    certificateAuthorities:
+    - ca.hosp2vijaya.hospital.com
+peers:
+  peer0.hosp2vijaya.hospital.com:
+    url: grpcs://localhost:9051
+    tlsCACerts:
+      pem: |
+          -----BEGIN CERTIFICATE-----
+          MIICFzCCAb2gAwIBAgIUeBkMnIPgF3VOtI3zKTL1KB7k5JEwCgYIKoZIzj0EAwIw
+          aDELMAkGA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRQwEgYDVQQK
+          EwtIeXBlcmxlZGdlcjEPMA0GA1UECxMGRmFicmljMRkwFwYDVQQDExBmYWJyaWMt
+          Y2Etc2VydmVyMB4XDTIyMDIyMjE1MTkwMFoXDTM3MDIxODE1MTkwMFowaDELMAkG
+          A1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRQwEgYDVQQKEwtIeXBl
+          cmxlZGdlcjEPMA0GA1UECxMGRmFicmljMRkwFwYDVQQDExBmYWJyaWMtY2Etc2Vy
+          dmVyMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEqhmyFoYHUxxfSunbvRoe+Bl9
+          a7x1b9pCih3RH5PBcnTcHJd/VIqyVbn+gfoQyuONSnUxfK/3nnyNvY8NgGstD6NF
+          MEMwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQEwHQYDVR0OBBYE
+          FCNxLNR7rXFzsXU0NgWtO58jgNuoMAoGCCqGSM49BAMCA0gAMEUCIQDbqd3IFi7/
+          PJponrOzQLEIj4uckGNbMHhJmHzVBXo8oQIgF1iHo38SMbVnjV9Pshq7JXVcwpJC
+          u8eOh8mh5DDqChk=
+          -----END CERTIFICATE-----
+          
+    grpcOptions:
+      ssl-target-name-override: peer0.hosp2vijaya.hospital.com
+      hostnameOverride: peer0.hosp2vijaya.hospital.com
+certificateAuthorities:
+  ca.hosp2vijaya.hospital.com:
+    url: https://localhost:8054
+    caName: ca-hosp2vijaya
+    tlsCACerts:
+      pem: 
+        - |
+          -----BEGIN CERTIFICATE-----
+          MIICFzCCAb2gAwIBAgIUeBkMnIPgF3VOtI3zKTL1KB7k5JEwCgYIKoZIzj0EAwIw
+          aDELMAkGA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRQwEgYDVQQK
+          EwtIeXBlcmxlZGdlcjEPMA0GA1UECxMGRmFicmljMRkwFwYDVQQDExBmYWJyaWMt
+          Y2Etc2VydmVyMB4XDTIyMDIyMjE1MTkwMFoXDTM3MDIxODE1MTkwMFowaDELMAkG
+          A1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRQwEgYDVQQKEwtIeXBl
+          cmxlZGdlcjEPMA0GA1UECxMGRmFicmljMRkwFwYDVQQDExBmYWJyaWMtY2Etc2Vy
+          dmVyMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEqhmyFoYHUxxfSunbvRoe+Bl9
+          a7x1b9pCih3RH5PBcnTcHJd/VIqyVbn+gfoQyuONSnUxfK/3nnyNvY8NgGstD6NF
+          MEMwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQEwHQYDVR0OBBYE
+          FCNxLNR7rXFzsXU0NgWtO58jgNuoMAoGCCqGSM49BAMCA0gAMEUCIQDbqd3IFi7/
+          PJponrOzQLEIj4uckGNbMHhJmHzVBXo8oQIgF1iHo38SMbVnjV9Pshq7JXVcwpJC
+          u8eOh8mh5DDqChk=
+          -----END CERTIFICATE-----
+          
+    httpOptions:
+      verify: false

@@ -1,8 +1,8 @@
 {
-    "name": "test-network-org${ORG}",
+    "name": "chaincare-network-hosp${ORG}",
     "version": "1.0.0",
     "client": {
-        "organization": "Org${ORG}",
+        "organization": "hosp${ORG}",
         "connection": {
             "timeout": {
                 "peer": {
@@ -12,32 +12,32 @@
         }
     },
     "organizations": {
-        "Org${ORG}": {
-            "mspid": "Org${ORG}MSP",
+        "hosp${ORG}": {
+            "mspid": "hosp${ORG}MSP",
             "peers": [
-                "peer0.org${ORG}.example.com"
+                "peer0.hosp${ORG}.chaincare.com"
             ],
             "certificateAuthorities": [
-                "ca.org${ORG}.example.com"
+                "ca.hosp${ORG}.chaincare.com"
             ]
         }
     },
     "peers": {
-        "peer0.org${ORG}.example.com": {
+        "peer0.hosp${ORG}.chaincare.com": {
             "url": "grpcs://localhost:${P0PORT}",
             "tlsCACerts": {
                 "pem": "${PEERPEM}"
             },
             "grpcOptions": {
-                "ssl-target-name-override": "peer0.org${ORG}.example.com",
-                "hostnameOverride": "peer0.org${ORG}.example.com"
+                "ssl-target-name-override": "peer0.hosp${ORG}.chaincare.com",
+                "hostnameOverride": "peer0.hosp${ORG}.chaincare.com"
             }
         }
     },
     "certificateAuthorities": {
-        "ca.org${ORG}.example.com": {
+        "ca.hosp${ORG}.chaincare.com": {
             "url": "https://localhost:${CAPORT}",
-            "caName": "ca-org${ORG}",
+            "caName": "ca-hosp${ORG}",
             "tlsCACerts": {
                 "pem": ["${CAPEM}"]
             },

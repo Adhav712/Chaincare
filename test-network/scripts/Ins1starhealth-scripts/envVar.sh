@@ -8,8 +8,10 @@
 # This is a collection of bash functions used by different scripts
 
 # imports
+echo ${PWD}
 . scripts/utils.sh
- 
+echo ${PWD}
+
 export CORE_PEER_TLS_ENABLED=true
 export ORDERER_CA=${PWD}/organizations/ordererOrganizations/chaincare.com/orderers/orderer.chaincare.com/msp/tlscacerts/tlsca.chaincare.com-cert.pem
 export PEER0_Ins1starhealth_CA=${PWD}/organizations/peerOrganizations/Ins1starhealth.chaincare.com/peers/peer0.Ins1starhealth.chaincare.com/tls/ca.crt

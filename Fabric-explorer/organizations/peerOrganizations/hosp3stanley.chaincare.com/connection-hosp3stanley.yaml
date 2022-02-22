@@ -1,0 +1,62 @@
+---
+name: chaincare-network-hosp3stanley
+version: 1.0.0
+client:
+  organization: hosp3stanley
+  connection:
+    timeout:
+      peer:
+        endorser: '300'
+organizations:
+  hosp3stanley:
+    mspid: hosp3stanleyMSP
+    peers:
+    - peer0.hosp3stanley.chaincare.com
+    certificateAuthorities:
+    - ca.hosp3stanley.chaincare.com
+peers:
+  peer0.hosp3stanley.chaincare.com:
+    url: grpcs://localhost:11051
+    tlsCACerts:
+      pem: |
+        -----BEGIN CERTIFICATE-----
+        MIICFzCCAb2gAwIBAgIUbC2Ih2HVx15sSjkH3kMIeug2dV0wCgYIKoZIzj0EAwIw
+        aDELMAkGA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRQwEgYDVQQK
+        EwtIeXBlcmxlZGdlcjEPMA0GA1UECxMGRmFicmljMRkwFwYDVQQDExBmYWJyaWMt
+        Y2Etc2VydmVyMB4XDTIyMDIyMjE1MjEwMFoXDTM3MDIxODE1MjEwMFowaDELMAkG
+        A1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRQwEgYDVQQKEwtIeXBl
+        cmxlZGdlcjEPMA0GA1UECxMGRmFicmljMRkwFwYDVQQDExBmYWJyaWMtY2Etc2Vy
+        dmVyMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAElqRz2FeQVNE3R2xoKDUARolJ
+        WuEGqBIS9TvUpUGA4XYdnIa7mJQ12A4XKX4h0wrTxAQr6UJZpYiuxJ7Umx9AtqNF
+        MEMwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQEwHQYDVR0OBBYE
+        FKt8DXP59Z7BI48KXz8izKD8gtE2MAoGCCqGSM49BAMCA0gAMEUCIQDWl7PMxnEX
+        735pivYvPOVUOJgA6HV3mqQ9roiYl3iWNgIgOSq6zvDMLZ36JMfZ68MQI5pWb0VW
+        NEu8Mq+kQZ9nCqY=
+        -----END CERTIFICATE-----
+        
+    grpcOptions:
+      ssl-target-name-override: peer0.hosp3stanley.chaincare.com
+      hostnameOverride: peer0.hosp3stanley.chaincare.com
+certificateAuthorities:
+  ca.hosp3stanley.chaincare.com:
+    url: https://localhost:11054
+    caName: ca-hosp3stanley
+    tlsCACerts:
+      pem: |
+        -----BEGIN CERTIFICATE-----
+        MIICFzCCAb2gAwIBAgIUbC2Ih2HVx15sSjkH3kMIeug2dV0wCgYIKoZIzj0EAwIw
+        aDELMAkGA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRQwEgYDVQQK
+        EwtIeXBlcmxlZGdlcjEPMA0GA1UECxMGRmFicmljMRkwFwYDVQQDExBmYWJyaWMt
+        Y2Etc2VydmVyMB4XDTIyMDIyMjE1MjEwMFoXDTM3MDIxODE1MjEwMFowaDELMAkG
+        A1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRQwEgYDVQQKEwtIeXBl
+        cmxlZGdlcjEPMA0GA1UECxMGRmFicmljMRkwFwYDVQQDExBmYWJyaWMtY2Etc2Vy
+        dmVyMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAElqRz2FeQVNE3R2xoKDUARolJ
+        WuEGqBIS9TvUpUGA4XYdnIa7mJQ12A4XKX4h0wrTxAQr6UJZpYiuxJ7Umx9AtqNF
+        MEMwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQEwHQYDVR0OBBYE
+        FKt8DXP59Z7BI48KXz8izKD8gtE2MAoGCCqGSM49BAMCA0gAMEUCIQDWl7PMxnEX
+        735pivYvPOVUOJgA6HV3mqQ9roiYl3iWNgIgOSq6zvDMLZ36JMfZ68MQI5pWb0VW
+        NEu8Mq+kQZ9nCqY=
+        -----END CERTIFICATE-----
+        
+    httpOptions:
+      verify: false

@@ -1,0 +1,49 @@
+{
+    "name": "chaincare-network-Ins1starhealth",
+    "version": "1.0.0",
+    "client": {
+        "organization": "Ins1starhealth",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                }
+            }
+        }
+    },
+    "organizations": {
+        "Ins1starhealth": {
+            "mspid": "Ins1starhealthMSP",
+            "peers": [
+                "peer0.Ins1starhealth.chaincare.com"
+            ],
+            "certificateAuthorities": [
+                "ca.Ins1starhealth.chaincare.com"
+            ]
+        }
+    },
+    "peers": {
+        "peer0.Ins1starhealth.chaincare.com": {
+            "url": "grpcs://localhost:12051",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICFzCCAb2gAwIBAgIUehoYMu8FHdj821IsL7EMgTI41PgwCgYIKoZIzj0EAwIw\naDELMAkGA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRQwEgYDVQQK\nEwtIeXBlcmxlZGdlcjEPMA0GA1UECxMGRmFicmljMRkwFwYDVQQDExBmYWJyaWMt\nY2Etc2VydmVyMB4XDTIyMDIyMjE1MjAwMFoXDTM3MDIxODE1MjAwMFowaDELMAkG\nA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRQwEgYDVQQKEwtIeXBl\ncmxlZGdlcjEPMA0GA1UECxMGRmFicmljMRkwFwYDVQQDExBmYWJyaWMtY2Etc2Vy\ndmVyMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEMm08wncbo2toiWlXiCAZZT9F\nLbq4yXVR66WrEP9ky4ORV+3O4Oe7xV2fGVHmUgauNuwzjxkEsxEEj+41mlEw/aNF\nMEMwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQEwHQYDVR0OBBYE\nFCzKUzz6OIzcR6d9iX2bqCusqLpIMAoGCCqGSM49BAMCA0gAMEUCIQCt+ki6092n\nZGep6ZlZWHdl4e383aLtaMVvCEyAJWkWQAIgKiyuiumxOMQ0/ev0OaGlpmHfwz1a\nc9LCo8Ejt85OdOE=\n-----END CERTIFICATE-----\n"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.Ins1starhealth.chaincare.com",
+                "hostnameOverride": "peer0.Ins1starhealth.chaincare.com"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca.Ins1starhealth.chaincare.com": {
+            "url": "https://localhost:12054",
+            "caName": "ca-Ins1starhealth",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICFzCCAb2gAwIBAgIUehoYMu8FHdj821IsL7EMgTI41PgwCgYIKoZIzj0EAwIw\naDELMAkGA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRQwEgYDVQQK\nEwtIeXBlcmxlZGdlcjEPMA0GA1UECxMGRmFicmljMRkwFwYDVQQDExBmYWJyaWMt\nY2Etc2VydmVyMB4XDTIyMDIyMjE1MjAwMFoXDTM3MDIxODE1MjAwMFowaDELMAkG\nA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMRQwEgYDVQQKEwtIeXBl\ncmxlZGdlcjEPMA0GA1UECxMGRmFicmljMRkwFwYDVQQDExBmYWJyaWMtY2Etc2Vy\ndmVyMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEMm08wncbo2toiWlXiCAZZT9F\nLbq4yXVR66WrEP9ky4ORV+3O4Oe7xV2fGVHmUgauNuwzjxkEsxEEj+41mlEw/aNF\nMEMwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8CAQEwHQYDVR0OBBYE\nFCzKUzz6OIzcR6d9iX2bqCusqLpIMAoGCCqGSM49BAMCA0gAMEUCIQCt+ki6092n\nZGep6ZlZWHdl4e383aLtaMVvCEyAJWkWQAIgKiyuiumxOMQ0/ev0OaGlpmHfwz1a\nc9LCo8Ejt85OdOE=\n-----END CERTIFICATE-----\n"
+            },
+            "httpOptions": {
+                "verify": false
+            }
+        }
+    }
+}
