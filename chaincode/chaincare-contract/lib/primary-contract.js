@@ -429,7 +429,12 @@ class PatientContract extends Contract {
         }
         await ctx.stub.deleteState(doctorId);
     }
+
+//Insurance Contract    
     
+    async Inurance(ctx,ID) {
+
+    }
 }
 
 module.exports = PatientContract;
