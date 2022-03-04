@@ -1,5 +1,3 @@
-
-
 /*
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -7,9 +5,7 @@
 'use strict';
 
 const { Contract } = require('fabric-contract-api');
-//let Patient = require('./Patient.js');
 const crypto = require('crypto');
-//const { format } = require('path/posix');
 let initPatients = require('./initpatientLedger.json');
 let initDoctors = require('./initdoctorLedger.json');
 
@@ -129,40 +125,7 @@ class PatientContract extends Contract {
 
 //PatientContract
 
-    async Patient_readPatient(ctx, patientId) {
-        const exists = await this.patientExists(ctx, patientId);
-        if (!exists) {
-            throw new Error(`The patient ${patientId} does not exist`);
-        }
-        const buffer = await ctx.stub.getState(patientId);
-        const asset = JSON.parse(buffer.toString());
-        return asset;
-    }
-
-//     async Patient_createPatient(ctx, patientId, firstName, lastName, password, age,
-//         phoneNumber,emergPhoneNumber,address, bloodGroup, changedBy, allergies) {
-//     const exists = await this.patientExists(ctx, patientId);
-//     if (exists) {
-//         throw new Error(`The patient ${patientId} already exists`);
-//     }
-//     const patient = {
-//         firstName,
-//         lastName,
-//         password:crypto.createHash('sha256').update(password).digest('hex'),
-//         age,
-//         phoneNumber,
-//         emergPhoneNumber,
-//         address,
-//         bloodGroup,
-//         changedBy,
-//         allergies,
-//         docType: 'patient',
-//     };
-//     const buffer = Buffer.from(JSON.stringify(patient));
-//     await ctx.stub.putState(patientId, buffer);
-// }
-
-    async Patient_updatePatient(ctx, patientId, newFirstname,newLastName,newPassword,newAge,updatedBy,newPhoneNumber,newEmergPhoneNumber,newAddress,newAllergies) {
+    async Patient_updatePatient(ctx, patientId, newFirstname,newLastName,newPassword,newAge,updatedBy,newPhoneNumber,newEmergPhoneNumber,newAddress) {
         const exists = await this.patientExists(ctx, patientId);
         if (!exists) {
             throw new Error(`The patient ${patientId} does not exist`);
@@ -210,16 +173,45 @@ class PatientContract extends Contract {
             isDataChanged = true;
         }
 
-        if (newAllergies !== null && newAllergies !== '' && patient.allergies !== newAllergies) {
-            patient.allergies = newAllergies;
-            isDataChanged = true;
-        }
-
         if (isDataChanged === false) return;
 
         const buffer = Buffer.from(JSON.stringify(patient));
         await ctx.stub.putState(patientId, buffer);
     }
+
+
+    async Patient_readPatient(ctx, patientId) {
+        const exists = await this.patientExists(ctx, patientId);
+        if (!exists) {
+            throw new Error(`The patient ${patientId} does not exist`);
+        }
+        const buffer = await ctx.stub.getState(patientId);
+        const asset = JSON.parse(buffer.toString());
+        return asset;
+    }
+
+//     async Patient_createPatient(ctx, patientId, firstName, lastName, password, age,
+//         phoneNumber,emergPhoneNumber,address, bloodGroup, changedBy, allergies) {
+//     const exists = await this.patientExists(ctx, patientId);
+//     if (exists) {
+//         throw new Error(`The patient ${patientId} already exists`);
+//     }
+//     const patient = {
+//         firstName,
+//         lastName,
+//         password:crypto.createHash('sha256').update(password).digest('hex'),
+//         age,
+//         phoneNumber,
+//         emergPhoneNumber,
+//         address,
+//         bloodGroup,
+//         changedBy,
+//         allergies,
+//         docType: 'patient',
+//     };
+//     const buffer = Buffer.from(JSON.stringify(patient));
+//     await ctx.stub.putState(patientId, buffer);
+// }
 
     async updatePatientPassword(ctx,patientId, newPassword) {
         if (newPassword === null || newPassword === '') {
@@ -235,6 +227,19 @@ class PatientContract extends Contract {
         const buffer = Buffer.from(JSON.stringify(patient));
         await ctx.stub.putState(patientId, buffer);
     }
+
+    async Patient_grantAccessToDoctor(ctx, patientId,doctorId) {
+        // Get the patient asset from world state
+        const patient = await this.Patient_readPatient(ctx, patientId);
+        // unique doctorIDs in permissionGranted
+        if (!patient.permissionGranted.includes(doctorId)) {
+            patient.permissionGranted.push(doctorId);
+            patient.changedBy = patientId;
+        }
+        const buffer = Buffer.from(JSON.stringify(patient));
+        await ctx.stub.putState(patientId, buffer);
+    };
+
 
 //DoctorContract
 
@@ -254,32 +259,36 @@ class PatientContract extends Contract {
             throw new Error(`The patient ${doctorId} does not exist`);
         }
         const buffer = await ctx.stub.getState(doctorId);
-        const asset = JSON.parse(buffer.toString());
-        return asset;
+        const result = JSON.parse(buffer.toString());
+        return result;
     }
 
-    async Doctor_getQueryResultForQueryString(ctx, queryString) {
-        let resultsIterator = await ctx.stub.getQueryResult(queryString);
-        console.info('getQueryResultForQueryString <--> ', resultsIterator);
-        let results = await this.getAllPatientResults(resultsIterator, false);
-        return JSON.stringify(results);
-    }
+    async Doctor_ReadPatients(ctx, patientId,doctorId) {
 
-    async Doctor_ReadMyPatients(ctx,permissionGranted){
-        let queryString = {};
-        queryString.selector = {};
-        queryString.selector.docType = 'patient';
-        queryString.selector.permissionGranted = permissionGranted;
+        let patient = await this.Patient_readPatient(ctx, patientId);
 
-        const buffer = await this.Doctor_getQueryResultForQueryString(ctx, JSON.stringify(queryString));
-        let asset = JSON.parse(buffer.toString());
-
-        return this.fetchLimitedFields(asset);
+        const permissionArray = patient.permissionGranted;
+        if(!permissionArray.includes(doctorId)) {
+            throw new Error(`The doctor ${doctorId} does not have permission to patient ${patientId}`);
+        }
+        patient = ({
+            patientId: patientId,
+            firstName: patient.firstName,
+            lastName: patient.lastName,
+            age: patient.age,
+            bloodGroup: patient.bloodGroup,
+            allergies: patient.allergies,
+            symptoms: patient.symptoms,
+            diagnosis: patient.diagnosis,
+            treatment: patient.treatment,
+            followUp: patient.followUp
+        });
+        return patient;
     }
 
     async Doctor_updateDoctor(ctx, doctorId, firstName, lastName, password, age,
         phoneNumber,address, bloodGroup, fields) {
-    const exists = await this.doctorExists(ctx, doctorId);
+    const exists = await this.Patient_readPatient(ctx, doctorId);
     if (exists) {
         throw new Error(`The doctor ${doctorId} already exists`);
     }
@@ -333,27 +342,6 @@ class PatientContract extends Contract {
 
         const buffer = Buffer.from(JSON.stringify(patient));
         await ctx.stub.putState(patientId, buffer);
-    }
-
-    fetchLimitedFields = asset => {
-        for (let i = 0; i < asset.length; i++) {
-            const obj = asset[i];
-            asset[i] = {
-                patientId: obj.Key,
-                firstName: obj.Record.firstName,
-                lastName: obj.Record.lastName,
-                phoneNumber: obj.Record.phoneNumber,
-                emergPhoneNumber: obj.Record.emergPhoneNumber,
-                address: obj.Record.address,
-                bloodGroup: obj.Record.bloodGroup,
-                allergies: obj.Record.allergies,
-                symptoms: obj.Record.symptoms,
-                diagnosis: obj.Record.diagnosis,
-                treatment: obj.Record.treatment,
-                followUp: obj.Record.followUp                
-            };
-        }
-        return asset;
     }
 
 //ADMIN contract
