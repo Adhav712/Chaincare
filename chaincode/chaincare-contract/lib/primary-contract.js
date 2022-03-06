@@ -240,6 +240,19 @@ class PatientContract extends Contract {
         await ctx.stub.putState(patientId, buffer);
     };
 
+    async Patient_revokeAccessFromDoctor(ctx, patientId,doctorId) {
+        
+        const patient = await this.Patient_readPatient(ctx, patientId);
+        // Remove the doctor if existing
+        if (patient.permissionGranted.includes(doctorId)) {
+            patient.permissionGranted = patient.permissionGranted.filter(doctor => doctor !== doctorId);
+            patient.changedBy = patientId;
+        }
+        const buffer = Buffer.from(JSON.stringify(patient));
+        // Update the ledger with updated permissionGranted
+        await ctx.stub.putState(patientId, buffer);
+    };
+
 
 //DoctorContract
 
@@ -306,6 +319,14 @@ class PatientContract extends Contract {
     const buffer = Buffer.from(JSON.stringify(doctor));
     await ctx.stub.putState(doctorId, buffer);
 }
+
+    async Doctor_queryPatientsByFirstName(ctx, firstName) {
+        return await this.Admin_queryPatientsByFirstName(ctx, firstName);
+    }
+
+    async Doctor_queryPatientsByLastName(ctx, lastName) {
+       return await this.Admin_queryPatientsByLastName(ctx, lastName);
+    }
 
     async Doctor_upadtePatientDetails(ctx, patientId, newSymptoms ,newDiagnosis ,newTreatment ,newFollowUp,updatedBy) {
         const exists = await this.patientExists(ctx, patientId);
@@ -416,6 +437,57 @@ class PatientContract extends Contract {
             throw new Error(`The patient ${doctorId} does not exist`);
         }
         await ctx.stub.deleteState(doctorId);
+    }
+
+    async Admin_queryPatientsByFirstName(ctx, firstName) {
+        let queryString = {};
+        queryString.selector = {};
+        queryString.selector.docType = 'patient';
+        queryString.selector.firstName = firstName;
+        const buffer = await this.getQueryResultForQueryString(ctx, JSON.stringify(queryString));
+        let result = JSON.parse(buffer.toString());
+
+        return this.fetchLimitedFields(result);
+    }
+
+    async Admin_queryPatientsByLastName(ctx, lastName) {
+        let queryString = {};
+        queryString.selector = {};
+        queryString.selector.docType = 'patient';
+        queryString.selector.lastName = lastName;
+        const buffer = await this.getQueryResultForQueryString(ctx, JSON.stringify(queryString));
+        let result = JSON.parse(buffer.toString());
+
+        return this.fetchLimitedFields(result);
+    }
+
+    // async queryAllPatients(ctx) {
+    //     let resultsIterator = await ctx.stub.getStateByRange('', '');
+    //     let result = await this.getAllPatientResults(resultsIterator, false);
+
+    //     return this.fetchLimitedFields(result);
+    // }
+
+    fetchLimitedFields = result => {
+        for (let i = 0; i < result.length; i++) {
+            const obj = result[i];
+            result[i] = {
+                patientId: obj.Key,
+                firstName: obj.Record.firstName,
+                lastName: obj.Record.lastName,
+                phoneNumber: obj.Record.phoneNumber,
+                emergPhoneNumber: obj.Record.emergPhoneNumber
+            };
+        }
+
+        return result;
+    }
+
+    async getQueryResultForQueryString(ctx, queryString) {
+        let resultsIterator = await ctx.stub.getQueryResult(queryString);
+        console.info('getQueryResultForQueryString <--> ', resultsIterator);
+        let results = await this.getAllPatientResults(resultsIterator, false);
+        return JSON.stringify(results);
     }
 
 //Insurance Contract    
