@@ -37,20 +37,20 @@ async function main() {
         const network = await gateway.getNetwork('hospitalchannel');
 
         // Get the contract from the network.
-        const contract = network.getContract('chaincare');
+        const contract = network.getContract('fabcar');
 
         // Submit the specified transaction.
         // createCar transaction - requires 5 argument, ex: ('createCar', 'CAR12', 'Honda', 'Accord', 'Black', 'Tom')
         // changeCarOwner transaction - requires 2 args , ex: ('changeCarOwner', 'CAR12', 'Dave')
-        // await contract.submitTransaction('createCar', 'CAR10', 'Audi', 'S', 'Blue', 'Adhavan');
+         await contract.submitTransaction('createCar', 'CAR10', 'Audi', 'S', 'Blue', 'Adhavan');
         
         //Admin create patient
         // await contract.submitTransaction('Admin_createPatient', 'PID6', 'Aakash', 'S', 'director', '20' , '9185218268');
         // console.log('Transaction has been submitted');
 
         //patient update details
-        await contract.submitTransaction('Patient_updatePatient','PID6','','','director','','patient','','78284884989','Manali Kosappur Rd, Mathur, Tamil Nadu 600051','Rashes');
-        console.log('Transcation has been submitted');
+        // await contract.submitTransaction('Patient_updatePatient','PID6','','','director','','patient','','78284884989','Manali Kosappur Rd, Mathur, Tamil Nadu 600051','Rashes');
+        // console.log('Transcation has been submitted');
 
 
         // Disconnect from the gateway.

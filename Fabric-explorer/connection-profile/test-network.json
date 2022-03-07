@@ -29,7 +29,7 @@
 		"hosp1apollo": {
 			"mspid": "hosp1apolloMSP",
 			"adminPrivateKey": {
-				"path": "/tmp/crypto/peerOrganizations/hosp1apollo.chaincare.com/users/User1@hosp1apollo.chaincare.com/msp/keystore/90fad0f461056fb872e5c2338183184c31cf34d77a50dc3783361c2e6ed845a3_sk"
+				"path": "/tmp/crypto/peerOrganizations/hosp1apollo.chaincare.com/users/User1@hosp1apollo.chaincare.com/msp/keystore/e3bf989aff668fd2e90c065d1a4d55d66ea5031b54d92bd42fea999b7fbc889d_sk"
 			},
 			"peers": ["peer0.hosp1apollo.chaincare.com"],
 			"signedCert": {

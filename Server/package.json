@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "scripts": {
+    "start": "nodemon script.js"
+  },
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server sides files of chaincare project",
+  "main": "server.js",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "author": "",
+  "license": "ISC"
+}

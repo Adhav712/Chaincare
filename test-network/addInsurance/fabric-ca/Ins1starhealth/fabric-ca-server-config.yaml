@@ -40,7 +40,7 @@
 version: 1.5.2
 
 # Server's listening port (default: 7054)
-port: 12054
+port: 7054
 
 # Cross-Origin Resource Sharing (CORS)
 cors:
@@ -66,7 +66,7 @@ crlsizelimit: 512000
 #############################################################################
 tls:
   # Enable TLS (default: false)
-  enabled: true
+  enabled: false
   # TLS for the server's listening port
   certfile:
   keyfile:
@@ -85,7 +85,7 @@ tls:
 #############################################################################
 ca:
   # Name of this CA
-  name: Ins1starhealthCA
+  name:
   # Key file (is only used to import a private key into BCCSP)
   keyfile:
   # Certificate file (default: ca-cert.pem)
@@ -317,7 +317,7 @@ csr:
         O: Hyperledger
         OU: Fabric
    hosts:
-     - f0b4c8730ac9
+     - 8800468f12aa
      - localhost
    ca:
       expiry: 131400h
