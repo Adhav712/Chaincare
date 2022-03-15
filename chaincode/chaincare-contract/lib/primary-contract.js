@@ -42,11 +42,6 @@ class PatientContract extends Contract {
     //     console.info('============= END : Initialize Ledger ===========');
     // }
 
-    async patientExists(ctx, patientId) {
-        const buffer = await ctx.stub.getState(patientId);
-        return (!!buffer && buffer.length > 0);
-    }
-
     // async createPatient(ctx, patientId, firstName, lastName, age, address) {
     //     const exists = await this.patientExists(ctx, patientId);
     //     if (exists) {
@@ -84,14 +79,6 @@ class PatientContract extends Contract {
     //     await ctx.stub.putState(patientId, buffer);
     // }
 
-    async deletePatient(ctx, patientId) {
-        const exists = await this.patientExists(ctx, patientId);
-        if (!exists) {
-            throw new Error(`The patient ${patientId} does not exist`);
-        }
-        await ctx.stub.deleteState(patientId);
-    }
-
     async getAllPatientResults(iterator, isHistory) {
         let allResults = [];
         while (true) {
@@ -124,6 +111,11 @@ class PatientContract extends Contract {
     }
 
 //PatientContract
+
+    async patientExists(ctx, patientId) {
+        const buffer = await ctx.stub.getState(patientId);
+        return (!!buffer && buffer.length > 0);
+    }
 
     async Patient_updatePatient(ctx, patientId, newFirstname,newLastName,newPassword,newAge,updatedBy,newPhoneNumber,newEmergPhoneNumber,newAddress) {
         const exists = await this.patientExists(ctx, patientId);
@@ -213,7 +205,7 @@ class PatientContract extends Contract {
 //     await ctx.stub.putState(patientId, buffer);
 // }
 
-    async updatePatientPassword(ctx,patientId, newPassword) {
+    async Patient_updatePatientPassword(ctx,patientId, newPassword) {
         if (newPassword === null || newPassword === '') {
             throw new Error(`Empty or null values should not be passed for newPassword parameter`);
         }
@@ -260,11 +252,6 @@ class PatientContract extends Contract {
         const buffer = await ctx.stub.getState(doctorId);
         return (!!buffer && buffer.length > 0);
     }
-
-    // async doctor_PermissionGrantedExits(ctx,permissionGranted){
-    //     const buffer = await ctx.stub.getState(permissionGranted);
-    //     return (!!buffer && buffer.length > 0);
-    // }
 
     async Doctor_readDoctor(ctx, doctorId) {
         const exists = await this.doctorExists(ctx, doctorId);
@@ -328,7 +315,7 @@ class PatientContract extends Contract {
        return await this.Admin_queryPatientsByLastName(ctx, lastName);
     }
 
-    async Doctor_upadtePatientDetails(ctx, patientId, newSymptoms ,newDiagnosis ,newTreatment ,newFollowUp,updatedBy) {
+    async Doctor_updatePatientDetails(ctx, patientId, newSymptoms ,newDiagnosis ,newTreatment ,newFollowUp,updatedBy) {
         const exists = await this.patientExists(ctx, patientId);
         if (!exists) {
             throw new Error(`The patient ${patientId} does not exist`);
