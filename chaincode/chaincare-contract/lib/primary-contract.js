@@ -492,9 +492,22 @@ class PatientContract extends Contract {
 
 //Insurance Contract    
     
-    async Inurance(ctx,ID) {
-
+    async Ins_ReadPatients(ctx, patientId){
+        let patient = await this.Patient_readPatient(ctx, patientId);
+        patient = ({
+            patientId: patientId,
+            firstName: patient.firstName,
+            lastName: patient.lastName,
+            age: patient.age,
+            bloodGroup: patient.bloodGroup,
+            allergies: patient.allergies,
+            symptoms: patient.symptoms,
+            diagnosis: patient.diagnosis,
+            treatment: patient.treatment
+        });
+        return patient;
     }
+
 }
 
 module.exports = PatientContract;
