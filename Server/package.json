@@ -1,6 +1,9 @@
 {
   "dependencies": {
-    "express": "^4.17.3"
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "fabric-ca-client": "^2.2.4",
+    "fabric-network": "^2.2.4"
   },
   "scripts": {
     "start": "nodemon script.js"

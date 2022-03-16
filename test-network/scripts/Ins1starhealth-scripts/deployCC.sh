@@ -105,7 +105,7 @@ peer lifecycle chaincode queryinstalled
 # echo ${CC_PACKAGE_ID} 
 
 echo 4 ----aprroving chaincode----
-peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" --channelID ${CHANNEL_NAME} --name ${CC_NAME} --version ${CC_VERSION} --package-id chaincare_1:e4ea9e58695207354cc5fe4ade647338b54a3be55e610231f3f2e01ec06a1ea2 --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
+peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" --channelID ${CHANNEL_NAME} --name ${CC_NAME} --version ${CC_VERSION} --package-id chaincare_1:3f8d4544d2df1207821e3f069553d17347bed69d9d5d89df776eaef12188ab94 --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
 
 
 echo 5 ----chaincode querycommitted----

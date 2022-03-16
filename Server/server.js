@@ -1,14 +1,100 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+const cors = require('cors');
+// const enrollAdmin = require('./controllers/enrollAdmin');
+// const registerUser = require('./controllers/registerUser');
+// const query = require('./controllers/query');
+// const patientRoutes = require('./patient-routes');
+// const doctorRoutes = require('./doctor-routes');
+const adminRoutes = require('./controllers/src/admin-routes.js');
 
 
-app.get('/',(req,res) => {
-    res.send('hey');
-})
+// app.use(app.json());
+// app.use(app.urlencoded ({
+// extended: false
+// }));
+
+async function main() {
+
+    app.use(cors())
+    app.use(express.json())
+
+    //-------------------Admin Routes---------------------
+    app.post('/admin/register', (req,res) => {
+        const {register} = req.body;
+        console.log("Its works post route  ")
+        console.log(register)
+
+        if(register === "doctor"){
+            adminRoutes.createDoctor
+            console.log("Doctor is Created")
+        }else if(register === "patient"){
+            adminRoutes.createPatient
+            console.log("Patient is Created")
+        }else{
+            console.log("nothing is created")
+        }
+    });
+
+    app.get('/admin/register', (req,res) => {
+        console.log("Its works get route ")
+    })
+
+    app.post('/admin/queries', (req,res) => {
+        
+    })
+
+    //-------------------Admin Routes----------------------
+
+    //-------------------Doctors Routes----------------------
 
 
-app.listen(port);
+    //-------------------Doctors Routes----------------------
+
+    //-------------------Patients Routes----------------------
+
+
+    //-------------------Patients Routes----------------------
+    // app.get('/query',(req,res)=>{
+    //     enrollAdmin.main
+    //     registerUser.main
+    //     query.query
+        
+    // });
+        
+        
+        
+        // query.query() 
+        // res.setHeader('Content-Type','application/json');
+        // res.send(JSON.stringify(query.query.result));
+        // query.query();
+        // const response = query.query();
+        // res.status(200).send(JSON.parse(response))
+        // const result = JSON.parse(response); 
+        // res.json(`hello:${result}`)
+        // res.end('<h1>Hello</h1>');
+   
+
+    app.listen(port, () => {
+        console.log("Server is listening")
+    })
+}
+
+// app.get('/', (req,res) => { enrollAdmin.main()})
+
+// app.get('/register', (req,res) => {registerUser.main()})
+
+// app.get('/query', (req,res) => { query.main()})
+
+main();
+
+// app.get('/',(req,res) => {
+//     res.send('hey');
+// })
+
+
+;
 
 
 // const { json } = require('express');
