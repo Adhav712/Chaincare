@@ -201,8 +201,6 @@ class PatientContract extends Contract {
 //         allergies,
 //         docType: 'patient',
 //     };
-//     const buffer = Buffer.from(JSON.stringify(patient));
-//     await ctx.stub.putState(patientId, buffer);
 // }
 
     async Patient_updatePatientPassword(ctx,patientId, newPassword) {
