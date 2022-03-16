@@ -34,6 +34,10 @@ external-chaincode/
 organizations/fabric-ca/ordererOrg/*
 organizations/fabric-ca/hosp1apollo/*
 organizations/fabric-ca/hosp2vijaya/*
+addOrg3/fabric-ca/hosp3stanley/*
+addOrg3/fabric-ca/org3/*
+addInsurance/fabric-ca/org3/*
+addInsurance/fabric-ca/Ins1starhealth/*
 organizations/ordererOrganizations/*
 organizations/peerOrganizations/*
 system-genesis-block/*
