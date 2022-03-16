@@ -354,12 +354,13 @@ class PatientContract extends Contract {
 
 //ADMIN contract
 
-    async Admin_createPatient(ctx, patientId, firstName, lastName,password, age, phoneNumber) {
+    async Admin_createPatient(ctx, patientId,emailId, firstName, lastName,password, age, phoneNumber) {
     const exists = await this.patientExists(ctx, patientId);
     if (exists) {
         throw new Error(`The patient ${patientId} already exists`);
     }
         const patient = {
+            emailId,
             firstName,
             lastName,
             password:crypto.createHash('sha256').update(password).digest('hex'),
@@ -371,13 +372,14 @@ class PatientContract extends Contract {
         await ctx.stub.putState(patientId, buffer);
     }
 
-    async Admin_createDoctor(ctx, doctorId, firstName, lastName,password, age,
+    async Admin_createDoctor(ctx, doctorId,emailId, firstName, lastName,password, age,
         phoneNumber,Fields) {
     const exists = await this.doctorExists(ctx, doctorId);
     if (exists) {
         throw new Error(`The patient ${doctorId} already exists`);
     }
         const patient = {
+            emailId,
             firstName,
             lastName,
             password:crypto.createHash('sha256').update(password).digest('hex'),
