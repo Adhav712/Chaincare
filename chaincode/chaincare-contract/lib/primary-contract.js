@@ -8,6 +8,7 @@ const { Contract } = require('fabric-contract-api');
 const crypto = require('crypto');
 let initPatients = require('./initpatientLedger.json');
 let initDoctors = require('./initdoctorLedger.json');
+let initAdmins = require('./initadminLedger.json');
 
 class PatientContract extends Contract {
 
@@ -22,15 +23,26 @@ class PatientContract extends Contract {
         console.info('============= END : Initialize Patient Ledger ===========');
 
         const doctor = initDoctors;
-
+        console.info('============= START : Initialize Doctor Ledger ===========');
         for (let i = 0; i < doctor.length; i++) {
             patient[i].docType = 'doctor';
             await ctx.stub.putState('DOCTOR' + i, Buffer.from(JSON.stringify(doctor[i])));
             console.info('Added <--> ', doctor[i]);
         }
-        console.info('============= END : Initialize Ledger ===========');
+        console.info('============= END : Initialize Doctor Ledger ===========');
+
+        const admin = initAdmins;
+        
+        console.info('============= END : Initialize Admin Ledger ===========');
+        for (let i = 0; i < admin.length; i++) {
+            admin[i].docType = 'admin';
+            await ctx.stub.putState('ADMIN' + i, Buffer.from(JSON.stringify(admin[i])));
+            console.info('Added <--> ', admin[i]);
+        }
+        console.info('============= END : Initialize Admin Ledger ===========');
 
     }
+
 
     // async initLedger(ctx) {
     //     console.info('============= START : Initialize Ledger ===========');

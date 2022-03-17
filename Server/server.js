@@ -8,17 +8,55 @@ const cors = require('cors');
 // const patientRoutes = require('./patient-routes');
 // const doctorRoutes = require('./doctor-routes');
 const adminRoutes = require('./controllers/src/admin-routes.js');
-
+const wallet = require('./controllers/wallet');
+const network = require('./controllers/Utils/app.js');
+const crypto = require('crypto');
+const auth = require('./controllers/Utils/login.js');
 
 // app.use(app.json());
 // app.use(app.urlencoded ({
 // extended: false
 // }));
 
+
 async function main() {
 
     app.use(cors())
     app.use(express.json())
+
+    app.post('/login',(req,res)=>{
+
+        const{login_role,choose_org,hospid,DocID_PID_AdminID,emailId,password} = req.body
+        if(choose_org === 'hospital')
+            switch (login_role){
+                case 'admin':
+                    auth.adminLogin(hospid,password,DocID_PID_AdminID,emailId);
+                    if(isLoggedIn == true){
+                        res.status(200).send("authenticated");
+                    }else{
+                        res.status(500).send("Check your credentials or Internal server error")
+                    }
+                    break;
+                case 'doctor':
+                        auth.doctorLogin(hospid,password,DocID_PID_AdminID,emailId);
+                        if(isLoggedIn == true){
+                            res.status(200).send("authenticated");
+                        }else{
+                            res.status(500).send("Check your credentials or Internal server error")
+                        }
+                    break;   
+                case 'patient':
+                        auth.patientLogin(hospid,password,DocID_PID_AdminID,emailId);
+                        if(isLoggedIn == true){
+                            res.status(200).send("authenticated");
+                        }else{
+                            res.status(500).send("Check your credentials or Internal server error")
+                        }
+                    break
+        }else{
+            //Insurance login
+        }
+    })
 
     //-------------------Admin Routes---------------------
     app.post('/admin/register', (req,res) => {
@@ -37,7 +75,7 @@ async function main() {
         }
     });
 
-    app.get('/admin/register', (req,res) => {
+    app.post('/admin/register', (req,res) => {
         console.log("Its works get route ")
     })
 

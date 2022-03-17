@@ -101,11 +101,11 @@ echo 3 ----chaincode queryed----
 peer lifecycle chaincode queryinstalled
 
 
-# export CC_PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" log.txt)
-# echo ${CC_PACKAGE_ID} 
+export CC_PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}" log.txt)
+echo ${CC_PACKAGE_ID} 
 
 echo 4 ----aprroving chaincode----
-peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" --channelID ${CHANNEL_NAME} --name ${CC_NAME} --version ${CC_VERSION} --package-id chaincare_1:3f8d4544d2df1207821e3f069553d17347bed69d9d5d89df776eaef12188ab94 --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
+peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" --channelID ${CHANNEL_NAME} --name ${CC_NAME} --version ${CC_VERSION} --package-id chaincare_1:6124b1e7a04c83beb74e1be575bf5dce31fe2a1c95cb24d505a8a1ab8d854a98 --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
 
 
 echo 5 ----chaincode querycommitted----

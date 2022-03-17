@@ -10,10 +10,10 @@ const exp = require('constants');
 let caClient
 let isLoggedIn
 
-exports.doctorLogin = async (hospid,password,DocID_or_PID,emailId) => {
+exports.doctorLogin = async (hospid,password,DocID_PID_AdminID,emailId) => {
     
-    const networkobj = network.connectToNetwork(DocID_or_PID);
-    const auth_check_res = network.invoke(networkobj,true,'Admin_readDoctor',DocID_or_PID);
+    const networkobj = network.connectToNetwork(hospid,DocID_PID_AdminID);
+    const auth_check_res = network.invoke(networkobj,true,'Admin_readDoctor',DocID_PID_AdminID);
     const res = auth_check_res.toString();
     const mailId = res.emailID[0];
     const en_pass = res.password[0];
@@ -25,10 +25,10 @@ exports.doctorLogin = async (hospid,password,DocID_or_PID,emailId) => {
     }
 }
 
-exports.patientLogin = async (hospid,password,DocID_or_PID,emailId) => {
+exports.patientLogin = async (hospid,password,DocID_PID_AdminID,emailId) => {
     
-    const networkobj = network.connectToNetwork(DocID_or_PID);
-    const auth_check_res = network.invoke(networkobj,true,'Admin_readPatient',DocID_or_PID);
+    const networkobj = network.connectToNetwork(hospid,DocID_PID_AdminID);
+    const auth_check_res = network.invoke(networkobj,true,'Admin_readPatient',DocID_PID_AdminID);
     const res = auth_check_res.toString();
     const mailId = res.emailID[0];
     const en_pass = res.password[0];
@@ -40,7 +40,18 @@ exports.patientLogin = async (hospid,password,DocID_or_PID,emailId) => {
     }
 }
 
-exports.adminLogin = async () => {
-    const networkobj = network.connectToNetwork(DocID_or_PID);
+exports.adminLogin = async (hospid,password,DocID_PID_AdminID,emailId) => {
+    const networkobj = network.connectToNetwork(hospid,DocID_PID_AdminID);
+    const auth_check_res = network.invoke(networkobj,true,'Admin_readOwnDetails',DocID_PID_AdminID);
+    const res = auth_check_res.toString();
+    const mailId = res.emailID[0];
+    const en_pass = res.password[0];
+    const pass = crypto.createHash('sha256').update(password).digest('hex');  
+    if(pass === en_pass && emailId === mailId){
+        return (isLoggedIn === true);
+    }else{
+        return (isLoggedIn === false);
+    }
+    
 
 }
