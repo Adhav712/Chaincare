@@ -201,6 +201,8 @@ class PatientContract extends Contract {
 //         allergies,
 //         docType: 'patient',
 //     };
+//     const buffer = Buffer.from(JSON.stringify(patient));
+//     await ctx.stub.putState(patientId, buffer);
 // }
 
     async Patient_updatePatientPassword(ctx,patientId, newPassword) {
@@ -286,10 +288,10 @@ class PatientContract extends Contract {
 
     async Doctor_updateDoctor(ctx, doctorId, firstName, lastName, password, age,
         phoneNumber,address, bloodGroup, fields) {
-    const exists = await this.Patient_readPatient(ctx, doctorId);
-    if (exists) {
-        throw new Error(`The doctor ${doctorId} already exists`);
-    }
+            const exists = await this.doctorExists(ctx, doctorId);
+            if (!exists) {
+                throw new Error(`The patient ${doctorId} does not exist`);
+            }
     const doctor = {
         firstName,
         lastName,
@@ -298,8 +300,7 @@ class PatientContract extends Contract {
         phoneNumber,
         address,
         bloodGroup,
-        fields,
-        docType: 'doctor',
+        fields
     };
     const buffer = Buffer.from(JSON.stringify(doctor));
     await ctx.stub.putState(doctorId, buffer);
@@ -346,7 +347,15 @@ class PatientContract extends Contract {
 
         if (isDataChanged === false) return;
 
-        const buffer = Buffer.from(JSON.stringify(patient));
+        const data = {
+            newSymptoms,
+            newDiagnosis,
+            newTreatment,
+            newFollowUp,
+            updatedBy
+        };
+
+        const buffer = Buffer.from(JSON.stringify(data));
         await ctx.stub.putState(patientId, buffer);
     }
 
