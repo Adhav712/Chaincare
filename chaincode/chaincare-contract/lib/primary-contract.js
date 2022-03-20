@@ -8,6 +8,7 @@ const { Contract } = require('fabric-contract-api');
 const crypto = require('crypto');
 let initPatients = require('./initpatientLedger.json');
 let initDoctors = require('./initdoctorLedger.json');
+let initAdmins = require('./initadminLedger.json');
 
 class PatientContract extends Contract {
 
@@ -22,15 +23,26 @@ class PatientContract extends Contract {
         console.info('============= END : Initialize Patient Ledger ===========');
 
         const doctor = initDoctors;
-
+        console.info('============= START : Initialize Doctor Ledger ===========');
         for (let i = 0; i < doctor.length; i++) {
             patient[i].docType = 'doctor';
             await ctx.stub.putState('DOCTOR' + i, Buffer.from(JSON.stringify(doctor[i])));
             console.info('Added <--> ', doctor[i]);
         }
-        console.info('============= END : Initialize Ledger ===========');
+        console.info('============= END : Initialize Doctor Ledger ===========');
+
+        const admin = initAdmins;
+        
+        console.info('============= END : Initialize Admin Ledger ===========');
+        for (let i = 0; i < admin.length; i++) {
+            admin[i].docType = 'admin';
+            await ctx.stub.putState('ADMIN' + i, Buffer.from(JSON.stringify(admin[i])));
+            console.info('Added <--> ', admin[i]);
+        }
+        console.info('============= END : Initialize Admin Ledger ===========');
 
     }
+
 
     // async initLedger(ctx) {
     //     console.info('============= START : Initialize Ledger ===========');
@@ -201,6 +213,8 @@ class PatientContract extends Contract {
 //         allergies,
 //         docType: 'patient',
 //     };
+//     const buffer = Buffer.from(JSON.stringify(patient));
+//     await ctx.stub.putState(patientId, buffer);
 // }
 
     async Patient_updatePatientPassword(ctx,patientId, newPassword) {
@@ -286,10 +300,10 @@ class PatientContract extends Contract {
 
     async Doctor_updateDoctor(ctx, doctorId, firstName, lastName, password, age,
         phoneNumber,address, bloodGroup, fields) {
-    const exists = await this.Patient_readPatient(ctx, doctorId);
-    if (exists) {
-        throw new Error(`The doctor ${doctorId} already exists`);
-    }
+            const exists = await this.doctorExists(ctx, doctorId);
+            if (!exists) {
+                throw new Error(`The patient ${doctorId} does not exist`);
+            }
     const doctor = {
         firstName,
         lastName,
@@ -298,8 +312,7 @@ class PatientContract extends Contract {
         phoneNumber,
         address,
         bloodGroup,
-        fields,
-        docType: 'doctor',
+        fields
     };
     const buffer = Buffer.from(JSON.stringify(doctor));
     await ctx.stub.putState(doctorId, buffer);
@@ -346,7 +359,15 @@ class PatientContract extends Contract {
 
         if (isDataChanged === false) return;
 
-        const buffer = Buffer.from(JSON.stringify(patient));
+        const data = {
+            newSymptoms,
+            newDiagnosis,
+            newTreatment,
+            newFollowUp,
+            updatedBy
+        };
+
+        const buffer = Buffer.from(JSON.stringify(data));
         await ctx.stub.putState(patientId, buffer);
     }
 
@@ -448,12 +469,12 @@ class PatientContract extends Contract {
         return this.fetchLimitedFields(result);
     }
 
-    // async queryAllPatients(ctx) {
-    //     let resultsIterator = await ctx.stub.getStateByRange('', '');
-    //     let result = await this.getAllPatientResults(resultsIterator, false);
+    async queryAllPatients(ctx) {
+        let resultsIterator = await ctx.stub.getStateByRange('', '');
+        let result = await this.getAllPatientResults(resultsIterator, false);
 
-    //     return this.fetchLimitedFields(result);
-    // }
+        return this.fetchLimitedFields(result);
+    }
 
     fetchLimitedFields = result => {
         for (let i = 0; i < result.length; i++) {
@@ -475,7 +496,24 @@ class PatientContract extends Contract {
         console.info('getQueryResultForQueryString <--> ', resultsIterator);
         let results = await this.getAllPatientResults(resultsIterator, false);
         return JSON.stringify(results);
+        
     }
+
+
+    async getLatestPatientId(ctx) {
+        let allResults = await this.queryAllPatients(ctx);
+
+        return allResults[allResults.length - 1].patientId;
+    }
+
+    async getPatientHistory(ctx, patientId) {
+        let resultsIterator = await ctx.stub.getHistoryForKey(patientId);
+        let asset = await this.getAllPatientResults(resultsIterator, true);
+
+        return this.fetchLimitedFields(asset, true);
+    }
+
+
 
 //Insurance Contract    
     

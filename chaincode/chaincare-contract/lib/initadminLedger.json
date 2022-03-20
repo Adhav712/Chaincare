@@ -1,0 +1,18 @@
+[
+    {
+        "emailId": "sankar@apollohospital.com",
+        "password": "11111111"
+    },
+    {
+        "emailId": "arnold@vijayahospital.com",
+        "password": "22222222"
+    },
+    {
+        "emailId": "vijay@stanleyhospital.com",
+        "password": "33333333"
+    },
+    {
+        "emailId": "antony@starhealthinsurance.com",
+        "password": "44444444"
+    }
+]

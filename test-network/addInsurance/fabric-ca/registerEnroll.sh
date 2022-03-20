@@ -12,7 +12,7 @@ function createIns {
 	export FABRIC_CA_CLIENT_HOME=${PWD}/../organizations/peerOrganizations/Ins1starhealth.chaincare.com/
 
   set -x
-  fabric-ca-client enroll -u https://admin:adminpw@localhost:12054 --caname ca-Ins1starhealth --tls.certfiles "${PWD}/fabric-ca/Ins1starhealth/tls-cert.pem"
+  fabric-ca-client enroll -u https://Ins1starhealthadmin:Ins1starhealthchaincare@localhost:12054 --caname ca-Ins1starhealth --tls.certfiles "${PWD}/fabric-ca/Ins1starhealth/tls-cert.pem"
   { set +x; } 2>/dev/null
 
   echo 'NodeOUs:
@@ -42,7 +42,7 @@ function createIns {
 
   infoln "Registering the org admin"
   set -x
-  fabric-ca-client register --caname ca-Ins1starhealth --id.name Ins1admin --id.secret Ins1adminpw --id.type admin --tls.certfiles "${PWD}/fabric-ca/Ins1starhealth/tls-cert.pem"
+  fabric-ca-client register --caname ca-Ins1starhealth --id.name Ins1Ins1starhealthadmin --id.secret Ins1starhealthchaincare --id.type admin --tls.certfiles "${PWD}/fabric-ca/Ins1starhealth/tls-cert.pem"
   { set +x; } 2>/dev/null
 
   infoln "Generating the peer0 msp"
@@ -80,7 +80,7 @@ function createIns {
 
   infoln "Generating the org admin msp"
   set -x
-	fabric-ca-client enroll -u https://Ins1admin:Ins1adminpw@localhost:12054 --caname ca-Ins1starhealth -M "${PWD}/../organizations/peerOrganizations/Ins1starhealth.chaincare.com/users/Admin@Ins1starhealth.chaincare.com/msp" --tls.certfiles "${PWD}/fabric-ca/Ins1starhealth/tls-cert.pem"
+	fabric-ca-client enroll -u https://Ins1Ins1starhealthadmin:Ins1starhealthchaincare@localhost:12054 --caname ca-Ins1starhealth -M "${PWD}/../organizations/peerOrganizations/Ins1starhealth.chaincare.com/users/Admin@Ins1starhealth.chaincare.com/msp" --tls.certfiles "${PWD}/fabric-ca/Ins1starhealth/tls-cert.pem"
   { set +x; } 2>/dev/null
 
   cp "${PWD}/../organizations/peerOrganizations/Ins1starhealth.chaincare.com/msp/config.yaml" "${PWD}/../organizations/peerOrganizations/Ins1starhealth.chaincare.com/users/Admin@Ins1starhealth.chaincare.com/msp/config.yaml"

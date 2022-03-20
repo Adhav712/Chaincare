@@ -10,8 +10,8 @@ const FabricCAServices = require('fabric-ca-client');
 const { Wallets } = require('fabric-network');
 const fs = require('fs');
 const path = require('path');
-const {buildCAClient, registerAndEnrollUser} = require('./Utils/CaUtils.js');
-const {buildCCPHosp1, buildCCPHosp2, buildWallet, buildCCPHosp3} = require('./Utils/Utils.js');
+const {buildCAClient, enrollAdmin} = require('./Utils/CaUtils.js');
+const {buildCCPHosp1, buildCCPHosp2, buildWallet, buildCCPHosp3, buildCCPIns1} = require('./Utils/Utils.js');
 const walletPath = path.join(__dirname, 'wallet');
 
 const adminHospital1 = 'hosp1apolloadmin';
@@ -22,9 +22,13 @@ const adminHospital2 = 'hosp2vijayaadmin';
 const adminHospital2Passwd = 'hosp2vijayachaincare';
 const mspHosp2 = 'hosp2vijayaMSP';
 
-const adminHospital3 = 'hosp1apolloadmin';
-const adminHospital3Passwd = 'hosp1apollochaincare';
+const adminHospital3 = 'hosp3stanleyadmin';
+const adminHospital3Passwd = 'hosp3stanleychaincare';
 const mspHosp3 = 'hosp3stanleyMSP';
+
+const adminInsurance1 = 'Ins1starhealthadmin';
+const adminInsurance1Passwd = 'Ins1starhealthchaincare';
+const mspIns1 = 'Ins1starhealthMSP';
 
 exports.enrollAdminHosp1 = async function() {
     try {
@@ -55,7 +59,7 @@ exports.enrollAdminHosp1 = async function() {
   
       // build an instance of the fabric ca services client based on
       // the information in the network configuration
-      const caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp2apollo.chaincare.com');
+      const caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp2vijaya.chaincare.com');
   
       // setup the wallet to hold the credentials of the application user
       const wallet = await buildWallet(Wallets, walletPath);
@@ -83,11 +87,33 @@ exports.enrollAdminHosp1 = async function() {
       const wallet = await buildWallet(Wallets, walletPath);
   
       // to be executed and only once per hospital. Which enrolls admin and creates admin in the wallet
-      await enrollAdmin(caClient, wallet, mspHosp3, adminHospital3, adminHospital3Passwd);
+      await enrollAdmin(caClient, wallet, mspIns1, adminHospital3, adminHospital3Passwd);
   
       console.log('msg: Successfully enrolled admin user ' + adminHospital3 + ' and imported it into the wallet');
     } catch (error) {
       console.error(`Failed to enroll admin user ' + ${adminHospital3} + : ${error}`);
+      process.exit(1);
+    }
+  };
+
+  exports.enrollAdminIns1 = async function() {
+    try {
+      // build an in memory object with the network configuration (also known as a connection profile)
+      const ccp = buildCCPIns1();
+  
+      // build an instance of the fabric ca services client based on
+      // the information in the network configuration
+      const caClient = buildCAClient(FabricCAServices, ccp, 'ca.Ins1starhealth.chaincare.com');
+  
+      // setup the wallet to hold the credentials of the application user
+      const wallet = await buildWallet(Wallets, walletPath);
+  
+      // to be executed and only once per hospital. Which enrolls admin and creates admin in the wallet
+      await enrollAdmin(caClient, wallet, mspHosp3, adminInsurance1, adminInsurance1Passwd);
+  
+      console.log('msg: Successfully enrolled admin user ' + adminInsurance1 + ' and imported it into the wallet');
+    } catch (error) {
+      console.error(`Failed to enroll admin user ' + ${adminInsurance1} + : ${error}`);
       process.exit(1);
     }
   };
