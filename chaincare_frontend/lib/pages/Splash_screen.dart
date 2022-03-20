@@ -31,7 +31,6 @@ class _SplashScreencState extends State<SplashScreenc> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(kLogo , width: 200, height: 200,),
               Text(
                 'ChainCare',
                 style: GoogleFonts.mochiyPopOne(
@@ -41,6 +40,7 @@ class _SplashScreencState extends State<SplashScreenc> {
                     ),
                     ),
               ),
+              Image.asset(kLogo , width: 200, height: 200,),
             ],
           ),
         ),

@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const SplashScreenc(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/patient-details': (context) => const PatientDetails(),
-        '/patient-login': (context) => const Login(),
+        '/patient-login': (context) => const PatientLogin(),
         '/doctor-login': (context) => const DoctorLogin(),
         '/insurance-login': (context) => const InsuranceLogin(),
         '/admin-login': (context) => const AdminLogin()

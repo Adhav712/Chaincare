@@ -16,14 +16,14 @@ class WelcomePage extends StatelessWidget {
             onPressed: () => Navigator.pushNamed(context, '/doctor-login'),
             child: const Text("Doctor Login"),
           ),
-          ElevatedButton(
-            onPressed: () => Navigator.pushNamed(context, '/insurance-login'),
-            child: const Text("Insurance Login"),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.pushNamed(context, '/admin-login'),
-            child: const Text("Admin Login"),
-          ),
+          // ElevatedButton(
+          //   onPressed: () => Navigator.pushNamed(context, '/insurance-login'),
+          //   child: const Text("Insurance Login"),
+          // ),
+          // ElevatedButton(
+          //   onPressed: () => Navigator.pushNamed(context, '/admin-login'),
+          //   child: const Text("Admin Login"),
+          // ),
         ],
       ),
       body: const Center(child: Text("Welcome to chaincare")),
