@@ -6,7 +6,10 @@
     "fabric-network": "^2.2.4"
   },
   "scripts": {
-    "start": "nodemon script.js"
+    "start": "nodemon script.js",
+    "prestart": "node initServer.js"
+
+
   },
   "name": "server",
   "version": "1.0.0",

@@ -7,7 +7,7 @@ function createHosp1() {
   export FABRIC_CA_CLIENT_HOME=${PWD}/organizations/peerOrganizations/hosp1apollo.chaincare.com/
 
   set -x
-  fabric-ca-client enroll -u https://admin:adminpw@localhost:7054 --caname ca-hosp1apollo --tls.certfiles "${PWD}/organizations/fabric-ca/hosp1apollo/tls-cert.pem"
+  fabric-ca-client enroll -u https://hosp1apolloadmin:hosp1apollochaincare@localhost:7054 --caname ca-hosp1apollo --tls.certfiles "${PWD}/organizations/fabric-ca/hosp1apollo/tls-cert.pem"
   { set +x; } 2>/dev/null
 
   echo 'NodeOUs:
@@ -37,7 +37,7 @@ function createHosp1() {
 
   infoln "Registering the hosp admin"
   set -x
-  fabric-ca-client register --caname ca-hosp1apollo --id.name org1admin --id.secret org1adminpw --id.type admin --tls.certfiles "${PWD}/organizations/fabric-ca/hosp1apollo/tls-cert.pem"
+  fabric-ca-client register --caname ca-hosp1apollo --id.name hosp1hosp1apolloadmin --id.secret hosp1apollochaincare --id.type admin --tls.certfiles "${PWD}/organizations/fabric-ca/hosp1apollo/tls-cert.pem"
   { set +x; } 2>/dev/null
 
   infoln "Generating the peer0 msp"
@@ -74,7 +74,7 @@ function createHosp1() {
 
   infoln "Generating the hosp admin msp"
   set -x
-  fabric-ca-client enroll -u https://org1admin:org1adminpw@localhost:7054 --caname ca-hosp1apollo -M "${PWD}/organizations/peerOrganizations/hosp1apollo.chaincare.com/users/Admin@hosp1apollo.chaincare.com/msp" --tls.certfiles "${PWD}/organizations/fabric-ca/hosp1apollo/tls-cert.pem"
+  fabric-ca-client enroll -u https://hosp1hosp1apolloadmin:hosp1apollochaincare@localhost:7054 --caname ca-hosp1apollo -M "${PWD}/organizations/peerOrganizations/hosp1apollo.chaincare.com/users/Admin@hosp1apollo.chaincare.com/msp" --tls.certfiles "${PWD}/organizations/fabric-ca/hosp1apollo/tls-cert.pem"
   { set +x; } 2>/dev/null
 
   cp "${PWD}/organizations/peerOrganizations/hosp1apollo.chaincare.com/msp/config.yaml" "${PWD}/organizations/peerOrganizations/hosp1apollo.chaincare.com/users/Admin@hosp1apollo.chaincare.com/msp/config.yaml"
@@ -87,7 +87,7 @@ function createHosp2() {
   export FABRIC_CA_CLIENT_HOME=${PWD}/organizations/peerOrganizations/hosp2vijaya.chaincare.com/
 
   set -x
-  fabric-ca-client enroll -u https://admin:adminpw@localhost:8054 --caname ca-hosp2vijaya --tls.certfiles "${PWD}/organizations/fabric-ca/hosp2vijaya/tls-cert.pem"
+  fabric-ca-client enroll -u https://hosp2vijayaadmin:hosp2vijayachaincare@localhost:8054 --caname ca-hosp2vijaya --tls.certfiles "${PWD}/organizations/fabric-ca/hosp2vijaya/tls-cert.pem"
   { set +x; } 2>/dev/null
 
   echo 'NodeOUs:
@@ -117,7 +117,7 @@ function createHosp2() {
 
   infoln "Registering the hosp admin"
   set -x
-  fabric-ca-client register --caname ca-hosp2vijaya --id.name org2admin --id.secret org2adminpw --id.type admin --tls.certfiles "${PWD}/organizations/fabric-ca/hosp2vijaya/tls-cert.pem"
+  fabric-ca-client register --caname ca-hosp2vijaya --id.name hosp2hosp2vijayaadmin --id.secret hosp2vijayachaincare --id.type admin --tls.certfiles "${PWD}/organizations/fabric-ca/hosp2vijaya/tls-cert.pem"
   { set +x; } 2>/dev/null
 
   infoln "Generating the peer0 msp"
@@ -154,7 +154,7 @@ function createHosp2() {
 
   infoln "Generating the hosp admin msp"
   set -x
-  fabric-ca-client enroll -u https://org2admin:org2adminpw@localhost:8054 --caname ca-hosp2vijaya -M "${PWD}/organizations/peerOrganizations/hosp2vijaya.chaincare.com/users/Admin@hosp2vijaya.chaincare.com/msp" --tls.certfiles "${PWD}/organizations/fabric-ca/hosp2vijaya/tls-cert.pem"
+  fabric-ca-client enroll -u https://hosp2hosp2vijayaadmin:hosp2vijayachaincare@localhost:8054 --caname ca-hosp2vijaya -M "${PWD}/organizations/peerOrganizations/hosp2vijaya.chaincare.com/users/Admin@hosp2vijaya.chaincare.com/msp" --tls.certfiles "${PWD}/organizations/fabric-ca/hosp2vijaya/tls-cert.pem"
   { set +x; } 2>/dev/null
 
   cp "${PWD}/organizations/peerOrganizations/hosp2vijaya.chaincare.com/msp/config.yaml" "${PWD}/organizations/peerOrganizations/hosp2vijaya.chaincare.com/users/Admin@hosp2vijaya.chaincare.com/msp/config.yaml"

@@ -1,40 +1,45 @@
  const {Gateway, Wallets} = require('fabric-network');
  const FabricCAServices = require('fabric-ca-client');
  const path = require('path');
- const {buildCAClient, registerAndEnrollUser} = require('../Utils/CaUtils.js');
- const {buildCCPHosp3, buildCCPHosp2, buildCCPHosp1, buildWallet} = require('../Utils/Utils.js');
+ const {buildCAClient, registerAndEnrollUser} = require('./CaUtils.js');
+ const {buildCCPHosp3, buildCCPHosp2, buildCCPHosp1, buildWallet} = require('./Utils.js');
  
  const channelName = 'hospitalchannel';
- const chaincodeName = 'patient';
+ const chaincodeName = 'chaincare';
  const mspOrg1 = 'hosp1MSP';
  const mspOrg2 = 'hosp2MSP';
  const mspOrg3 = 'hosp3MSP';
- const walletPath = path.join(__dirname, 'wallet');
+ const walletPath = path.join(__dirname, '../wallet');
  
  
- /**
-  * @author Jathin Sreenivas
-  * @param  {string} doctorID
-  * @return {networkObj} networkObj if all paramters are correct, the networkObj consists of contract, network, gateway
-  * @return {string} response error if there is a error in the method
-  * @description Connects to the network using the username - doctorID, networkObj contains the paramters using which
-  * @description a connection to the fabric network is possible.
-  */
- exports.connectToNetwork = async function(doctorID) {
+
+ exports.connectToNetwork = async function(hospid,DocID_PID_AdminID) {
    const gateway = new Gateway();
-   const ccp = buildCCPHosp1();
- 
+   const hospitalId = parseInt(hospid);
+  
+
+   if (hospitalId === 1) {
+      const ccp = buildCCPHosp1();
+        return ccp;
+    } else if (hospitalId === 2) {
+      const ccp = buildCCPHosp2();
+        return ccp;
+    } else if (hospitalId === 3) {
+      const ccp = buildCCPHosp3();
+        return ccp;
+    }
+
    try {
-     const walletPath = path.join(process.cwd(), '../patient-asset-transfer/application-javascript/wallet/');
+     const walletPath = path.join(process.cwd(), '../wallet');
  
      const wallet = await buildWallet(Wallets, walletPath);
  
-     const userExists = await wallet.get(doctorID);
+     const userExists = await wallet.get(DocID_PID_AdminID);
      if (!userExists) {
-       console.log('An identity for the doctorID: ' + doctorID + ' does not exist in the wallet');
-       console.log('Create the doctorID before retrying');
+       console.log(`An identity for the : ${DocID_PID_AdminID} does not exist in the wallet`);
+       console.log(`Create the ${DocID_PID_AdminID} before retrying`);
        const response = {};
-       response.error = 'An identity for the user ' + doctorID + ' does not exist in the wallet. Register ' + doctorID + ' first';
+       response.error = `An identity for the user ${DocID_PID_AdminID} does not exist in the wallet. Register ${DocID_PID_AdminID} first`;
        return response;
      }
  
@@ -45,7 +50,7 @@
      * signed by this user using the credentials stored in the wallet.
      */
      // using asLocalhost as this gateway is using a fabric network deployed locally
-     await gateway.connect(ccp, {wallet, identity: doctorID, discovery: {enabled: true, asLocalhost: true}});
+     await gateway.connect(ccp, {wallet, identity: DocID_PID_AdminID, discovery: {enabled: true, asLocalhost: true}});
  
      // Build a network instance based on the channel where the smart contract is deployed
      const network = await gateway.getNetwork(channelName);
@@ -69,17 +74,7 @@
    }
  };
  
- 
- /**
-  * @author Jathin Sreenivas
-  * @param  {*} networkObj the object which is given when connectToNetwork is executed
-  * @param  {boolean} isQuery true if retieving from ledger, else false in the case of add a transaction to the ledger.
-  * @param  {string} func must be the function name in the chaincode.
-  * @param  {string} args - a json string, if there are mutiple args, the args must be a json as one string
-  * @return {string} response if the transaction was successful
-  * @return {string} response error otherwise
-  * @description A common function to interact with the ledger
-  */
+
  exports.invoke = async function(networkObj, isQuery, func, args= '') {
    try {
      if (isQuery === true) {
@@ -126,15 +121,15 @@
      // TODO: Must be handled in a config file instead of using if
      if (hospitalId === 1) {
        const ccp = buildCCPHosp1();
-       const caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp1.lithium.com');
+       const caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp1apollo.chaincare.com');
        await registerAndEnrollUser(caClient, wallet, mspOrg1, userId, 'hosp1admin', attributes);
      } else if (hospitalId === 2) {
        const ccp = buildCCPHosp2();
-       const caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp2.lithium.com');
+       const caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp2vijaya.chaincare.com');
        await registerAndEnrollUser(caClient, wallet, mspOrg2, userId, 'hosp2admin', attributes);
      } else if (hospitalId === 3) {
        const ccp = buildCCPHosp3();
-       const caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp3.lithium.com');
+       const caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp3stanley.chaincare.com');
        await registerAndEnrollUser(caClient, wallet, mspOrg3, userId, 'hosp3admin', attributes);
      }
      console.log(`Successfully registered user: + ${userId}`);
@@ -163,13 +158,13 @@
      // TODO: Must be handled in a config file instead of using if
      if (hospitalId === 1) {
        const ccp = buildCCPHosp1();
-       caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp1.lithium.com');
+       caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp1.chaincare.com');
      } else if (hospitalId === 2) {
        const ccp = buildCCPHosp2();
-       caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp2.lithium.com');
+       caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp2.chaincare.com');
      } else if (hospitalId === 3) {
        const ccp = buildCCPHosp3();
-       caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp3.lithium.com');
+       caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp3.chaincare.com');
      }
  
      // Use the identity service to get the user enrolled using the respective CA

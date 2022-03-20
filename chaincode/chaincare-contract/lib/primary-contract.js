@@ -469,12 +469,12 @@ class PatientContract extends Contract {
         return this.fetchLimitedFields(result);
     }
 
-    // async queryAllPatients(ctx) {
-    //     let resultsIterator = await ctx.stub.getStateByRange('', '');
-    //     let result = await this.getAllPatientResults(resultsIterator, false);
+    async queryAllPatients(ctx) {
+        let resultsIterator = await ctx.stub.getStateByRange('', '');
+        let result = await this.getAllPatientResults(resultsIterator, false);
 
-    //     return this.fetchLimitedFields(result);
-    // }
+        return this.fetchLimitedFields(result);
+    }
 
     fetchLimitedFields = result => {
         for (let i = 0; i < result.length; i++) {
@@ -496,7 +496,24 @@ class PatientContract extends Contract {
         console.info('getQueryResultForQueryString <--> ', resultsIterator);
         let results = await this.getAllPatientResults(resultsIterator, false);
         return JSON.stringify(results);
+        
     }
+
+
+    async getLatestPatientId(ctx) {
+        let allResults = await this.queryAllPatients(ctx);
+
+        return allResults[allResults.length - 1].patientId;
+    }
+
+    async getPatientHistory(ctx, patientId) {
+        let resultsIterator = await ctx.stub.getHistoryForKey(patientId);
+        let asset = await this.getAllPatientResults(resultsIterator, true);
+
+        return this.fetchLimitedFields(asset, true);
+    }
+
+
 
 //Insurance Contract    
     
