@@ -1,9 +1,9 @@
+import 'package:chaincare_frontend/pages/Splash_screen.dart';
 import 'package:chaincare_frontend/pages/details/patient_details.dart';
 import 'package:chaincare_frontend/pages/login/admin_login.dart';
 import 'package:chaincare_frontend/pages/login/doctor_login.dart';
 import 'package:chaincare_frontend/pages/login/insurance_login.dart';
 import 'package:chaincare_frontend/pages/login/patient_login.dart';
-import 'package:chaincare_frontend/welcome_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => const WelcomePage(),
+        '/': (context) => const SplashScreenc(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/patient-details': (context) => const PatientDetails(),
         '/patient-login': (context) => const Login(),
