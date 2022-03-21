@@ -19,7 +19,7 @@ class _PatientLoginState extends State<PatientLogin> {
     final width = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.only(left: height / 1.3),
+        padding: EdgeInsets.only(left: width / 1.3),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
