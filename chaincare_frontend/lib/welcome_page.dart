@@ -8,15 +8,12 @@ class WelcomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          
-             ElevatedButton(
-              
-              autofocus: true,
-              onPressed: () => Navigator.pushNamed(context, '/patient-login'),
-              child: const Text("Patient Login"),
-            ),
-          
-          
+          ElevatedButton(
+            autofocus: true,
+            onPressed: () => Navigator.pushNamed(context, '/patient-login'),
+            child: const Text("Patient Login"),
+          ),
+
           ElevatedButton(
             onPressed: () => Navigator.pushNamed(context, '/doctor-login'),
             child: const Text("Doctor Login"),
