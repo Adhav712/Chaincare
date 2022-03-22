@@ -43,54 +43,6 @@ class PatientContract extends Contract {
 
     }
 
-
-    // async initLedger(ctx) {
-    //     console.info('============= START : Initialize Ledger ===========');
-    //     for (let i = 0; i < initPatients.length; i++) {
-    //         initPatients[i].docType = 'patient';
-    //         await ctx.stub.putState('PID' + i, Buffer.from(JSON.stringify(initPatients[i])));
-    //         console.info('Added <--> ', initPatients[i]);
-    //     }
-    //     console.info('============= END : Initialize Ledger ===========');
-    // }
-
-    // async createPatient(ctx, patientId, firstName, lastName, age, address) {
-    //     const exists = await this.patientExists(ctx, patientId);
-    //     if (exists) {
-    //         throw new Error(`The patient ${patientId} already exists`);
-    //     }
-    //     const patient = {
-    //         firstName,
-    //         lastName,
-    //         docType: 'patient',
-    //         age,
-    //         address,
-    //     };
-    //     const buffer = Buffer.from(JSON.stringify(patient));
-    //     await ctx.stub.putState(patientId, buffer);
-    // }
-
-    // async readPatient(ctx, patientId) {
-    //     const exists = await this.patientExists(ctx, patientId);
-    //     if (!exists) {
-    //         throw new Error(`The patient ${patientId} does not exist`);
-    //     }
-    //     const buffer = await ctx.stub.getState(patientId);
-    //     const asset = JSON.parse(buffer.toString());
-    //     return asset;
-    // }
-
-    // async updatePatient(ctx, patientId, newAddress) {
-    //     const exists = await this.patientExists(ctx, patientId);
-    //     if (!exists) {
-    //         throw new Error(`The patient ${patientId} does not exist`);
-    //     }
-    //     const patient = await this.readPatient(ctx, patientId)
-    //     patient.address = newAddress;
-    //     const buffer = Buffer.from(JSON.stringify(patient));
-    //     await ctx.stub.putState(patientId, buffer);
-    // }
-
     async getAllPatientResults(iterator, isHistory) {
         let allResults = [];
         while (true) {
@@ -193,29 +145,6 @@ class PatientContract extends Contract {
         const asset = JSON.parse(buffer.toString());
         return asset;
     }
-
-//     async Patient_createPatient(ctx, patientId, firstName, lastName, password, age,
-//         phoneNumber,emergPhoneNumber,address, bloodGroup, changedBy, allergies) {
-//     const exists = await this.patientExists(ctx, patientId);
-//     if (exists) {
-//         throw new Error(`The patient ${patientId} already exists`);
-//     }
-//     const patient = {
-//         firstName,
-//         lastName,
-//         password:crypto.createHash('sha256').update(password).digest('hex'),
-//         age,
-//         phoneNumber,
-//         emergPhoneNumber,
-//         address,
-//         bloodGroup,
-//         changedBy,
-//         allergies,
-//         docType: 'patient',
-//     };
-//     const buffer = Buffer.from(JSON.stringify(patient));
-//     await ctx.stub.putState(patientId, buffer);
-// }
 
     async Patient_updatePatientPassword(ctx,patientId, newPassword) {
         if (newPassword === null || newPassword === '') {
@@ -359,19 +288,26 @@ class PatientContract extends Contract {
 
         if (isDataChanged === false) return;
 
-        const data = {
-            newSymptoms,
-            newDiagnosis,
-            newTreatment,
-            newFollowUp,
-            updatedBy
-        };
-
-        const buffer = Buffer.from(JSON.stringify(data));
+        const buffer = Buffer.from(JSON.stringify(patient));
         await ctx.stub.putState(patientId, buffer);
     }
 
 //ADMIN contract
+
+    async AdminExists(ctx, adminId) {
+        const buffer = await ctx.stub.getState(adminId);
+        return (!!buffer && buffer.length > 0);
+    }
+
+    async readAdminDetails(ctx, adminId) {
+        const exists = await this.AdminExists(ctx, adminId);
+        if (!exists) {
+            throw new Error(`The patient ${adminId} does not exist`);
+        }
+        const buffer = await ctx.stub.getState(adminId);
+        const asset = JSON.parse(buffer.toString());
+        return asset;
+    }
 
     async Admin_createPatient(ctx, patientId,emailId, firstName, lastName,password, age, phoneNumber) {
     const exists = await this.patientExists(ctx, patientId);
@@ -447,6 +383,13 @@ class PatientContract extends Contract {
         await ctx.stub.deleteState(doctorId);
     }
 
+    async queryAllIds(ctx) {
+        let resultsIterator = await ctx.stub.getStateByRange('', '');
+        let asset = await this.getAllPatientResults(resultsIterator, false);
+
+        return this.fetchLimitedFields(asset);
+    }
+
     async Admin_queryPatientsByFirstName(ctx, firstName) {
         let queryString = {};
         queryString.selector = {};
@@ -473,7 +416,7 @@ class PatientContract extends Contract {
         let resultsIterator = await ctx.stub.getStateByRange('', '');
         let result = await this.getAllPatientResults(resultsIterator, false);
 
-        return this.fetchLimitedFields(result);
+        return this.fetchLimitedFields1(result);
     }
 
     fetchLimitedFields = result => {
@@ -491,19 +434,24 @@ class PatientContract extends Contract {
         return result;
     }
 
+    fetchLimitedFields1 = result => {
+        for (let i = 0; i < result.length; i++) {
+            const obj = result[i];
+            result[i] = {
+                patientId: obj.Key
+    
+            };
+        }
+    
+        return result;
+    }
+
     async getQueryResultForQueryString(ctx, queryString) {
         let resultsIterator = await ctx.stub.getQueryResult(queryString);
         console.info('getQueryResultForQueryString <--> ', resultsIterator);
         let results = await this.getAllPatientResults(resultsIterator, false);
         return JSON.stringify(results);
         
-    }
-
-
-    async getLatestPatientId(ctx) {
-        let allResults = await this.queryAllPatients(ctx);
-
-        return allResults[allResults.length - 1].patientId;
     }
 
     async getPatientHistory(ctx, patientId) {
