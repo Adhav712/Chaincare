@@ -2,15 +2,11 @@
 // const {ROLE_ADMIN, ROLE_DOCTOR, capitalize, getMessage, validateRole, createRedisClient} = require('../utils.js');
 const network = require("../Utils/network.js");
 
-/**
- * @param  {Request} req Body must be a patient json and role in the header
- * @param  {Response} res 201 response if asset is created else 400 with a simple json message
- * @description Creates a patient as an user adds the patient to the wallet and an asset(patient) is added to the ledger
- */
-exports.createPatient = async (req, res) => {
+
+exports.createPatient = async (req, res,hospid,DocID_PID_AdminID) => {
 
         // Set up and connect to Fabric Gateway using the username in header
-        const networkObj = await network.connectToNetwork(req.username);
+        const networkObj = await network.connectToNetwork(hospid,DocID_PID_AdminID);
 
         let {patientId,emailId, firstName, lastName,password, age, phoneNumber} = req.body;
         // The request present in the body is converted into a single json string
@@ -24,7 +20,7 @@ exports.createPatient = async (req, res) => {
            }
 
         // Enrol and register the user with the CA and adds the user to the wallet.
-        const userData = JSON.stringify({hospitalId: (req.headers.username).slice(4, 5), userId: req.body.patientId});
+        const userData = JSON.stringify({hospitalId: hospid, userId: DocID_PID_AdminID});
         const registerUserRes = await network.registerUser(userData);
         if (registerUserRes.error) {
           await network.invoke(networkObj, false,  'Admin_deletePatient', req.body.patientId);
@@ -34,46 +30,51 @@ exports.createPatient = async (req, res) => {
   res.status(201).send(getMessage(false, 'Successfully registered Patient.', req.body.patientId, req.body.password));
 };
 
-/**
- * @param  {Request} req Body must be a doctor json and role in the header
- * @param  {Response} res 201 response if asset is created else 400 with a simple json message
- * @description Creates a doctor as an user adds the doctor to the wallet
- */
-exports.createDoctor = async (req, res,hospid,DocID_PID_AdminID) => {
+
+exports.createDoctor = async (req, res, hospid, AdminID) => {
     // This var are adminId and his hospid
-    const networkObj = await network.connectToNetwork(hospid,DocID_PID_AdminID);
+    // const hospid = req.body.hospid;
+    // const AdminID = req.body.DocID_PID_AdminID;
+    console.log("36",hospid,AdminID);
+    const networkObj = await network.connectToNetwork(hospid,AdminID);
+    console.log("37",hospid,AdminID);
     
-    let {doctorId,emailId, firstName, lastName,password, age,phoneNumber,Fields} = req.body
+    const new_DocID = req.body;
+    const emailId= req.body;
+    const firstName= req.body;
+    const lastName = req.body;
+    const password = req.body;
+    const age= req.body;
+    const phoneNumber= req.body;
+    const Fields = req.body;
+    console.log("50",new_DocID);
     // if (!('doctorId' in req.body) || req.body.doctorId === null || req.body.doctorId === '') {
     //   const lastId = await network.invoke(networkObj, true, capitalize(userRole) + 'Contract:getLatestPatientId');
     //   req.body.patientId = 'PID' + (parseInt(lastId.slice(3)) + 1);
     // }
+    const DocID = parseInt(new_DocID);
 
-    const data = JSON.stringify(doctorId,emailId, firstName, lastName,password, age,phoneNumber,Fields);
+    const data = JSON.stringify(DocID,emailId, firstName, lastName,password, age,phoneNumber,Fields);
         const args = [data];
     const createDoctorRes = await network.invoke(networkObj, false, 'Admin_createDoctor', args);
-        if (createDoctortRes.error) {
-            res.status(400).send(response.error);
-           }
+        // if (createDoctorRes.error) {
+        //     res.status(400).send(response.error);
+        //  }
 
 
     
     // Enrol and register the user with the CA and adds the user to the wallet.
-    const userData = JSON.stringify({hospitalId: req.body.hospid, userId: req.body.doctorId});
+    const userData = JSON.stringify({hospitalId: hospid, userId: new_DocID});
     const registerUserRes = await network.registerUser(userData);
     if (registerUserRes.error) {
       await network.invoke(networkObj, false, 'Admin_deleteDoctor', userData);
       res.send(registerUserRes.error);
     }
 
-    res.status(201).send(getMessage(false, 'Successfully registered Doctor.', req.body.doctorId, req.body.password));
+    res.status(201).send(getMessage(false, 'Successfully registered Doctor.', DocID_PID_AdminID,emailId, firstName, lastName,password, age,phoneNumber,Fields, password));
 };
 
-/**
- * @param  {Request} req Role in the header
- * @param  {Response} res 200 response with the json of all the assets(patients) in the ledger
- * @description Retrieves all the assets(patients) in the ledger
- */
+
 exports.getAllPatients = async (req, res) => {
   // User role from the request header is validated
   const userRole = req.headers.role;

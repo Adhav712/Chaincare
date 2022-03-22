@@ -23,6 +23,10 @@ async function main() {
 
     app.use(cors())
     app.use(express.json())
+    app.options('*', cors());  
+    app.use(express.urlencoded ({
+    extended: false
+    }));
 
     app.post('/login',(req,res)=>{
 
@@ -62,27 +66,30 @@ async function main() {
     //app.get()
     
     app.post('/admin', (req,res) => {
-        const register = req.body.register;
-        const {hospid} = req.body;
-        const DocID_PID_AdminID = req.body;
-        console.log("Its works post route  ")
-        console.log(register)
+       
+    const register = req.body.register;
+    const hospid = req.body.hospid;
+    const AdminID = req.body.DocID_PID_AdminID;
+    
+    console.log("Its works post route  ")
+    console.log(register)
+    console.log(hospid,AdminID);
+    if(register === "doctor"){
+         adminRoutes.createDoctor(req,res,hospid,AdminID)
+        console.log("Doctor is Created")
+    }else if(register === "patient"){
+        adminRoutes.createPatient(req,res,hospid,AdminID)
+        console.log("Patient is Created")
+    }else{
+        console.log("nothing is created")
+    }
 
-        if(register === "doctor"){
-            adminRoutes.createDoctor(hospid,DocID_PID_AdminID)
-            console.log("Doctor is Created")
-        }else if(register === "patient"){
-            adminRoutes.createPatient(hospid,DocID_PID_AdminID)
-            console.log("Patient is Created")
-        }else{
-            console.log("nothing is created")
-        }
 
     });
 
 
     app.post('/admin/queries', (req,res) => {
-        
+
     })
 
     //-------------------  Admin Routes Ends ----------------------

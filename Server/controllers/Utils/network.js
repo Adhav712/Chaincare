@@ -16,7 +16,7 @@
  exports.connectToNetwork = async function(hospid,DocID_PID_AdminID) {
    const gateway = new Gateway();
    const hospitalId = parseInt(hospid);
-  
+   console.log("19",hospid,DocID_PID_AdminID);  
 
    if (hospitalId === 1) {
       const ccp = buildCCPHosp1();
@@ -122,15 +122,15 @@
      if (hospitalId === 1) {
        const ccp = buildCCPHosp1();
        const caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp1apollo.chaincare.com');
-       await registerAndEnrollUser(caClient, wallet, mspOrg1, userId, 'hosp1admin', attributes);
+       await registerAndEnrollUser(caClient, wallet, mspOrg1, userId, 'hosp1apolloadmin', attributes);
      } else if (hospitalId === 2) {
        const ccp = buildCCPHosp2();
        const caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp2vijaya.chaincare.com');
-       await registerAndEnrollUser(caClient, wallet, mspOrg2, userId, 'hosp2admin', attributes);
+       await registerAndEnrollUser(caClient, wallet, mspOrg2, userId, 'hosp2vijayaadmin', attributes);
      } else if (hospitalId === 3) {
        const ccp = buildCCPHosp3();
        const caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp3stanley.chaincare.com');
-       await registerAndEnrollUser(caClient, wallet, mspOrg3, userId, 'hosp3admin', attributes);
+       await registerAndEnrollUser(caClient, wallet, mspOrg3, userId, 'hosp3vijayadmin', attributes);
      }
      console.log(`Successfully registered user: + ${userId}`);
      const response = 'Successfully registered user: '+ userId;
