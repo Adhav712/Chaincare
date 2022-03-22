@@ -3,6 +3,7 @@
 const network = require("../Utils/network.js");
 
 
+
 exports.createPatient = async (req, res, hospid, AdminID) => {
 
         // Set up and connect to Fabric Gateway using the username in header
@@ -31,6 +32,8 @@ exports.createPatient = async (req, res, hospid, AdminID) => {
 
         if (registerUserRes.error) {
           await networkObj.contract.submitTransaction('Admin_deletePatient', patientId);
+
+
           res.send(registerUserRes.error);
         }
 
@@ -39,6 +42,7 @@ exports.createPatient = async (req, res, hospid, AdminID) => {
 
 
 exports.createDoctor = async (req, res, hospid, AdminID) => {
+
 
     const networkObj = await network.connectToNetwork(hospid,AdminID);
 
@@ -62,6 +66,7 @@ exports.createDoctor = async (req, res, hospid, AdminID) => {
     await network.registerUser(userData);
 
     res.status(201).send('Successfully registered Doctor.', new_DocID,emailId, firstName, lastName,password, age,phoneNumber,Fields, password);
+
 };
 
 
