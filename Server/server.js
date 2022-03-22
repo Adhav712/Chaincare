@@ -8,9 +8,9 @@ const cors = require('cors');
 // const patientRoutes = require('./patient-routes');
 // const doctorRoutes = require('./doctor-routes');
 const adminRoutes = require('./controllers/src/admin-routes.js');
-const wallet = require('./controllers/wallet');
-const network = require('./controllers/Utils/app.js');
-const crypto = require('crypto');
+//const wallet = require('./controllers/wallet');
+//const network = require('./controllers/Utils/app.js');
+//const crypto = require('crypto');
 const auth = require('./controllers/Utils/login.js');
 
 // app.use(app.json());
@@ -23,6 +23,10 @@ async function main() {
 
     app.use(cors())
     app.use(express.json())
+    app.options('*', cors());  
+    app.use(express.urlencoded ({
+    extended: false
+    }));
 
     app.post('/login',(req,res)=>{
 
@@ -58,140 +62,65 @@ async function main() {
         }
     })
 
-    //-------------------Admin Routes---------------------
-    app.post('/admin/register', (req,res) => {
-        const {register} = req.body;
-        console.log("Its works post route  ")
-        console.log(register)
+    //-------------------Admin Routes Starts---------------------
+    //app.get()
+    
+    app.post('/admin', (req,res) => {
+       
+    const register = req.body.register;
+    const hospid = req.body.hospid;
+    const AdminID = req.body.DocID_PID_AdminID;
+    
+    console.log("Its works post route  ")
+    console.log(register)
+    console.log(hospid,AdminID);
+    if(register === "doctor"){
+         adminRoutes.createDoctor(req,res,hospid,AdminID)
+        console.log("Doctor is Created")
+    }else if(register === "patient"){
+        adminRoutes.createPatient(req,res,hospid,AdminID)
+        console.log("Patient is Created")
+    }else{
+        console.log("nothing is created")
+    }
 
-        if(register === "doctor"){
-            adminRoutes.createDoctor
-            console.log("Doctor is Created")
-        }else if(register === "patient"){
-            adminRoutes.createPatient
-            console.log("Patient is Created")
-        }else{
-            console.log("nothing is created")
-        }
+
     });
 
-    app.post('/admin/register', (req,res) => {
-        console.log("Its works get route ")
-    })
 
     app.post('/admin/queries', (req,res) => {
+
+    })
+
+    //-------------------  Admin Routes Ends ----------------------
+    //-------------------Doctors Routes Starts----------------------
+
+    app.post('/doctor', (req,res) => {
         
     })
 
-    //-------------------Admin Routes----------------------
+    app.post('/doctors/queries', (req,res) => {
 
-    //-------------------Doctors Routes----------------------
-
-
-    //-------------------Doctors Routes----------------------
-
-    //-------------------Patients Routes----------------------
-
-
-    //-------------------Patients Routes----------------------
-    // app.get('/query',(req,res)=>{
-    //     enrollAdmin.main
-    //     registerUser.main
-    //     query.query
         
-    // });
+    })
+
+    //-------------------Doctors Routes Ends----------------------
+    //-------------------Patients Routes Starts----------------------
+
+    app.post('/doctor',(req,res) =>{
+
+    })
+
+    app.post('/doctor/queries',(req,res) =>{
         
-        
-        
-        // query.query() 
-        // res.setHeader('Content-Type','application/json');
-        // res.send(JSON.stringify(query.query.result));
-        // query.query();
-        // const response = query.query();
-        // res.status(200).send(JSON.parse(response))
-        // const result = JSON.parse(response); 
-        // res.json(`hello:${result}`)
-        // res.end('<h1>Hello</h1>');
-   
+    })
+
+    //-------------------Patients Routes Ends----------------------
 
     app.listen(port, () => {
         console.log("Server is listening")
     })
 }
 
-// app.get('/', (req,res) => { enrollAdmin.main()})
-
-// app.get('/register', (req,res) => {registerUser.main()})
-
-// app.get('/query', (req,res) => { query.main()})
 
 main();
-
-// app.get('/',(req,res) => {
-//     res.send('hey');
-// })
-
-
-;
-
-
-// const { json } = require('express');
-// const http = require('http');
-
-// const server = http.createServer((req,res) => {
-//     const user = {
-//             Name : "Adhavan",
-//             Age : "20"
-//         } 
-//     res.setHeader('Content-Type', 'application/json');
-//     res.end(JSON.stringify(user))
-    
-// })
-// server.listen(3000);
-
-// const express = require("express");
-// const app = express();
-// const port = 3000;
-// const user = {
-//    Name : "Adhavan",
-//    Age : "20"
-// }
-
-// app.post('/',(rep,res) => {
-//    res.setHeader('Content-Type','application/json');
-//    res.end(JSON.stringify(user))
-// })
-
-// app.listen(port, console.log(`Your server listening on localhost ${port}`));
-// app.listen(port, () => { 
-//    console.log(`Your server listening on localhost ${port}`)
-// });
-
-
-// const express = require("express");
-// const app = express()
-// const port = 3000;
-// const user = {
-//     name: "adhavan",
-//     age:20
-// }
-// const user1 = {
-//     name: "adhavan",
-//     age:21
-// }
-// //get
-// app.get('/', (req,res)=> {
-//     // res.setHeader("Content-Type","application/json");
-//     // res.end(JSON.stringify(user))
-//     res.send(user);
-//     console.log("Hey");
-// })
-
-// //post
-// app.post('/', (req,res)=> {
-//     res.send(user1);
-// })
-
-// //
-
-// app.listen(port, console.log(`Your server listening on localhost ${port}`));

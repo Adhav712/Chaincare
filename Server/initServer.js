@@ -37,6 +37,7 @@ async function main(){
     await enrollAdmin.enrollAdminHosp1();
     await enrollAdmin.enrollAdminHosp2();
     await enrollAdmin.enrollAdminHosp3();
+    await enrollAdmin.enrollAdminIns1();
     await initpatientLedger();
     await initdoctorLedger();
 }

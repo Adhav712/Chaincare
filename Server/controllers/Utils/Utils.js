@@ -5,7 +5,7 @@
 
  exports.buildCCPHosp1 = () => {
    // load the common connection configuration file
-   const ccpPath = path.resolve(__dirname, '..', '..','..','first-network',
+   const ccpPath = path.resolve(__dirname, '..', '..','..','test-network',
      'organizations', 'peerOrganizations', 'hosp1apollo.chaincare.com', 'connection-hosp1apollo.json');
    const fileExists = fs.existsSync(ccpPath);
    if (!fileExists) {
@@ -23,7 +23,7 @@
 
  exports.buildCCPHosp2 = () => {
    // load the common connection configuration file
-   const ccpPath = path.resolve(__dirname, '..', '..','..','first-network',
+   const ccpPath = path.resolve(__dirname, '..', '..','..','test-network',
      'organizations', 'peerOrganizations', 'hosp2vijaya.chaincare.com', 'connection-hosp2vijaya.json');
    const fileExists = fs.existsSync(ccpPath);
    if (!fileExists) {
@@ -41,7 +41,7 @@
 
  exports.buildCCPHosp3 = () => {
    // load the common connection configuration file
-   const ccpPath = path.resolve(__dirname, '..', '..', '..','first-network',
+   const ccpPath = path.resolve(__dirname, '..', '..', '..','test-network',
      'organizations', 'peerOrganizations', 'hosp3stanley.chaincare.com', 'connection-hosp3stanley.json');
    const fileExists = fs.existsSync(ccpPath);
    if (!fileExists) {
@@ -55,6 +55,23 @@
    console.log(`Loaded the network configuration located at ${ccpPath}`);
    return ccp;
  };
+
+ exports.buildCCPIns1 = () => {
+  // load the common connection configuration file
+  const ccpPath = path.resolve(__dirname, '..', '..', '..','test-network',
+    'organizations', 'peerOrganizations', 'Ins1starhealth.chaincare.com', 'connection-Ins1starhealth.json');
+  const fileExists = fs.existsSync(ccpPath);
+  if (!fileExists) {
+    throw new Error(`no such file or directory: ${ccpPath}`);
+  }
+  const contents = fs.readFileSync(ccpPath, 'utf8');
+
+  // build a JSON object from the file contents
+  const ccp = JSON.parse(contents);
+
+  console.log(`Loaded the network configuration located at ${ccpPath}`);
+  return ccp;
+};
  
 
  exports.buildWallet = async (Wallets, walletPath) => {
