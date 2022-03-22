@@ -196,9 +196,10 @@
    try {
      if (isQuery === true) {
        const response = await networkObj.contract.evaluateTransaction(func, args);
-       console.log(response);
+       const result_toString = response.toString()
+       console.log(`Transaction has been evaluated, result is: ${result_toString}`);
        await networkObj.gateway.disconnect();
-       return response;
+       return result_toString;
      } else {
        if (args) {
          args = JSON.parse(args[0]);

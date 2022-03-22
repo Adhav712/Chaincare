@@ -10,50 +10,65 @@ const crypto = require('crypto');
 let caClient
 let isLoggedIn
 
-exports.doctorLogin = async (hospid,password,DocID_PID_AdminID,emailId) => {
+exports.doctorLogin = async (res,req,hospid,AdminID,DocID,emailId,password) => {
     
-    const networkobj = network.connectToNetwork(hospid,DocID_PID_AdminID);
-    const auth_check_res = network.invoke(networkobj,true,'Admin_readDoctor',DocID_PID_AdminID);
-    const res = auth_check_res.toString();
-    const mailId = res.emailID[0];
-    const en_pass = res.password[0];
-    const pass = crypto.createHash('sha256').update(password).digest('hex');  
-    if(pass === en_pass && emailId === mailId){
-        return (isLoggedIn === true);
-    }else{
-        return (isLoggedIn === false);
-    }
-}
+    const networkObj =  await network.connectToNetwork(hospid,AdminID);
+    const auth_check_res =  await network.invoke(networkObj,true,'Admin_readDoctor',DocID);
 
-exports.patientLogin = async (hospid,password,DocID_PID_AdminID,emailId) => {
-    
-    const networkobj = network.connectToNetwork(hospid,DocID_PID_AdminID);
-    const auth_check_res = network.invoke(networkobj,true,'Admin_readPatient',DocID_PID_AdminID);
-    const res = auth_check_res.toString();
-    const mailId = res.emailID;
-    const en_pass = res.password;
-    const pass = crypto.createHash('sha256').update(password).digest('hex');  
-    if(pass === en_pass && emailId === mailId){
-        return (isLoggedIn === true);
-    }else{
-        return (isLoggedIn === false);
-    }
-}
-
-exports.adminLogin = async (hospid,password,DocID_PID_AdminID,emailId,res) => {
-    const networkobj = network.connectToNetwork(hospid,DocID_PID_AdminID);
-    const auth_check_res = network.invoke(networkobj,true,'Admin_readOwnDetails',DocID_PID_AdminID);
-    const result = auth_check_res.toString();
-    const mailId = result.emailID;
+    //const result =  auth_check_res.toString();
+    const result =  JSON.parse(auth_check_res);
+    const mailId = result.emailId;
     const en_pass = result.password;
-    const pass = crypto.createHash('sha256').update(password).digest('hex');  
-    if(pass === en_pass && emailId === mailId){
-        res.status(200).send("authenticated");
-        return (isLoggedIn === true);
-        
+    const pass = crypto.createHash('sha256').update(password).digest('hex');
+    if(pass == en_pass && emailId == mailId){
+        console.log("Authenticated");
+        await res.status(200).send("authenticated");
+        return true
     }else{
-        res.status(500).send("Check your credentials or Internal server error")
-        return (isLoggedIn === false);
+        console.log("Declined");
+        await res.status(500).send("Check your credentials or Internal server error")
+        return false
+    }
+}
+
+exports.patientLogin = async (res,req,hospid,AdminID,PID,emailId,password) => {
+    
+    const networkObj =  await network.connectToNetwork(hospid,AdminID);
+    const auth_check_res =  await network.invoke(networkObj,true,'Admin_readPatient',PID);
+
+    //const result =  auth_check_res.toString();
+    const result =  JSON.parse(auth_check_res);
+    const mailId = result.emailId;
+    const en_pass = result.password;
+    const pass = crypto.createHash('sha256').update(password).digest('hex');
+    if(pass == en_pass && emailId == mailId){
+        console.log("Authenticated");
+        await res.status(200).send("authenticated");
+        return true
+    }else{
+        console.log("Declined");
+        await res.status(500).send("Check your credentials or Internal server error")
+        return false
+    }
+}
+
+exports.adminLogin = async (res,req,hospid,AdminID,adminid,emailId,password) => {
+    const networkObj =  await network.connectToNetwork(hospid,AdminID);
+    const auth_check_res =  await network.invoke(networkObj,true,'readAdminDetails',adminid);
+
+    //const result =  auth_check_res.toString();
+    const result =  JSON.parse(auth_check_res);
+    const mailId = result.emailId;
+    const en_pass = result.password;
+    const pass = crypto.createHash('sha256').update(password).digest('hex');
+    if(pass == en_pass && emailId == mailId){
+        console.log("Authenticated");
+        await res.status(200).send("authenticated");
+        return true
+    }else{
+        console.log("Declined");
+        await res.status(500).send("Check your credentials or Internal server error")
+        return false
     }
     
 

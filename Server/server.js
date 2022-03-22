@@ -30,32 +30,18 @@ async function main() {
 
     app.post('/login',(req,res)=>{
 
-        const{login_role,choose_org,hospid,DocID_PID_AdminID,emailId,password} = req.body
+        const{login_role,choose_org,hospid,AdminID,PID,DocID,adminid,emailId,password} = req.body
+        const isLoggedIn=false;
         if(choose_org === 'hospital')
             switch (login_role){
                 case 'admin':
-                    auth.adminLogin(hospid,password,DocID_PID_AdminID,emailId);
-                    if(isLoggedIn == true){
-                        res.status(200).send("authenticated");
-                    }else{
-                        res.status(500).send("Check your credentials or Internal server error")
-                    }
+                    auth.adminLogin(res,res,hospid,AdminID,adminid,emailId,password);
                     break;
                 case 'doctor':
-                        auth.doctorLogin(hospid,password,DocID_PID_AdminID,emailId);
-                        if(isLoggedIn == true){
-                            res.status(200).send("authenticated");
-                        }else{
-                            res.status(500).send("Check your credentials or Internal server error")
-                        }
+                        auth.doctorLogin(res,res,hospid,AdminID,DocID,emailId,password);
                     break;   
                 case 'patient':
-                        auth.patientLogin(hospid,password,DocID_PID_AdminID,emailId);
-                        if(isLoggedIn == true){
-                            res.status(200).send("authenticated");
-                        }else{
-                            res.status(500).send("Check your credentials or Internal server error")
-                        }
+                      auth.patientLogin(res,res,hospid,AdminID,PID,emailId,password);
                     break
         }else{
             //Insurance login
