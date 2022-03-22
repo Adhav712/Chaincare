@@ -30,8 +30,8 @@ exports.patientLogin = async (hospid,password,DocID_PID_AdminID,emailId) => {
     const networkobj = network.connectToNetwork(hospid,DocID_PID_AdminID);
     const auth_check_res = network.invoke(networkobj,true,'Admin_readPatient',DocID_PID_AdminID);
     const res = auth_check_res.toString();
-    const mailId = res.emailID[0];
-    const en_pass = res.password[0];
+    const mailId = res.emailID;
+    const en_pass = res.password;
     const pass = crypto.createHash('sha256').update(password).digest('hex');  
     if(pass === en_pass && emailId === mailId){
         return (isLoggedIn === true);

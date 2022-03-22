@@ -32,12 +32,10 @@ exports.createPatient = async (req, res, hospid, AdminID) => {
 
         if (registerUserRes.error) {
           await networkObj.contract.submitTransaction('Admin_deletePatient', patientId);
-
-
           res.send(registerUserRes.error);
         }
 
-  res.status(201).send(getMessage(false, 'Successfully registered Patient.', req.body.patientId, req.body.password));
+  res.status(201).send('Successfully registered Patient.', req.body.patientId, req.body.password);
 };
 
 

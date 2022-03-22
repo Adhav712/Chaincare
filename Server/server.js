@@ -78,7 +78,7 @@ async function main() {
          adminRoutes.createDoctor(req,res,hospid,AdminID)
         console.log("Doctor is Created")
     }else if(register === "patient"){
-        adminRoutes.createPatient(req,res,hospid,AdminID)
+         adminRoutes.createPatient(req,res,hospid,AdminID)
         console.log("Patient is Created")
     }else{
         console.log("nothing is created")
