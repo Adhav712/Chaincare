@@ -28,7 +28,7 @@ async function main() {
     extended: false
     }));
 
-    app.post('/login',(req,res)=>{
+    app.post('/login',async (req,res) => {
 
         const{login_role,choose_org,hospid,AdminID,PID,DocID,adminid,emailId,password} = req.body
         let isLoggedIn=false;
@@ -37,10 +37,11 @@ async function main() {
                 case 'admin':
                     const authentication_admin = auth.adminLogin(res,res,hospid,AdminID,adminid,emailId,password);
                     isLoggedIn = authentication_admin;
+            
                     break;
                 case 'doctor':
                     const authentication_doctor = auth.doctorLogin(res,res,hospid,AdminID,DocID,emailId,password);
-                    isLoggedIn = authentication_doctor
+                    (isLoggedIn = authentication_doctor);
                     break;   
                 case 'patient':
                     const authentication_patient = auth.patientLogin(res,res,hospid,AdminID,PID,emailId,password);
@@ -49,6 +50,7 @@ async function main() {
         }else{
             //Insurance login
         }
+        
         return isLoggedIn;
     })
 
@@ -75,15 +77,15 @@ async function main() {
     }
     });
 
-    app.post('/admin',(res,rep) =>{
+    app.post('/admin',(req,res) =>{
         const deleteRecord = req.body.delete;
         const hospid = req.body.hospid;
         const AdminID = req.body.AdminID;
 
         if(deleteRecord == "deleteDoctor"){
-            adminRoutes.deleteDoctor(res,rep ,hospid, AdminID);
+            adminRoutes.deleteDoctor(req,res ,hospid, AdminID);
         }else if(deleteRecord == "deletePatient"){
-            adminRoutes.deletePatient(res,rep ,hospid, AdminID);
+            adminRoutes.deletePatient(req,res ,hospid, AdminID);
         }else{
             res.status(300).send("Wrong input");
         }

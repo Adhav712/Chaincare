@@ -5,8 +5,8 @@
 /channel-artifacts/*.json
 /org3-artifacts/crypto-config/*
 organizations/fabric-ca/ordererOrg/*
-organizations/fabric-ca/hosp1apollo/*
-organizations/fabric-ca/hosp2vijaya/*
+organizations/fabric-ca/hosp1apollo/fabric-ca-server-config.yaml
+organizations/fabric-ca/hosp2vijaya/fabric-ca-server-config.yaml
 organizations/ordererOrganizations/*
 organizations/peerOrganizations/*
 system-genesis-block/*

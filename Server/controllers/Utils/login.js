@@ -8,7 +8,7 @@ const crypto = require('crypto');
 //const exp = require('constants');
 
 let caClient
-let isLoggedIn
+let isLoggedIn;
 
 exports.doctorLogin = async (res,req,hospid,AdminID,DocID,emailId,password) => {
     
@@ -20,15 +20,16 @@ exports.doctorLogin = async (res,req,hospid,AdminID,DocID,emailId,password) => {
     const mailId = result.emailId;
     const en_pass = result.password;
     const pass = crypto.createHash('sha256').update(password).digest('hex');
-    const isLoggedin = false;
+    const isLoggedIn = false;
     if(pass == en_pass && emailId == mailId){
         console.log("Authenticated");
         await res.status(200).send("authenticated");
-        return (isLoggedin = true);
+        return (isLoggedIn == true);
+        
     }else{
         console.log("Declined");
         await res.status(500).send("Check your credentials or Internal server error")
-        return (isLoggedin = false);
+        return (isLoggedIn == false);
     }
 }
 

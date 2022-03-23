@@ -1,3 +1,4 @@
+const { json } = require("express");
 const network = require("../Utils/network.js");
 
 //------------------------Admin Submit Transcations-----------------------
@@ -69,8 +70,11 @@ exports.createDoctor = async (req, res, hospid, AdminID) => {
 };
 
 exports.deletePatient = async(req,res,hospid,AdminID) => {
-  const networkObj = await network.connectToNetwork(hospid,AdminID, hospid, AdminID);
+  const networkObj = await network.connectToNetwork(hospid, AdminID);
+  
   const patientId = req.body.patientId;
+  const PID = JSON.stringify(patientId);
+  console.log("77 PID:",PID);
 
   const deletePatientRes  = await networkObj.contract.submitTransaction('Admin_deletePatient',patientId);
   await networkObj.gateway.disconnect();  
@@ -78,11 +82,12 @@ exports.deletePatient = async(req,res,hospid,AdminID) => {
   if (deletePatientRes.error) {
     res.status(400).send(deletePatientRes.error);
   }
-  res.status(201).send('Successfully Deleted PatientID:',patientId);
+  res.status(200).send(`Successfully Deleted PatientID:${PID}`);
 }
 
 exports.deleteDoctor = async(req,res,hospid,AdminID) => {
   const networkObj = await network.connectToNetwork(hospid,AdminID);
+  
   const DoctorID = req.body.DocID;
 
   const deleteDoctorRes  = await networkObj.contract.submitTransaction('Admin_deleteDoctor',DoctorID);
@@ -91,7 +96,7 @@ exports.deleteDoctor = async(req,res,hospid,AdminID) => {
   if (deleteDoctorRes.error) {
     res.status(400).send(response.error);
   }
-  res.status(201).send('Successfully Deleted DoctorID:',DoctorID);
+  res.status(201).send(`Successfully Deleted DoctorID:${DoctorID}`);
 
 }
 
