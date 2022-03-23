@@ -31,13 +31,6 @@ external-chaincode/
 /ledgers-backup
 /channel-artifacts/*.json
 /org3-artifacts/crypto-config/*
-organizations/fabric-ca/ordererOrg/*
-organizations/fabric-ca/hosp1apollo/fabric-ca-server-config.yaml
-organizations/fabric-ca/hosp2vijaya/fabric-ca-server-config.yaml
-addOrg3/fabric-ca/hosp3stanley/fabric-ca-server-config.yaml
-addOrg3/fabric-ca/org3/fabric-ca-server-config.yaml
-addInsurance/fabric-ca/org3/fabric-ca-server-config.yaml
-addInsurance/fabric-ca/Ins1starhealth/fabric-ca-server-config.yaml
 organizations/ordererOrganizations/*
 organizations/peerOrganizations/*
 system-genesis-block/*
