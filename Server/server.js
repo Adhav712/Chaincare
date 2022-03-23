@@ -31,31 +31,35 @@ async function main() {
     app.post('/login',(req,res)=>{
 
         const{login_role,choose_org,hospid,AdminID,PID,DocID,adminid,emailId,password} = req.body
-        const isLoggedIn=false;
+        let isLoggedIn=false;
         if(choose_org === 'hospital')
             switch (login_role){
                 case 'admin':
-                    auth.adminLogin(res,res,hospid,AdminID,adminid,emailId,password);
+                    const authentication_admin = auth.adminLogin(res,res,hospid,AdminID,adminid,emailId,password);
+                    isLoggedIn = authentication_admin;
                     break;
                 case 'doctor':
-                        auth.doctorLogin(res,res,hospid,AdminID,DocID,emailId,password);
+                    const authentication_doctor = auth.doctorLogin(res,res,hospid,AdminID,DocID,emailId,password);
+                    isLoggedIn = authentication_doctor
                     break;   
                 case 'patient':
-                      auth.patientLogin(res,res,hospid,AdminID,PID,emailId,password);
+                    const authentication_patient = auth.patientLogin(res,res,hospid,AdminID,PID,emailId,password);
+                    isLoggedIn = authentication_patient;
                     break
         }else{
             //Insurance login
         }
+        return isLoggedIn;
     })
 
     //-------------------Admin Routes Starts---------------------
     //app.get()
     
-    app.post('/admin', (req,res) => {
+    app.post('/admin/register', (req,res) => {
        
     const register = req.body.register;
     const hospid = req.body.hospid;
-    const AdminID = req.body.DocID_PID_AdminID;
+    const AdminID = req.body.AdminID;
     
     console.log("Its works post route  ")
     console.log(register)
@@ -63,19 +67,34 @@ async function main() {
     if(register === "doctor"){
          adminRoutes.createDoctor(req,res,hospid,AdminID)
         console.log("Doctor is Created")
-    }else if(register === "patient"){
+     }else if(register === "patient"){
          adminRoutes.createPatient(req,res,hospid,AdminID)
         console.log("Patient is Created")
-    }else{
+     }else{
         console.log("nothing is created")
     }
-
-
     });
+
+    app.post('/admin',(res,rep) =>{
+        const deleteRecord = req.body.delete;
+        const hospid = req.body.hospid;
+        const AdminID = req.body.AdminID;
+
+        if(deleteRecord == "deleteDoctor"){
+            adminRoutes.deleteDoctor(res,rep ,hospid, AdminID);
+        }else if(deleteRecord == "deletePatient"){
+            adminRoutes.deletePatient(res,rep ,hospid, AdminID);
+        }else{
+            res.status(300).send("Wrong input");
+        }
+    })
 
 
     app.post('/admin/queries', (req,res) => {
-
+        const hospid = req.body.hospid;
+        const AdminID = req.body.AdminID;
+        const result = adminRoutes.Admin_query(req,res,hospid,AdminID)
+        console.log("Queried result:",result);
     })
 
     //-------------------  Admin Routes Ends ----------------------
@@ -86,8 +105,7 @@ async function main() {
     })
 
     app.post('/doctors/queries', (req,res) => {
-
-        
+  
     })
 
     //-------------------Doctors Routes Ends----------------------
