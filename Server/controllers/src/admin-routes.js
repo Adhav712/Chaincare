@@ -2,10 +2,10 @@ const { json } = require("express");
 const network = require("../Utils/network.js");
 
 //------------------------Admin Submit Transcations-----------------------
-exports.createPatient = async (req, res, hospid, AdminID) => {
+exports.createPatient = async (req, res, org, hospid, AdminID) => {
 
         // Set up and connect to Fabric Gateway using the username in header
-        const networkObj = await network.connectToNetwork(hospid,AdminID);
+        const networkObj = await network.connectToNetwork(org,hospid,AdminID);
 
         
         const patientId  = req.body.patientId;
@@ -36,10 +36,10 @@ exports.createPatient = async (req, res, hospid, AdminID) => {
   res.status(201).send('Successfully registered Patient.', req.body.patientId, req.body.password);
 };
 
-exports.createDoctor = async (req, res, hospid, AdminID) => {
+exports.createDoctor = async (req, res, org, hospid, AdminID) => {
 
 
-    const networkObj = await network.connectToNetwork(hospid,AdminID);
+    const networkObj = await network.connectToNetwork(org,hospid,AdminID);
 
     const new_DocID = req.body.new_DocID;
     const emailId= req.body.emailId;
@@ -69,8 +69,8 @@ exports.createDoctor = async (req, res, hospid, AdminID) => {
 
 };
 
-exports.deletePatient = async(req,res,hospid,AdminID) => {
-  const networkObj = await network.connectToNetwork(hospid, AdminID);
+exports.deletePatient = async(req,res,org,hospid,AdminID) => {
+  const networkObj = await network.connectToNetwork(org,hospid, AdminID);
   
   const patientId = req.body.patientId;
   const PID = JSON.stringify(patientId);
@@ -85,8 +85,8 @@ exports.deletePatient = async(req,res,hospid,AdminID) => {
   res.status(200).send(`Successfully Deleted PatientID:${PID}`);
 }
 
-exports.deleteDoctor = async(req,res,hospid,AdminID) => {
-  const networkObj = await network.connectToNetwork(hospid,AdminID);
+exports.deleteDoctor = async(req,res,org,hospid,AdminID) => {
+  const networkObj = await network.connectToNetwork(org,hospid,AdminID);
   
   const DoctorID = req.body.DocID;
 
@@ -102,9 +102,9 @@ exports.deleteDoctor = async(req,res,hospid,AdminID) => {
 
 //------------------------Admin Query Transcations-----------------------
 
-exports.Admin_query = async(req,res,hospid,AdminID) => {
+exports.Admin_query = async(req,res,org,hospid,AdminID) => {
     const {patientId,doctorId,firstName,lastName,queryName} = req.body;
-    const networkObj = await network.connectToNetwork(hospid,AdminID);
+    const networkObj = await network.connectToNetwork(org,hospid,AdminID);
 
     if(queryName == "Admin_readPatient"){
       const response = await networkObj.contract.evaluateTransaction(queryName, patientId);
