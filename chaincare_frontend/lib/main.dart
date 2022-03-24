@@ -1,4 +1,4 @@
-import 'package:chaincare_frontend/pages/Splash_screen.dart';
+import 'package:chaincare_frontend/pages/splash_screen.dart';
 import 'package:chaincare_frontend/pages/details/patient_details.dart';
 import 'package:chaincare_frontend/pages/login/admin_login.dart';
 import 'package:chaincare_frontend/pages/login/doctor_login.dart';

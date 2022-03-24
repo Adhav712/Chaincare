@@ -1,4 +1,3 @@
-import 'package:chaincare_frontend/util/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
@@ -40,7 +39,7 @@ class _SplashScreencState extends State<SplashScreenc> {
                     ),
                     ),
               ),
-              Image.asset(kLogo , width: 200, height: 200,),
+              Image.asset("assets/blockchain.png" , width: 200, height: 200,),
             ],
           ),
         ),

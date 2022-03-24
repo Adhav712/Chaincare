@@ -67,7 +67,7 @@ class Patient {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['_id'] = sId;
     data['_rev'] = sRev;
     data['address'] = address;
