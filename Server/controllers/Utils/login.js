@@ -10,9 +10,10 @@ const crypto = require('crypto');
 let caClient
 let isLoggedIn;
 
-exports.doctorLogin = async (res,req,hospid,AdminID,DocID,emailId,password) => {
-    
-    const networkObj =  await network.connectToNetwork(hospid,AdminID);
+
+exports.doctorLogin = async (res,req,choose_org,hospid,AdminID,DocID,emailId,password) => {
+    const networkObj =  await network.connectToNetwork(req,res,choose_org,hospid,AdminID);    
+
     const auth_check_res =  await network.invoke(networkObj,true,'Admin_readDoctor',DocID);
 
     //const result =  auth_check_res.toString();
@@ -33,9 +34,9 @@ exports.doctorLogin = async (res,req,hospid,AdminID,DocID,emailId,password) => {
     }
 }
 
-exports.patientLogin = async (res,req,hospid,AdminID,PID,emailId,password) => {
+exports.patientLogin = async (res,req,choose_org,hospid,AdminID,PID,emailId,password) => {
     
-    const networkObj =  await network.connectToNetwork(hospid,AdminID);
+    const networkObj =  await network.connectToNetwork(req,res,choose_org,hospid,AdminID);    
     const auth_check_res =  await network.invoke(networkObj,true,'Admin_readPatient',PID);
 
     //const result =  auth_check_res.toString();
@@ -54,8 +55,8 @@ exports.patientLogin = async (res,req,hospid,AdminID,PID,emailId,password) => {
     }
 }
 
-exports.adminLogin = async (res,req,hospid,AdminID,adminid,emailId,password) => {
-    const networkObj =  await network.connectToNetwork(hospid,AdminID);
+exports.adminLogin = async (res,req,choose_org,hospid,AdminID,adminid,emailId,password) => {
+    const networkObj =  await network.connectToNetwork(req,res,choose_org,hospid,AdminID);    
     const auth_check_res =  await network.invoke(networkObj,true,'readAdminDetails',adminid);
 
     //const result =  auth_check_res.toString();
@@ -73,5 +74,25 @@ exports.adminLogin = async (res,req,hospid,AdminID,adminid,emailId,password) => 
         return false
     }
     
+}
 
+exports.InsuranceAdminLogin = async (res,req,choose_org,adminid,Insurance_adminid,emailId,password) => {
+    const networkObj =   await network.connectToNetwork(req,res,choose_org,'',Insurance_adminid);    
+    const auth_check_res =  await network.invoke(networkObj,true,'readAdminDetails',adminid);
+
+    //const result =  auth_check_res.toString();
+    const result =  JSON.parse(auth_check_res);
+    const mailId = result.emailId;
+    const en_pass = result.password;
+    const pass = crypto.createHash('sha256').update(password).digest('hex');
+    if(pass == en_pass && emailId == mailId){
+        console.log("Authenticated");
+        await res.status(200).send("authenticated");
+        return true
+    }else{
+        console.log("Declined");
+        await res.status(500).send("Check your credentials or Internal server error")
+        return false
+    }
+    
 }

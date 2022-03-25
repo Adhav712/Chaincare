@@ -33,25 +33,27 @@ async function main() {
 
     app.post('/login',async (req,res) => {
 
-        const{login_role,choose_org,hospid,AdminID,PID,DocID,adminid,emailId,password} = req.body
+        const{login_role,choose_org,hospid,AdminID,Insurance_adminid,PID,DocID,adminid,emailId,password} = req.body
         let isLoggedIn=false;
         if(choose_org === 'hospital')
             switch (login_role){
                 case 'admin':
-                    const authentication_admin = auth.adminLogin(res,res,hospid,AdminID,adminid,emailId,password);
+                    const authentication_admin = auth.adminLogin(res,res,choose_org,hospid,AdminID,adminid,emailId,password);
                     isLoggedIn = authentication_admin;
             
                     break;
                 case 'doctor':
-                    const authentication_doctor = auth.doctorLogin(res,res,hospid,AdminID,DocID,emailId,password);
+                    const authentication_doctor = auth.doctorLogin(res,res,choose_org,hospid,AdminID,DocID,emailId,password);
                     (isLoggedIn = authentication_doctor);
                     break;   
                 case 'patient':
-                    const authentication_patient = auth.patientLogin(res,res,hospid,AdminID,PID,emailId,password);
+                    const authentication_patient = auth.patientLogin(res,res,choose_org,hospid,AdminID,PID,emailId,password);
                     isLoggedIn = authentication_patient;
                     break
         }else{
             //Insurance login
+            const authentication_Insurance_admin = auth.InsuranceAdminLogin(req,res,choose_org,adminid,Insurance_adminid,emailId,password);
+            isLoggedIn = authentication_Insurance_admin;
         }
         
         return isLoggedIn;
@@ -109,19 +111,11 @@ async function main() {
     //-------------------Doctors Routes Starts----------------------
 
     app.post('/doctor', (req,res) => {
-        const choose_fun = req.body.choose_fun;
         const org = req.body.org;
         const hospid = req.body.hospid;
-        const AdminID = req.body.AdminID;
-        
-        if(choose_fun == "doctor_update_details"){
-            doctorRoutes.doctor_update_details(req,res,org,hospid,AdminID);
-        }else if(choose_fun == "doctor_update_patient_details"){
-            doctorRoutes.doctor_update_patient_details(req,res,org,hospid,AdminID);
-        }else{
-            res.status(300).send("Function not triggered properley")
-        }
-
+        const DocID = req.body.DocID;
+        const result = doctorRoutes.Doctor_submit_transcations(req,res,org,hospid,DocID);
+        console.log("Submitted result:",result);
     })
 
     app.post('/doctors/queries', (req,res) => {
@@ -159,9 +153,9 @@ async function main() {
     
     app.post('/Insurance/queries',(req,res) =>{
         const org = req.body.org;
-        const hospid = req.body.hospid;
+        // const hospid = req.body.hospid;
         const AdminID = req.body.AdminID;
-        const result = insuranceRoutes.Insurance_query(req,res,org,hospid,AdminID)
+        const result = insuranceRoutes.Insurance_query(req,res,org,AdminID)
         console.log("Queried result:",result);
 
     })

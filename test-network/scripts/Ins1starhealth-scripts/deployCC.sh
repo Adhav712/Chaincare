@@ -105,7 +105,7 @@ export CC_PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/,
 echo ${CC_PACKAGE_ID} 
 
 echo 4 ----aprroving chaincode----
-peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" --channelID ${CHANNEL_NAME} --name ${CC_NAME} --version ${CC_VERSION} --package-id chaincare_1:6124b1e7a04c83beb74e1be575bf5dce31fe2a1c95cb24d505a8a1ab8d854a98 --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
+peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" --channelID ${CHANNEL_NAME} --name ${CC_NAME} --version ${CC_VERSION} --package-id chaincare_1:02dde13f7bf1360a0e6e7c1585cc7176fc888d736e976ab9d29bc722d0389e2e --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
 
 
 echo 5 ----chaincode querycommitted----
@@ -113,7 +113,7 @@ peer lifecycle chaincode querycommitted --channelID ${CHANNEL_NAME} --name ${CC_
 
 
 echo 6 ----chaincode invoke-----
-peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" -C ${CHANNEL_NAME} -n ${CC_NAME} --peerAddresses localhost:9051 --tlsRootCertFiles ${PWD}/../../organizations/peerOrganizations/hosp2vijaya.chaincare.com/peers/peer0.hosp2vijaya.chaincare.com/tls/ca.crt --peerAddresses localhost:12051 --tlsRootCertFiles ${CORE_PEER_TLS_ROOTCERT_FILE} -c '{"function":"Admin_createPatient","Args":["PID6", "Aakash", "s", "director", "20" , "9185218268"]}'
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" -C ${CHANNEL_NAME} -n ${CC_NAME} --peerAddresses localhost:9051 --tlsRootCertFiles ${PWD}/../../organizations/peerOrganizations/hosp2vijaya.chaincare.com/peers/peer0.hosp2vijaya.chaincare.com/tls/ca.crt --peerAddresses localhost:12051 --tlsRootCertFiles ${CORE_PEER_TLS_ROOTCERT_FILE} -c '{"function":"Admin_createPatient","Args":["PID6","akashs@gmail.com","Aakash", "s", "director", "20" , "9185218268"]}'
 
 
 echo 7 ----chaincode query----

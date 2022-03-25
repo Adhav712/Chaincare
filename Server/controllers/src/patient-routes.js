@@ -2,7 +2,7 @@ const network = require("../Utils/network.js");
 
 //--------------------------Patient Submit Transcations------------------------------
 exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
-    const networkObj = await network.connectToNetwork(org,hospid,AdminID);
+    const networkObj = await network.connectToNetwork(req,res,org,hospid,AdminID);
     const{fun_name,patientId, newFirstname,newLastName,newPassword,newAge,updatedBy,newPhoneNumber,newEmergPhoneNumber,newAddress,doctorId}=req.body;
 
     if(fun_name == "Patient_updatePatient"){
@@ -55,7 +55,7 @@ exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
 //--------------------------------Patient Query transcations -----------------------------
 
 exports.Patient_query = async(req,res,org,hospid,AdminID) => {
-  const networkObj = await network.connectToNetwork(org,hospid,AdminID);
+  const networkObj = await network.connectToNetwork(req,res,org,hospid,AdminID);
     const {queryName,patientId} = req.body;
     
     if(queryName == "Patient_readPatient"){

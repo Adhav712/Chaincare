@@ -15,7 +15,7 @@
  
  
 
- exports.connectToNetwork = async function(org,hospid,DocID_PID_AdminID) {
+ exports.connectToNetwork = async function(req,res,org,hospid,DocID_PID_AdminID) {
    const gateway = new Gateway();
    const hospitalId = parseInt(hospid);
     if(org == "hospital"){
@@ -231,9 +231,10 @@
           gateway: gateway,
         };
         console.log('Succesfully connected to the network.');
+        return networkObj;
 
     }else{
-      res.stats(400).send("Unable to connect to network");
+      res.status(400).send("Unable to connect to network");
     }
       
     
@@ -298,7 +299,7 @@
      } else if (hospitalId === 3) {
        const ccp = buildCCPHosp3();
        const caClient = buildCAClient(FabricCAServices, ccp, 'ca.hosp3stanley.chaincare.com');
-       await registerAndEnrollUser(caClient, wallet, mspOrg3, userId, 'hosp3vijayadmin', attributes);
+       await registerAndEnrollUser(caClient, wallet, mspOrg3, userId, 'hosp3vijayaadmin', attributes);
      }
      console.log(`Successfully registered user: + ${userId}`);
      const response = 'Successfully registered user: '+ userId;

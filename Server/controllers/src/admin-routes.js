@@ -5,7 +5,7 @@ const network = require("../Utils/network.js");
 exports.createPatient = async (req, res, org, hospid, AdminID) => {
 
         // Set up and connect to Fabric Gateway using the username in header
-        const networkObj = await network.connectToNetwork(org,hospid,AdminID);
+        const networkObj = await network.connectToNetwork(req,res,org,hospid,AdminID);
 
         
         const patientId  = req.body.patientId;
@@ -39,7 +39,7 @@ exports.createPatient = async (req, res, org, hospid, AdminID) => {
 exports.createDoctor = async (req, res, org, hospid, AdminID) => {
 
 
-    const networkObj = await network.connectToNetwork(org,hospid,AdminID);
+    const networkObj = await network.connectToNetwork(req,res,org,hospid,AdminID);
 
     const new_DocID = req.body.new_DocID;
     const emailId= req.body.emailId;
@@ -70,7 +70,7 @@ exports.createDoctor = async (req, res, org, hospid, AdminID) => {
 };
 
 exports.deletePatient = async(req,res,org,hospid,AdminID) => {
-  const networkObj = await network.connectToNetwork(org,hospid, AdminID);
+  const networkObj = await network.connectToNetwork(req,res,org,hospid, AdminID);
   
   const patientId = req.body.patientId;
   const PID = JSON.stringify(patientId);
@@ -86,7 +86,7 @@ exports.deletePatient = async(req,res,org,hospid,AdminID) => {
 }
 
 exports.deleteDoctor = async(req,res,org,hospid,AdminID) => {
-  const networkObj = await network.connectToNetwork(org,hospid,AdminID);
+  const networkObj = await network.connectToNetwork(req,res,org,hospid,AdminID);
   
   const DoctorID = req.body.DocID;
 
@@ -104,7 +104,7 @@ exports.deleteDoctor = async(req,res,org,hospid,AdminID) => {
 
 exports.Admin_query = async(req,res,org,hospid,AdminID) => {
     const {patientId,doctorId,firstName,lastName,queryName} = req.body;
-    const networkObj = await network.connectToNetwork(org,hospid,AdminID);
+    const networkObj = await network.connectToNetwork(req,res,org,hospid,AdminID);
 
     if(queryName == "Admin_readPatient"){
       const response = await networkObj.contract.evaluateTransaction(queryName, patientId);

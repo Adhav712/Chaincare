@@ -14,11 +14,11 @@ const path = require('path');
 async function main() {
     try {
         // load the network configuration
-        const ccpPath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'hosp1apollo.chaincare.com', 'connection-hosp1apollo.json');
+        const ccpPath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'Ins1starhealth.chaincare.com', 'connection-Ins1starhealth.json');
         const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
         // Create a new CA client for interacting with the CA.
-        const caURL = ccp.certificateAuthorities['ca.hosp1apollo.chaincare.com'].url;
+        const caURL = ccp.certificateAuthorities['ca.Ins1starhealth.chaincare.com'].url;
         const ca = new FabricCAServices(caURL);
 
         // Create a new file system based wallet for managing identities.
@@ -34,7 +34,7 @@ async function main() {
         }
 
         // Check to see if we've already enrolled the admin user.
-        const adminIdentity = await wallet.get('admin');
+        const adminIdentity = await wallet.get('Ins1starhealthadmin');
         if (!adminIdentity) {
             console.log('An identity for the admin user "admin" does not exist in the wallet');
             console.log('Run the enrollAdmin.js application before retrying');
@@ -43,7 +43,7 @@ async function main() {
 
         // build a user object for authenticating with the CA
         const provider = wallet.getProviderRegistry().getProvider(adminIdentity.type);
-        const adminUser = await provider.getUserContext(adminIdentity, 'admin');
+        const adminUser = await provider.getUserContext(adminIdentity, 'Ins1starhealthadmin');
 
         // Register the user, enroll the user, and import the new identity into the wallet.
         const secret = await ca.register({
@@ -60,7 +60,7 @@ async function main() {
                 certificate: enrollment.certificate,
                 privateKey: enrollment.key.toBytes(),
             },
-            mspId: 'hosp1apolloMSP',
+            mspId: 'Ins1starhealthMSP',
             type: 'X.509',
         };
         await wallet.put('appUser', x509Identity);
