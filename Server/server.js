@@ -11,6 +11,7 @@ const adminRoutes = require('./controllers/src/admin-routes.js');
 const doctorRoutes = require('./controllers/src/doctor-routes.js');
 const patientRoutes = require('./controllers/src/patient-routes');
 const insuranceRoutes = require('./controllers/src/insurance-routes');
+const privateRoutes = require('./controllers/src/private-routes');
 //const wallet = require('./controllers/wallet');
 //const network = require('./controllers/Utils/app.js');
 //const crypto = require('crypto');
@@ -105,6 +106,11 @@ async function main() {
         const AdminID = req.body.AdminID;
         const result = adminRoutes.Admin_query(req,res,org,hospid,AdminID)
         console.log("Queried result:",result);
+    })
+
+    app.post('/admin/private_data', (req,res) =>{
+        const result = privateRoutes.Private_Submit_transcations(req,res)
+        console.log("Submitted result:",result);
     })
 
     //-------------------  Admin Routes Ends ----------------------

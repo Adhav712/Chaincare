@@ -1,7 +1,7 @@
 [
     {
       "name": "billCollection",
-      "policy": "OR('Org1MSP.member', 'Org2MSP.member')",
+      "policy": "OR('hosp1apolloMSP.member', 'Ins1starhealthMSP.member')",
       "requiredPeerCount": 1,
       "maxPeerCount": 1,
       "blockToLive":1000000,
@@ -9,27 +9,27 @@
       "memberOnlyWrite": true
    },
     {
-      "name": "Org1MSPPrivateCollection",
-      "policy": "OR('Org1MSP.member', 'Org2MSP.member')",
+      "name": "hosp1apolloMSPPrivateCollection",
+      "policy": "OR('hosp1apolloMSP.member', 'Ins1starhealthMSP.member')",
       "requiredPeerCount": 0,
       "maxPeerCount": 1,
       "blockToLive":3,
       "memberOnlyRead": true,
       "memberOnlyWrite": false,
       "endorsementPolicy": {
-        "signaturePolicy": "OR('Org1MSP.member')"
+        "signaturePolicy": "OR('hosp1apolloMSP.member')"
       }
     },
     {
-      "name": "Org2MSPPrivateCollection",
-      "policy": "OR('Org1MSP.member', 'Org2MSP.member')",
+      "name": "Ins1starhealthMSPPrivateCollection",
+      "policy": "OR('hosp1apolloMSP.member', 'Ins1starhealthMSP.member')",
       "requiredPeerCount": 0,
       "maxPeerCount": 1,
       "blockToLive":3,
       "memberOnlyRead": true,
       "memberOnlyWrite": false,
       "endorsementPolicy": {
-        "signaturePolicy": "OR('Org2MSP.member')"
+        "signaturePolicy": "OR('Ins1starhealthMSP.member')"
       }
      }
    ]
