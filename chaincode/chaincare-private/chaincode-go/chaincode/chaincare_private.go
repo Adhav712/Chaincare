@@ -12,15 +12,15 @@ import (
 const billCollection = "billCollection"
 
 type Bill struct {
-    ID                 string `json:"ID"`
-	Name               string `json:"name"`    //the fieldtags are needed to keep case from bouncing around
-	Owner              string `json:"owner"`
-	PublicDescription  string `json:"publicDescription"`
+	ID                string `json:"ID"`
+	Name              string `json:"name"` //the fieldtags are needed to keep case from bouncing around
+	Owner             string `json:"owner"`
+	PublicDescription string `json:"publicDescription"`
 }
 
 type BillPrivateDetails struct {
-	ID          string `json:"ID"` 
-	BillAmount  string `json:"billamount"`
+	ID         string `json:"ID"`
+	BillAmount string `json:"billamount"`
 }
 
 type SmartContract struct {
@@ -41,10 +41,10 @@ func (s *SmartContract) CreateBill(ctx contractapi.TransactionContextInterface) 
 	}
 
 	type billTransientInput struct {
-        ID         		  string  `json:"ID"`
-        Name       		  string  `json:"name"`   
-		BillAmount        string  `json:"billamount"`
-		PublicDescription string  `json:"publicDesc"`
+		ID                string `json:"ID"`
+		Name              string `json:"name"`
+		BillAmount        string `json:"billamount"`
+		PublicDescription string `json:"publicDesc"`
 	}
 
 	var billInput billTransientInput
@@ -85,10 +85,10 @@ func (s *SmartContract) CreateBill(ctx contractapi.TransactionContextInterface) 
 	}
 
 	bill := Bill{
-		ID:          		billInput.ID,
-		Name:        		billInput.Name,
-		PublicDescription: 	billInput.PublicDescription,
-		Owner:             	clientID,
+		ID:                billInput.ID,
+		Name:              billInput.Name,
+		PublicDescription: billInput.PublicDescription,
+		Owner:             clientID,
 	}
 	billJSONasBytes, err := json.Marshal(bill)
 	if err != nil {
@@ -105,7 +105,7 @@ func (s *SmartContract) CreateBill(ctx contractapi.TransactionContextInterface) 
 		BillAmount: billInput.BillAmount,
 	}
 
-	billPrivateDetailsAsBytes, err := json.Marshal(billPrivateDetails) 
+	billPrivateDetailsAsBytes, err := json.Marshal(billPrivateDetails)
 	if err != nil {
 		return fmt.Errorf("failed to marshal into JSON: %v", err)
 	}
@@ -137,8 +137,8 @@ func (s *SmartContract) UpdateBill(ctx contractapi.TransactionContextInterface) 
 	}
 
 	type billTransientInput struct {
-        ID         		  string `json:"ID"`
-        Name       		  string `json:"name"`   
+		ID                string `json:"ID"`
+		Name              string `json:"name"`
 		BillAmount        string `json:"billamount"`
 		PublicDescription string `json:"publicDesc"`
 	}
@@ -150,7 +150,7 @@ func (s *SmartContract) UpdateBill(ctx contractapi.TransactionContextInterface) 
 	}
 
 	if len(billInput.ID) == 0 {
-		return fmt.Errorf("aBillID field must be a non-empty string")
+		return fmt.Errorf("BillID field must be a non-empty string")
 	}
 	if len(billInput.Name) == 0 {
 		return fmt.Errorf("name field must be a non-empty string")
@@ -161,14 +161,14 @@ func (s *SmartContract) UpdateBill(ctx contractapi.TransactionContextInterface) 
 	if len(billInput.PublicDescription) == 0 {
 		return fmt.Errorf("PublicDescription field must be a non-empty string")
 	}
-    
-	billAsBytes, err :=s.BillExists(ctx, billInput.ID)
+
+	billAsBytes, err := s.BillExists(ctx, billInput.ID)
 	if err != nil {
 		return err
 	}
 	if !billAsBytes {
 		return fmt.Errorf("the bill %s does not exist", billInput.ID)
-	}	
+	}
 
 	clientID, err := submittingClientIdentity(ctx)
 	if err != nil {
@@ -181,10 +181,10 @@ func (s *SmartContract) UpdateBill(ctx contractapi.TransactionContextInterface) 
 	}
 
 	bill := Bill{
-		ID:          		billInput.ID,
-		Name:        		billInput.Name,
-		PublicDescription: 	billInput.PublicDescription,
-		Owner:             	clientID,
+		ID:                billInput.ID,
+		Name:              billInput.Name,
+		PublicDescription: billInput.PublicDescription,
+		Owner:             clientID,
 	}
 	billJSONasBytes, err := json.Marshal(bill)
 	if err != nil {
@@ -219,7 +219,7 @@ func (s *SmartContract) UpdateBill(ctx contractapi.TransactionContextInterface) 
 }
 
 func (s *SmartContract) BillExists(ctx contractapi.TransactionContextInterface, billID string) (bool, error) {
-	billJSON, err := ctx.GetStub().GetPrivateData(billCollection,billID)
+	billJSON, err := ctx.GetStub().GetPrivateData(billCollection, billID)
 	if err != nil {
 		return false, fmt.Errorf("failed to read from world state: %v", err)
 	}
@@ -238,7 +238,6 @@ func getCollectionName(ctx contractapi.TransactionContextInterface) (string, err
 
 	return orgCollection, nil
 }
-
 
 func verifyClientOrgMatchesPeerOrg(ctx contractapi.TransactionContextInterface) error {
 	clientMSPID, err := ctx.GetClientIdentity().GetMSPID()

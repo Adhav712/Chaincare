@@ -4,7 +4,7 @@
 
 *Deploy Chainode*
 
-./network.sh deployCC -ccn private -ccp ../chaincode/chaincare-private/chainode/chaincode-go/ -ccl go -ccep "OR('hosp1apolloMSP.peer','Ins1starhealthMSP.peer')" -cccg ../chaincode/chaincare-private/chaincode-go/collections_config.json
+./network.sh deployCC -ccn private -ccp ../chaincode/chaincare-private/chaincode-go -ccl go -ccep "OR('hosp1apolloMSP.peer','Ins1starhealthMSP.peer')" -cccg ../chaincode/chaincare-private/chaincode-go/collections_config.json
 
 *Register Identites*
 
@@ -47,7 +47,9 @@ export BILL_PROPERTIES=$(echo -n "{\"ID\":\"PID0\",\"name\":\"Patient anme\",\"b
 
 *Invoke createBill function*
 
-peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride [orderer.chaincare.com](http://orderer.chaincare.com/) --tls --cafile "${PWD}/organizations/ordererOrganizations/chaincare.com/orderers/orderer.chaincare.com/msp/tlscacerts/tlsca.chaincare.com-cert.pem" -C hospitalchannel -n private -c '{"function":"CreateBill","Args":[]}' --transient "{\"bill_properties\":\"$BILL_PROPERTIES\"}"
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride [orderer.chaincare.com](http://orderer.chaincare.com/) --tls --cafile 
+"${PWD}/organizations/ordererOrganizations/chaincare.com/orderers/orderer.chaincare.com/msp/tlscacerts/tlsca.chaincare.com-cert.pem" -C hospitalchannel 
+-n private -c '{"function":"CreateBill","Args":[]}' --transient "{\"bill_properties\":\"$BILL_PROPERTIES\"}"
 
 *Read Public details* 
 
@@ -55,7 +57,7 @@ peer chaincode query -C hospitalchannel -n private -c '{"function":"ReadBill","A
 
 *Read Org1 Private details*
 
-peer chaincode query -C hospitalchannel -n private -c '{"function":"ReadOrg1BillPrivateDetails","Args":["PID0"]}'
+peer chaincode query -C hospitalchannel -n private -c '{"function":"hosp1apolloMSPPrivateCollection","Args":["PID0"]}'
 
 *As Ins1starhealth(Insurance)*
 
@@ -82,7 +84,9 @@ export BILL_PROPERTIES=$(echo -n "{\"ID\":\"PID0\",\"name\":\"green\",\"billamou
 
 *Invoke update bill function*
 
-peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride [orderer.chaincare.com](http://orderer.chaincare.com/) --tls --cafile "${PWD}/organizations/ordererOrganizations/chaincare.com/orderers/orderer.chaincare.com/msp/tlscacerts/tlsca.chaincare.com-cert.pem" -C hospitalchannel -n private -c '{"function":"UpdateBill","Args":[]}' --transient "{\"bill_properties\":\"$BILL_PROPERTIES\"}"
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride [orderer.chaincare.com](http://orderer.chaincare.com/) --tls --cafile 
+"${PWD}/organizations/ordererOrganizations/chaincare.com/orderers/orderer.chaincare.com/msp/tlscacerts/tlsca.chaincare.com-cert.pem" 
+-C hospitalchannel -n private -c '{"function":"UpdateBill","Args":[]}' --transient "{\"bill_properties\":\"$BILL_PROPERTIES\"}"
 
 *Read Org2 Private details (To see Updated bill status)*
 

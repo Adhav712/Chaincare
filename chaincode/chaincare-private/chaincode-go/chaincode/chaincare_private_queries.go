@@ -51,17 +51,15 @@ func (s *SmartContract) ReadBillPrivateDetails(ctx contractapi.TransactionContex
 	return billDetails, nil
 }
 
-
-
 func (s *SmartContract) ReadOrg1BillPrivateDetails(ctx contractapi.TransactionContextInterface, billID string) (*BillPrivateDetails, error) {
 
-	billDetailsJSON, err := ctx.GetStub().GetPrivateData("Org1MSPPrivateCollection", billID) 
-		if err != nil {
-			return nil, fmt.Errorf("failed to read from marble details %s", err.Error())
-		}
-		if billDetailsJSON == nil {
-			return nil, fmt.Errorf("%s does not exist", billID)
-		}
+	billDetailsJSON, err := ctx.GetStub().GetPrivateData("hosp1apolloMSPPrivateCollection", billID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read from marble details %s", err.Error())
+	}
+	if billDetailsJSON == nil {
+		return nil, fmt.Errorf("%s does not exist", billID)
+	}
 
 	var billDetails *BillPrivateDetails
 	err = json.Unmarshal(billDetailsJSON, &billDetails)
@@ -75,13 +73,13 @@ func (s *SmartContract) ReadOrg1BillPrivateDetails(ctx contractapi.TransactionCo
 
 func (s *SmartContract) ReadOrg2BillPrivateDetails(ctx contractapi.TransactionContextInterface, billID string) (*BillPrivateDetails, error) {
 
-	billDetailsJSON, err := ctx.GetStub().GetPrivateData("Org2MSPPrivateCollection", billID)
-		if err != nil {
-			return nil, fmt.Errorf("failed to read from marble details %s", err.Error())
-		}
-		if billDetailsJSON == nil {
-			return nil, fmt.Errorf("%s does not exist", billID)
-		}
+	billDetailsJSON, err := ctx.GetStub().GetPrivateData("Ins1starhealthMSPPrivateCollection", billID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read from marble details %s", err.Error())
+	}
+	if billDetailsJSON == nil {
+		return nil, fmt.Errorf("%s does not exist", billID)
+	}
 
 	var billDetails *BillPrivateDetails
 	err = json.Unmarshal(billDetailsJSON, &billDetails)
@@ -92,4 +90,3 @@ func (s *SmartContract) ReadOrg2BillPrivateDetails(ctx contractapi.TransactionCo
 	return billDetails, nil
 
 }
-

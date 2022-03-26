@@ -113,11 +113,11 @@ peer lifecycle chaincode querycommitted --channelID ${CHANNEL_NAME} --name ${CC_
 
 
 echo 6 ----chaincode invoke-----
-peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" -C ${CHANNEL_NAME} -n ${CC_NAME} --peerAddresses localhost:9051 --tlsRootCertFiles ${PWD}/../../organizations/peerOrganizations/hosp2vijaya.chaincare.com/peers/peer0.hosp2vijaya.chaincare.com/tls/ca.crt --peerAddresses localhost:12051 --tlsRootCertFiles ${CORE_PEER_TLS_ROOTCERT_FILE} -c '{"function":"Admin_createPatient","Args":["PID6","akashs@gmail.com","Aakash", "s", "director", "20" , "9185218268"]}'
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" -C ${CHANNEL_NAME} -n ${CC_NAME}  --peerAddresses localhost:12051 --tlsRootCertFiles ${CORE_PEER_TLS_ROOTCERT_FILE} -c '{"function":"Admin_createPatient","Args":["PID6","akashs@gmail.com","Aakash", "s", "director", "20" , "9185218268"]}'
 
 
 echo 7 ----chaincode query----
-peer chaincode query -C ${CHANNEL_NAME} -n ${CC_NAME} -c '{"Args":["Patient_readPatient","PID5"]}'
+peer chaincode query -C ${CHANNEL_NAME} -n ${CC_NAME} -c '{"Args":["Patient_readPatient","PID6"]}'
 
 # installChaincode() {
 #   ORG=$1
