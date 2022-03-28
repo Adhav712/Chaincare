@@ -4,7 +4,7 @@ body{
   background: rgb(34,193,195);
   font-family: "work sans";
   font-weight: 400;
-  background: linear-gradient(135deg,rgba(34,193,195,1) 0%,rgba(253,187,45,1) 100%);
+  /* background: linear-gradient(135deg,rgba(34,193,195,1) 0%,rgba(253,187,45,1) 100%); */
 }
 /*  
 html{
@@ -12,14 +12,14 @@ html{
 } */
 
 #loginform{
-  max-width: 100%;
+  max-width: 70%;
   min-width: 50%;
   max-height: 100%;
   width: 95%;
-  height: 100%;
+  height: 70%;
   margin: 100px auto;
-  background-color: #FFFFFF;
-  border-radius: 25px;
+  background-color: #f4f5fa;
+  border-radius: 15px;
 }
 
 #headerTitle{
@@ -113,13 +113,20 @@ html{
 }
 
 .agerow{
-  display: flex;
+  /* display: flex; */
   flex-direction: row;
   align-items: center;
   padding-right: 20px;
   max-width: 100%;
   position: center;
-  margin-left: 70px;  
-  right: 0;
+  /* margin-left: auto;   */
+  /* right: 0; */
 }
 
+#lines{
+    position: center;
+    align-items: center;
+    text-align: center;
+   padding-top: 2rem;
+   margin-top: 1.5rem;
+}

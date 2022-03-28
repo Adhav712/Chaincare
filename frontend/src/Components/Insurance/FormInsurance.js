@@ -1,11 +1,11 @@
 import React from "react";
-import "./FormS.css";
+import "./FormInsurance.css";
 
-export default function Login() {
+export default function FormInsurance() {
 
     return(
       <div id="loginform">
-        <FormHeader title="Patient Detials" />
+        <FormHeader title="Insurance Patient Details" />
         <Form />
       </div>
     )
@@ -21,22 +21,19 @@ const FormHeader = props => (
 
 const Form = props => (
    <div>
-     <FormInput description="Email" placeholder="" type="email" />
+<FormInput description="Patient ID" placeholder="" type=""/>
      <FormInput description="First Name" placeholder="" type="text"/>
      <FormInput description="Last Names" placeholder="" type="Text"/>
-     <FormInput description="Phone Number" placeholder="" type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"/>
      <FormInput description="Address" placeholder="" type="Text"/>
-     <div class="agerow">
+     
      <FormInput description="Age" placeholder="" type="Text"/>
 
      <FormInput description="Blood group" placeholder="" type="tel"/>
      <FormInput description="Allergies" placeholder="" type="Text"/>
-     </div>
+   
      <FormInput description="Symptoms" placeholder="" type="Text"/>
-     <FormInput description="Emergency Number" placeholder="" type="Text"/>
      <FormInput description="Diagnosis" placeholder="" type="Text"/>  
      <FormInput description="Treatment" placeholder="" type="Text"/>  
-     <FormInput description="I am His/Her paitent" placeholder="" type=""/>
      <FormButton title="Log in"/>
    </div>
 );
