@@ -1,11 +1,19 @@
 import React from "react";
-import FormS from "./Components/FormS";
-// import Login from "./Components/Login";
-
+import FormInsurance from "./Components/Insurance/FormInsurance";
+import AdminAddDoctor from "./Components/Admin/AdminAddDoctor";
+import AdminHomePage from "./Components/Admin/AdminHomePage";
+import AdminAddPatient from "./Components/Admin/AdminAddPatient"
+import FormD from "./Components/Doctors/FormD";
+import FormPatient from "./Components/Patient/FormPatient";
 function App() {
   return (
     <div>
-      <FormS/>
+     <FormInsurance/>
+     <AdminAddDoctor/>
+     <AdminHomePage/>
+     <AdminAddPatient/>
+     <FormD/>
+<FormPatient/>
     </div>
   )
 }
