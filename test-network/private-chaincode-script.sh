@@ -44,12 +44,22 @@ export CORE_PEER_ADDRESS=localhost:7051
 *Export Create bill Properties*
 
 export BILL_PROPERTIES=$(echo -n "{\"ID\":\"PID0\",\"name\":\"Patient anme\",\"billamount\":\"20\",\"publicDesc\":\"Provide insurance\"}" | base64 | tr -d \\n)
-
+export BILL_PROPERTIES=$(echo -n "{\"ID\":\"PID1\",\"name\":\"Adhavan\",\"billamount\":\"Qmasdsa54d6sa4d60\",\"publicDesc\":\"Added bill\"}" | base64 | tr -d \\n)
 *Invoke createBill function*
 
-peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride [orderer.chaincare.com](http://orderer.chaincare.com/) --tls --cafile 
-"${PWD}/organizations/ordererOrganizations/chaincare.com/orderers/orderer.chaincare.com/msp/tlscacerts/tlsca.chaincare.com-cert.pem" -C hospitalchannel 
--n private -c '{"function":"CreateBill","Args":[]}' --transient "{\"bill_properties\":\"$BILL_PROPERTIES\"}"
+peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile  "${PWD}/organizations/ordererOrganizations/chaincare.com/orderers/orderer.chaincare.com/msp/tlscacerts/tlsca.chaincare.com-cert.pem" -C hospitalchannel -n private -c '{"function":"CreateBill","Args":[]}' --transient "{\"bill_properties\":\"$BILL_PROPERTIES\"}" 
+
+peer chaincode invoke -o localhost:7050 \
+--ordererTLSHostnameOverride [orderer.chaincare.com](http://orderer.chaincare.com/) \
+--tls \
+--cafile \
+-C ${CHANNEL_NAME} -n ${CC_NAME} \
+--peerAddresses localhost:7051  --tlsRootCertFiles $PEER0_hosp1apollo_CA \
+--peerAddresses localhost:12051  --tlsRootCertFiles $PEER0_Ins1starhealth_CA \  
+-c '{"function":"CreateBill","Args":[]}' \
+--transient "{\"bill_properties\":\"$BILL_PROPERTIES\"}"
+
+
 
 *Read Public details* 
 

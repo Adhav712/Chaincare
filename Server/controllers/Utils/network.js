@@ -371,3 +371,253 @@
    );
  };
  
+
+ exports.connectToNetwork_forPrivate = async function(req,res,org,hospid,AdminID) {
+  const channelName = 'hospitalchannel';
+  const chaincodeName = 'private';
+  
+  const gateway = new Gateway();
+  const hospitalId = parseInt(hospid);
+   if(org == "hospital"){
+     if (hospitalId === 1) { 
+       const ccpPath = path.resolve(__dirname, '..', '..' ,'..','test-network', 'organizations', 'peerOrganizations', 'hosp1apollo.chaincare.com', 'connection-hosp1apollo.json');
+       const fileExists = fs.existsSync(ccpPath);
+       if (!fileExists) {
+         throw new Error(`no such file or directory: ${ccpPath}`);
+       }
+       const contents = fs.readFileSync(ccpPath, 'utf8');
+   
+       // build a JSON object from the file contents
+       const ccp = JSON.parse(contents);
+   
+       console.log(`Loaded the network configuration located at ${ccpPath}`);
+   
+     
+       const walletPath = path.join(process.cwd(), 'controllers/wallet');
+       console.log("WALLET CHECKING")
+   
+       const wallet = await buildWallet(Wallets, walletPath);
+       
+   
+       const userExists = await wallet.get(AdminID);
+       if (!userExists) {
+         console.log(`An identity for the : ${AdminID} does not exist in the wallet`);
+         console.log(`Create the ${AdminID} before retrying`);
+         const response = {};
+         response.error = `An identity for the user ${AdminID} does not exist in the wallet. Register ${AdminID} first`;
+         return response;
+       }
+   
+       /**
+        * setup the gateway instance
+        *  he user will now be able to create connections to the fabric network and be able to
+        * ubmit transactions and query. All transactions submitted by this gateway will be
+        * signed by this user using the credentials stored in the wallet.
+        */
+       // using asLocalhost as this gateway is using a fabric network deployed locally
+       await gateway.connect(ccp, {wallet, identity: AdminID, discovery: {enabled: true, asLocalhost: true}});
+   
+       // Build a network instance based on the channel where the smart contract is deployed
+       const network = await gateway.getNetwork(channelName);
+   
+       // Get the contract from the network.
+       const contract = network.getContract(chaincodeName);
+   
+       const networkObj = {
+         contract: contract,
+         network: network,
+         gateway: gateway,
+       };
+       console.log('Succesfully connected to the network.');
+       return networkObj;
+     } else if (hospitalId === 2) 
+     
+     {
+       
+       const ccpPath = path.resolve(__dirname, '..', '..','..','test-network','organizations', 'peerOrganizations', 'hosp2vijaya.chaincare.com', 'connection-hosp2vijaya.json');
+       const fileExists = fs.existsSync(ccpPath);
+       if (!fileExists) {
+         throw new Error(`no such file or directory: ${ccpPath}`);
+       }
+       const contents = fs.readFileSync(ccpPath, 'utf8');
+     
+       // build a JSON object from the file contents
+       const ccp = JSON.parse(contents);
+     
+       console.log(`Loaded the network configuration located at ${ccpPath}`);
+       
+
+       const walletPath = path.join(process.cwd(), 'controllers/wallet');
+       console.log("WALLET CHECKING")
+   
+       const wallet = await buildWallet(Wallets, walletPath);
+       
+   
+       const userExists = await wallet.get(AdminID);
+       if (!userExists) {
+         console.log(`An identity for the : ${AdminID} does not exist in the wallet`);
+         console.log(`Create the ${AdminID} before retrying`);
+         const response = {};
+         response.error = `An identity for the user ${AdminID} does not exist in the wallet. Register ${AdminID} first`;
+         return response;
+       }
+   
+       /**
+        * setup the gateway instance
+        *  he user will now be able to create connections to the fabric network and be able to
+        * ubmit transactions and query. All transactions submitted by this gateway will be
+        * signed by this user using the credentials stored in the wallet.
+        */
+       // using asLocalhost as this gateway is using a fabric network deployed locally
+       await gateway.connect(ccp, {wallet, identity: AdminID, discovery: {enabled: true, asLocalhost: true}});
+   
+       // Build a network instance based on the channel where the smart contract is deployed
+       const network = await gateway.getNetwork(channelName);
+   
+       // Get the contract from the network.
+       const contract = network.getContract(chaincodeName);
+   
+       const networkObj = {
+         contract: contract,
+         network: network,
+         gateway: gateway,
+       };
+       console.log('Succesfully connected to the network.');
+       return networkObj;
+
+       
+     }else if (hospitalId === 3) {
+       
+       // load the common connection configuration file
+       const ccpPath = path.resolve(__dirname, '..', '..', '..','test-network','organizations', 'peerOrganizations', 'hosp3stanley.chaincare.com', 'connection-hosp3stanley.json');
+       const fileExists = fs.existsSync(ccpPath);
+       if (!fileExists) {
+         throw new Error(`no such file or directory: ${ccpPath}`);
+       }
+       const contents = fs.readFileSync(ccpPath, 'utf8');
+
+       // build a JSON object from the file contents
+       const ccp = JSON.parse(contents);
+
+       console.log(`Loaded the network configuration located at ${ccpPath}`);
+
+       const walletPath = path.join(process.cwd(), 'controllers/wallet');
+       console.log("WALLET CHECKING")
+   
+       const wallet = await buildWallet(Wallets, walletPath);
+       
+   
+       const userExists = await wallet.get(AdminID);
+       if (!userExists) {
+         console.log(`An identity for the : ${AdminID} does not exist in the wallet`);
+         console.log(`Create the ${AdminID} before retrying`);
+         const response = {};
+         response.error = `An identity for the user ${AdminID} does not exist in the wallet. Register ${AdminID} first`;
+         return response;
+       }
+   
+       /**
+        * setup the gateway instance
+        *  he user will now be able to create connections to the fabric network and be able to
+        * ubmit transactions and query. All transactions submitted by this gateway will be
+        * signed by this user using the credentials stored in the wallet.
+        */
+       // using asLocalhost as this gateway is using a fabric network deployed locally
+       await gateway.connect(ccp, {wallet, identity: AdminID, discovery: {enabled: true, asLocalhost: true}});
+   
+       // Build a network instance based on the channel where the smart contract is deployed
+       const network = await gateway.getNetwork(channelName);
+   
+       // Get the contract from the network.
+       const contract = network.getContract(chaincodeName);
+   
+       const networkObj = {
+         contract: contract,
+         network: network,
+         gateway: gateway,
+       };
+       console.log('Succesfully connected to the network.');
+       return networkObj;
+
+     }else{
+       res.stats(400).send("Unable to connect to network");
+     }
+   }else if(org == "Insurance"){
+     const ccpPath = path.resolve(__dirname, '..', '..', '..','test-network','organizations', 'peerOrganizations',
+      'Ins1starhealth.chaincare.com', 'connection-Ins1starhealth.json');
+     const fileExists = fs.existsSync(ccpPath);
+     if (!fileExists) {
+       throw new Error(`no such file or directory: ${ccpPath}`);
+     }
+     const contents = fs.readFileSync(ccpPath, 'utf8');
+
+     // build a JSON object from the file contents
+     const ccp = JSON.parse(contents);
+
+     console.log(`Loaded the network configuration located at ${ccpPath}`);
+
+     const walletPath = path.join(process.cwd(), 'controllers/wallet');
+       console.log("WALLET CHECKING")
+   
+       const wallet = await buildWallet(Wallets, walletPath);
+       
+   
+       const userExists = await wallet.get(AdminID);
+       if (!userExists) {
+         console.log(`An identity for the : ${AdminID} does not exist in the wallet`);
+         console.log(`Create the ${AdminID} before retrying`);
+         const response = {};
+         response.error = `An identity for the user ${AdminID} does not exist in the wallet. Register ${AdminID} first`;
+         return response;
+       }
+   
+       /**
+        * setup the gateway instance
+        *  he user will now be able to create connections to the fabric network and be able to
+        * ubmit transactions and query. All transactions submitted by this gateway will be
+        * signed by this user using the credentials stored in the wallet.
+        */
+       // using asLocalhost as this gateway is using a fabric network deployed locally
+       await gateway.connect(ccp, {wallet, identity: AdminID, discovery: {enabled: true, asLocalhost: true}});
+   
+       // Build a network instance based on the channel where the smart contract is deployed
+       const network = await gateway.getNetwork(channelName);
+   
+       // Get the contract from the network.
+       const contract = network.getContract(chaincodeName);
+   
+       const networkObj = {
+         contract: contract,
+         network: network,
+         gateway: gateway,
+       };
+       console.log('Succesfully connected to the network.');
+      //  const PrivateCollectionName = "Ins1starhealthMSPPrivateCollection";
+      
+       return networkObj;
+
+   }else{
+     res.status(400).send("Unable to connect to network");
+   }
+}
+
+
+exports.gettingPrivateCollectionname = async (org,hospid) => {
+  if(org == "hospital"){
+    const hospitalId = parseInt(hospid);
+      if(hospitalId == 1){
+        const PrivateCollectionName = "hosp1apolloMSPPrivateCollection"; 
+        return PrivateCollectionName;
+      }else if(hospitalId == 2){
+        const PrivateCollectionName = "hosp2vijayaMSPPrivateCollection";   
+        return PrivateCollectionName;
+      }else if(hospitalId == 3){
+        const PrivateCollectionName = "hosp3stanleyMSPPrivateCollection";    
+        return PrivateCollectionName;
+      }
+   }else if(org =="Insurance"){
+    const PrivateCollectionName = "Ins1starhealthMSPPrivateCollection"; 
+     return PrivateCollectionName
+   }
+
+}

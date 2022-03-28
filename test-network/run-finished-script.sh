@@ -19,7 +19,7 @@ cd ../addInsurance
 
 cd .. 
 # echo ${PWD}
-
+# export Endorsement = "OR(AND('hosp1apolloMSP.peer', 'hosp2apolloMSP.peer'), AND('hosp1apolloMSP.peer', 'hosp3stanleyMSP.peer'), AND('hosp2apolloMSP.peer', 'hosp3stanleyMSP.peer'))"
 ./network.sh deployCC -ccn chaincare -ccv 1 -cci initLedger -ccl javascript -ccp ../chaincode/chaincare-contract
 
 cd ./scripts/Ins1starhealth-scripts
