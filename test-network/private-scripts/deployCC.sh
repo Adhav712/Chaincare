@@ -124,10 +124,10 @@ peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameO
 echo 5 ----chaincode querycommitted----
 peer lifecycle chaincode querycommitted --channelID ${CHANNEL_NAME} --name ${CC_NAME} --cafile "$ORDERER_CA" 
 
-export BILL_PROPERTIES=$(echo -n "{\"ID\":\"PID0\",\"name\":\"Patient anme\",\"billamount\":\"20\",\"publicDesc\":\"Provide insurance\"}" | base64 | tr -d \\n)
+# export BILL_PROPERTIES=$(echo -n "{\"ID\":\"PID0\",\"name\":\"Patient anme\",\"billamount\":\"20\",\"publicDesc\":\"Provide insurance\"}" | base64 | tr -d \\n)
 
-echo 6 ----chaincode invoke-----
-peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" -C ${CHANNEL_NAME} -n ${CC_NAME} --peerAddresses ${CORE_PEER_ADDRESS} --tlsRootCertFiles ${CORE_PEER_TLS_ROOTCERT_FILE} -c '{"function":"CreateBill","Args":[]}' --transient "{\"bill_properties\":\"$BILL_PROPERTIES\"}"
+# echo 6 ----chaincode invoke-----
+# peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" -C ${CHANNEL_NAME} -n ${CC_NAME} --peerAddresses ${CORE_PEER_ADDRESS} --tlsRootCertFiles ${CORE_PEER_TLS_ROOTCERT_FILE} -c '{"function":"CreateBill","Args":[]}' --transient "{\"bill_properties\":\"$BILL_PROPERTIES\"}"
 
 
 echo 7 ----chaincode query public data----

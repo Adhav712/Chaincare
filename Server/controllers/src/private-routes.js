@@ -13,7 +13,7 @@ exports.Private_Submit_transcations = async (req,res) => {
     const myChannel = "hospitalchannel";
     const myChaincodeName = "private";
     const memberAssetCollectionName = "billCollection";
-    //const transientData = `"{\"Bill\":\"{\"ID\":"${PID}\", \"name\": "${PName} ",\"billamount\": "${bill_amount}\",\"publicDesc\":\"${publicDescription}"}\"}"`
+
     const args = {
       bill_properties : {ID: PID,
         name: PName,
@@ -100,7 +100,7 @@ exports.Private_Submit_transcations = async (req,res) => {
               //contract.setTransient(transientData) 
               // result = await contract.submitTransaction(private_func); 
               message = `Successfully submitter transient data`
-                res.status(200).send(`Successfully queried Patient Private bill ${JSON.stringify(resultJSON)}`);
+                res.status(200).send(`Successfully updated Patient Private bill ${JSON.stringify(resultJSON)}`);
                 
 
             }

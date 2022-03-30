@@ -124,7 +124,7 @@ async function main() {
         console.log("Submitted result:",result);
     })
 
-    app.post('/doctors/queries', (req,res) => {
+    app.post('/doctor/queries', (req,res) => {
         const org = req.body.org;
         const hospid = req.body.hospid;
         const AdminID = req.body.AdminID;

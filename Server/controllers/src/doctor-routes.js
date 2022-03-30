@@ -1,4 +1,5 @@
 const network = require("../Utils/network.js");
+const { prettyJSONString } = require("../Utils/Utils.js");
 
 //--------------------------Doctor Submit Transcations------------------------------
 exports.Doctor_submit_transcations = async(req,res,org,hospid,DocID)=>{
@@ -47,8 +48,8 @@ exports.Doctor_query = async(req,res,org,hospid,DocID) => {
       if (response.error) {
         res.status(400).send(response.error);
       }
-      console.log(`Transaction has been evaluated, result is: ${response.toString()}`);
-      res.status(201).send(`Transaction has been evaluated, result is: ${response.toString()}`);
+      console.log(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);
+      res.status(201).send(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);
     }else if(queryName == "Doctor_readDoctor"){
       const response = await networkObj.contract.evaluateTransaction(queryName, doctorId);
       
@@ -57,8 +58,8 @@ exports.Doctor_query = async(req,res,org,hospid,DocID) => {
       if (response.error) {
         res.status(400).send(response.error);
       }
-      console.log(`Transaction has been evaluated, result is: ${response.toString()}`);
-      res.status(201).send(`Transaction has been evaluated, result is: ${response.toString()}`);
+      console.log(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);
+      res.status(201).send(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);
 
     }else if(queryName == "Doctor_queryPatientsByFirstName"){
       const response = await networkObj.contract.evaluateTransaction(queryName, firstName);
@@ -68,8 +69,8 @@ exports.Doctor_query = async(req,res,org,hospid,DocID) => {
       if (response.error) {
         res.status(400).send(response.error);
       }
-      console.log(`Transaction has been evaluated, result is: ${response.toString()}`);
-      res.status(201).send(`Transaction has been evaluated, result is: ${response.toString()}`);
+      console.log(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);
+      res.status(201).send(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);
 
     }else if(queryName == "Doctor_queryPatientsByLastName"){
       const response = await networkObj.contract.evaluateTransaction(queryName, lastName);
@@ -79,8 +80,8 @@ exports.Doctor_query = async(req,res,org,hospid,DocID) => {
       if (response.error) {
         res.status(400).send(response.error);
       }
-      console.log(`Transaction has been evaluated, result is: ${response.toString()}`);
-      res.status(201).send(`Transaction has been evaluated, result is: ${response.toString()}`);
+      console.log(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);
+      res.status(201).send(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);
     }else{
       
     }

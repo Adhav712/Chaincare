@@ -13,7 +13,7 @@ function App() {
      <AdminHomePage/>
      <AdminAddPatient/>
      <FormD/>
-<FormPatient/>
+     <FormPatient/>
     </div>
   )
 }
