@@ -22,7 +22,7 @@ exports.doctorLogin = async (res,req,choose_org,hospid,AdminID,DocID,emailId,pas
     const en_pass = result.password;
     const pass = crypto.createHash('sha256').update(password).digest('hex');
     const isLoggedIn = false;
-    if(pass == en_pass && emailId == mailId){
+    if(password == en_pass && emailId == mailId){
         console.log("Authenticated");
         await res.status(200).send("authenticated");
         return (isLoggedIn == true);
@@ -44,7 +44,7 @@ exports.patientLogin = async (res,req,choose_org,hospid,AdminID,PID,emailId,pass
     const mailId = result.emailId;
     const en_pass = result.password;
     const pass = crypto.createHash('sha256').update(password).digest('hex');
-    if(pass == en_pass && emailId == mailId){
+    if(password == en_pass && emailId == mailId){
         console.log("Authenticated");
         await res.status(200).send("authenticated");
         return true
@@ -64,7 +64,7 @@ exports.adminLogin = async (res,req,choose_org,hospid,AdminID,adminid,emailId,pa
     const mailId = result.emailId;
     const en_pass = result.password;
     const pass = crypto.createHash('sha256').update(password).digest('hex');
-    if(pass == en_pass && emailId == mailId){
+    if(password == en_pass && emailId == mailId){
         console.log("Authenticated");
         await res.status(200).send("authenticated");
         return true
@@ -85,7 +85,7 @@ exports.InsuranceAdminLogin = async (res,req,choose_org,adminid,Insurance_admini
     const mailId = result.emailId;
     const en_pass = result.password;
     const pass = crypto.createHash('sha256').update(password).digest('hex');
-    if(pass == en_pass && emailId == mailId){
+    if(password == en_pass && emailId == mailId){
         console.log("Authenticated");
         await res.status(200).send("authenticated");
         return true

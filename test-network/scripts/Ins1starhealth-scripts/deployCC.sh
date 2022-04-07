@@ -105,7 +105,7 @@ export CC_PACKAGE_ID=$(sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/,
 echo ${CC_PACKAGE_ID} 
 
 echo 4 ----aprroving chaincode----
-peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" --channelID ${CHANNEL_NAME} --name ${CC_NAME} --version ${CC_VERSION} --package-id chaincare_1:02dde13f7bf1360a0e6e7c1585cc7176fc888d736e976ab9d29bc722d0389e2e --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
+peer lifecycle chaincode approveformyorg -o localhost:7050 --ordererTLSHostnameOverride orderer.chaincare.com --tls --cafile "$ORDERER_CA" --channelID ${CHANNEL_NAME} --name ${CC_NAME} --version ${CC_VERSION} --package-id chaincare_1:be82f2e99f2c8c2d8b4387244ea0702dc783e9ea934a1e759003c7b049ff5de0 --sequence ${CC_SEQUENCE} ${INIT_REQUIRED} ${CC_END_POLICY} ${CC_COLL_CONFIG}
 
 
 echo 5 ----chaincode querycommitted----

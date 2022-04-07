@@ -31,7 +31,7 @@ exports.Private_Submit_transcations = async (req,res) => {
             {
             let result 
             let message; 
-            if (private_func === "CreateBill" || private_func === "UpdateBill") {
+            if (private_func === "CreateBill") {
               let BILL_PROPERTIES_String = JSON.parse(transientData)
               console.log("BILL_PROPERTIES_String:",BILL_PROPERTIES_String);
               let key = Object.keys (BILL_PROPERTIES_String)[0] 
@@ -48,38 +48,16 @@ exports.Private_Submit_transcations = async (req,res) => {
               //contract.setTransient(transientData) 
               // result = await contract.submitTransaction(private_func); 
               message = `Successfully submitter transient data`
+              
+              // result = JSON.parse(result.toString());
+              // console.log(`result is ================: ${resultJSON}`)
 
+              res.status(200).send(`Successfully created Patient Private bill ${resultJSON}`);
             }else {
                 return `Invocation require either createCar or changeCarowner as function but got ${resultJSON}`
             }
-            // await gateway.disconnect();
-
-            result = JSON.parse(result.toString());
-            console.log(`result is ================: ${resultJSON}`)
-
-
-
-              // const BILL_PROPERTIES = {
-              //   ID: PID,
-              //   name: PName,
-              //   billamount: bill_amount,
-              //   publicDesc: publicDescription
-              //   };
-              // const BILL_PROPERTIES_String = JSON.stringify(BILL_PROPERTIES);
-              // console.log(`--> Submit Transaction: CreateBill, ${PID} as Org1 - endorsed by Org1`);
-              // console.log(`${BILL_PROPERTIES_String}`);
-
-              // transaction = networkObj.contract.createTransaction('CreateBill');
-              // transaction.setEndorsingOrganizations("hosp1apolloMSP");
-              // transaction.setTransient({
-              //   BILL_PROPERTIES: (BILL_PROPERTIES_String)
-              // });
-
-              // await transaction.submit();
-              // console.log(`*** Result: committed, asset ${assetKey} is owned by Org1`);
-              res.status(200).send(`Successfully queried Patient Private bill ${resultJSON}`);
-
-            }
+          
+         }
           else if(private_func == "UpdateBill")
             {
               let result 

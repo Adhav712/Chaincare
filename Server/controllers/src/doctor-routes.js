@@ -26,7 +26,7 @@ exports.Doctor_submit_transcations = async(req,res,org,hospid,DocID)=>{
       if (Update_Patient_Detials_Res.error) {
         res.status(400).send(Update_Patient_Detials_Res.error);
       }
-      res.status(201).send(`Successfully updated doctor details:${Update_Patient_Detials_Res}`);
+      res.status(201).send(`Successfully updated patient details:${Update_Patient_Detials_Res}`);
 
   }else{
     res.status(300).send('Invalid function triggered');
@@ -40,12 +40,13 @@ exports.Doctor_query = async(req,res,org,hospid,DocID) => {
   const networkObj = await network.connectToNetwork(req,res,org,hospid,DocID);
     const {patientId,doctorId,firstName,lastName,queryName} = req.body;
     
-    if(queryName == "Doctor_ReadPatient"){
+    if(queryName == "Doctor_ReadPatients"){
       const response = await networkObj.contract.evaluateTransaction(queryName,patientId,doctorId);
       
       await networkObj.gateway.disconnect();  
     
       if (response.error) {
+        res.status(201).send(`Patient ${patientId} doen't give permission`);  
         res.status(400).send(response.error);
       }
       console.log(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);

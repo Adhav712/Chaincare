@@ -16,6 +16,7 @@ exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
           res.status(400).send(UpdatePatient_Detials_Res.error);
         }
         res.status(201).send(`Successfully updated patient details :${prettyJSONString(UpdatePatient_Detials_Res)}`);
+
     }else if(fun_name == "Patient_updatePatientPassword"){
         
         const Update_Patient_Password_Res  = await networkObj.contract.submitTransaction('Patient_updatePatientPassword',patientId,newPassword);
@@ -34,7 +35,7 @@ exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
         if (Patient_grantAccessToDoctor.error) {
         res.status(400).send(Patient_grantAccessToDoctor.error);
         }
-        res.status(201).send(`Successfully Granted Permission :${prettyJSONString(Patient_grantAccessToDoctor)}`);
+        res.status(201).send(`Successfully Granted Permission : ${(doctorId)}`);
 
         
     }else if(fun_name == "Patient_revokeAccessFromDoctor"){
@@ -45,7 +46,7 @@ exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
         if (Patient_revokeAccessFromDoctor.error) {
         res.status(400).send(Patient_revokeAccessFromDoctor.error);
         }
-        res.status(201).send(`Successfully Revoke Permission :${prettyJSONString(Patient_revokeAccessFromDoctor)}`);
+        res.status(201).send(`Successfully Revoke Permission : ${prettyJSONString(doctorId)}`);
 
     }else{
 

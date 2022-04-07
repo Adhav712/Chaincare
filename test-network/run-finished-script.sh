@@ -31,7 +31,7 @@ cd ../../
 
 ./network.sh deployCC -ccn private -ccp ../chaincode/chaincare-private/chaincode-go -ccl go -ccep "OR('hosp1apolloMSP.peer','Ins1starhealthMSP.peer')" -cccg ../chaincode/chaincare-private/chaincode-go/collections_config.json
 
-cd private-scripts/
+cd private-scripts/ 
 
 ./deployCC.sh
 
