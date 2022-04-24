@@ -1,7 +1,7 @@
 [//]: # (SPDX-License-Identifier: CC-BY-4.0)
 
 # Chaincare
-Health Data Management Network powered by Private Blockchain Using Hypeledger Fabric
+Health Data Management Network powered by Private Blockchain Using Hyperledger Fabric
 
 
 # Hyperledger Fabric Samples
