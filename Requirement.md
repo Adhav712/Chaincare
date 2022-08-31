@@ -105,6 +105,7 @@ Primary details load with jwt help of emailID
     "org" : "hospital",
     "hospid": "1",
     "AdminID" : "hosp1apolloadmin",
+    "patientId": "PID1"
     
 load this (Patient_readPatient) function using useEffect hook to automatically pull the details of the current patient
 
@@ -117,7 +118,7 @@ load this (Patient_readPatient) function using useEffect hook to automatically p
     
     "fun_name" : " ",
 
-<b>Patient_updatePatient
+<b>Patient_updatePatient</b>
 
     {
         "patientId" : "PID6",
@@ -131,21 +132,21 @@ load this (Patient_readPatient) function using useEffect hook to automatically p
         "newAddress" : "xxxxxxx"
     }
 
-Patient_updatePatientPassword
+<b>Patient_updatePatientPassword</b>
     
     {
         "patientId":"PID1",
         "newPassword":"Heythere"
     }
 
-Patient_grantAccessToDoctor
+<b>Patient_grantAccessToDoctor</b>
 
     {
         "patientId":"PID1",
         "doctorId":"DOCTOR1"
     }
 
-Patient_revokeAccessFromDoctor</b>
+<b>Patient_revokeAccessFromDoctor</b>
 
     {
         "patientId":"PID1",
@@ -157,5 +158,108 @@ Once any changes made reflect the changes by call the useEffect hook.
 <br></br>
 ## Doctor DashBoard
 ---
+Primary details load with jwt help of emailID
 
 
+    "org":"hospital",
+    "hospid":"1",
+    "AdminID":"hosp1apolloadmin",
+    "queryName":"Doctor_readDoctor",
+    "doctorId":"DOCTOR1"
+
+    
+load this (Doctor_readDoctor) function using useEffect hook to automatically pull the details of the current Doctor
+
+
+
+### <b>Profile Details</b>
+
+<br></br>
+*by Clicking the button load the function name
+    
+    "queryName" : " ",
+
+<b> doctor_update_details</b>
+
+    {
+        "org": "hospital",
+        "hospid": "1",
+        "DocID": "DOCTOR1",
+        "function_Name":"doctor_update_details",
+        "firstName" : "adhavan",
+        "lastName":"asdasdasd", 
+        "password": "asdsad", 
+        "age": "32",
+        "phoneNumber":"49849",
+        "address": "asdkljhnsaiuohdasd",
+        "bloodGroup":"+o",
+        "fields":"asdgisad"
+    }
+
+<b>Doctor_updatePatientDetails</b>
+
+    {
+        "org": "hospital",
+        "hospid": "1",
+        "DocID": "DOCTOR1",
+        "function_Name":"Doctor_updatePatientDetails",
+        "patientId":"PID1",
+        "newSymptoms":"xcxas" ,
+        "newDiagnosis":"asdasd" ,
+        "newTreatment":"asdaw" ,
+        "newFollowUp":"asdsa",
+        "updatedBys":"DOCTOR1"
+    }
+
+<b>Doctor_ReadPatients</b>
+
+    {
+        "org":"hospital",
+        "hospid":"2",
+        "AdminID":"hosp1apolloadmin",
+        "queryName":"Doctor_ReadPatients",
+        "patientId":"PID1",
+        "doctorId":"DOCTOR1"
+    }
+
+<b>Doctor_queryPatientsByFirstName</b>
+
+    {
+        "org":"hospital",
+        "hospid":"1",
+        "AdminID":"hosp1apolloadmin",
+        "queryName":"Doctor_queryPatientsByFirstName",
+        "firstName":"Monica"
+    }
+
+<b>Doctor_queryPatientsByLastName</b>
+
+    {
+        "org":"hospital",
+        "hospid":"1",
+        "AdminID":"hosp1apolloadmin",
+        "queryName":"Doctor_queryPatientsByLastName",
+        "lastName":"Mustermann"
+    }
+
+Once any changes made reflect the changes by call the useEffect hook.
+
+# Insurance Dashboard
+
+    {
+        choose_org: ,
+        adminid: ,
+        Insurance_adminid: ,
+        emailId : ,
+        password : 
+    }
+
+## Quering PID
+
+    {
+        "org" : "Insurance",
+        "AdminID": "appUser",
+        "queryName": "Ins_ReadPatients",
+        "patientId": "PID1"
+    }
+   
