@@ -47,10 +47,10 @@ With the details form the mail id extract the details about <b>hospID</b> , <b>a
 # Dashboard
 
 ## Admin Dashboard
+---
+### <b>Admin Detials</b>
 
-### Admin Detials
-
-### Patient
+### <b>Patient</b>
 - Create
 
     - patientId
@@ -70,7 +70,7 @@ With the details form the mail id extract the details about <b>hospID</b> , <b>a
 - Delete
     - Delete Patient
 
-### Doctor
+### <b>Doctor</b>
 
 - Create 
 
@@ -94,7 +94,68 @@ With the details form the mail id extract the details about <b>hospID</b> , <b>a
     
 
 
-### Admin Private Queries
+### <b>Admin Private Queries</b>
+
+<br></br>
+
+## Patient Dashboard
+---
+Primary details load with jwt help of emailID
+
+    "org" : "hospital",
+    "hospid": "1",
+    "AdminID" : "hosp1apolloadmin",
+    
+load this (Patient_readPatient) function using useEffect hook to automatically pull the details of the current patient
+
+### <b>Profile Details</b>
+
+### <b>Medical Details</b>
+    
+<br></br>
+*by Clicking the button load the function name
+    
+    "fun_name" : " ",
+
+<b>Patient_updatePatient
+
+    {
+        "patientId" : "PID6",
+        "newFirstname" : "Adhavan",
+        "newLastName" : "T",
+        "newPassword" : "asdas",
+        "newAge" : "20",
+        "updatedBy" : "patient",
+        "newPhoneNumber" : "9344582248",
+        "newEmergPhoneNumber" : "9940044617",
+        "newAddress" : "xxxxxxx"
+    }
+
+Patient_updatePatientPassword
+    
+    {
+        "patientId":"PID1",
+        "newPassword":"Heythere"
+    }
+
+Patient_grantAccessToDoctor
+
+    {
+        "patientId":"PID1",
+        "doctorId":"DOCTOR1"
+    }
+
+Patient_revokeAccessFromDoctor</b>
+
+    {
+        "patientId":"PID1",
+        "doctorId":"DOCTOR1"
+    }
+
+Once any changes made reflect the changes by call the useEffect hook.     
+
+<br></br>
+## Doctor DashBoard
+---
 
 
-## patient Dashboard
