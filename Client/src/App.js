@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Login from "./pages/Login";
 import 'bulma/css/bulma.min.css';
+import AdminDashboard from "./pages/Components/AdminDashboard";
 
 function App(){
   
@@ -16,7 +17,8 @@ function App(){
   return (
     <div className="App">
 
-      <Login/>
+      {/* <Login/> */}
+      <AdminDashboard/>
 
     </div>
   );
