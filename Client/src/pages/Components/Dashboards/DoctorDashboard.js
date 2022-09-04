@@ -7,7 +7,7 @@ function DoctorDashboard() {
                 <div class="container">
                     <div className="column is-half is-offset-3">
                         <div className='mb-6'>
-                            <p className='is-size-2'>Welcome, username</p>
+                            <p className='is-size-2'>Welcome, Doctor</p>
                         </div>
                         <div className="mb-6">
                             <div class="card">
@@ -42,13 +42,7 @@ function DoctorDashboard() {
                                     </div>
                                     <div className="columns is-half" >
                                         <div className="column">
-                                            <button class="button is-active is-fullwidth is-primary" value="Doctor_ReadPatients">Read Patients</button>
-                                        </div>
-                                        <div className="column">
-                                            <button class="button is-active is-fullwidth is-primary" value="Doctor_queryPatientsByFirstName">Query by Firstname</button>
-                                        </div>
-                                        <div className="column">
-                                            <button class="button is-active is-fullwidth is-primary" value="Doctor_queryPatientsByFirstName">Query by Lastname</button>
+                                            <button class="button is-active is-fullwidth is-primary" value="Doctor_ReadPatients">ViewPatient</button>
                                         </div>
                                     </div>
                                 </div>

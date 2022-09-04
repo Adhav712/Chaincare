@@ -10,7 +10,9 @@ import InsuranceDashboard from "./pages/Components/Dashboards/InsuranceDashboard
 import CreatePatient from "./pages/Components/CreatePatient";
 import CreateDoctor from "./pages/Components/CreateDoctor";
 import Navbar from "./pages/Components/navbar";
-import ViewDoctor from "./pages/Components/viewDoctor";
+import ViewPatient from "./pages/Components/ViewPatient";
+import ViewDoctor from "./pages/Components/ViewDoctor";
+
 
 function App(){
 
@@ -18,14 +20,15 @@ function App(){
     <div className="App">
 
       <Navbar/>
-      {/* <Login/> */}
+      {/* <Login/>
       <AdminDashboard/>
-      {/* <PatientDashboard/>
+      <PatientDashboard/>
       <DoctorDashboard/>
       <InsuranceDashboard/>
       <CreatePatient/>
       <CreateDoctor/>   
-      <ViewDoctor/> */}
+      <ViewPatient/> */}
+      <ViewDoctor/>
 
     </div>
   );

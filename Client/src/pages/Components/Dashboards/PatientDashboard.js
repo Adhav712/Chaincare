@@ -7,7 +7,7 @@ function PatientDashboard() {
                 <div class="container">
                     <div className="column is-half is-offset-3">
                         <div className='mb-6'>
-                            <p className='is-size-2'>Welcome, username</p>
+                            <p className='is-size-2'>Welcome, Patient</p>
                         </div>
                         <div className="mb-6">
                             <div class="card">

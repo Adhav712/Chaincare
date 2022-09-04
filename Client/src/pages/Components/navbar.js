@@ -7,7 +7,7 @@ function Navbar() {
             <nav class="navbar is-transparent">
                 <div class="navbar-brand">
                     <a class="navbar-item" href="https://bulma.io">
-                        <img src={chaincare_logo} alt="Bulma: a modern CSS framework based on Flexbox" />
+                        <img src={chaincare_logo} alt="Bulma: a modern CSS framework based on Flexbox" style={{marginTop:"6px"}}/>
                     </a>
                     {/* <div class="navbar-burger" data-target="navbarExampleTransparentExample">
                         <span></span>
