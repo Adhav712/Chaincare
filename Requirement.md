@@ -40,82 +40,109 @@ With the details form the mail id extract the details about <b>hospID</b> , <b>a
     "emailId": "sankar@apollohospital.com",
     "password": "11111111",
     "adminid" : "ADMIN0"
+
 </br>
-
-
 
 # Dashboard
 
 ## Admin Dashboard
+
 ---
+
 ### <b>Admin Detials</b>
 
 ### <b>Patient</b>
+
 - Create
 
-    - patientId
-    - emailId
-    - firstName
-    - lastName
-    - password
-    - age
-    - phoneNumber
-    - <b>Submit</b>
+  - patientId
+  - emailId
+  - firstName
+  - lastName
+  - password
+  - age
+  - phoneNumber
+  - <b>Submit</b>
 
 - View
-    - ReadPatient
-        - input field
-            - show result in container( ref: )
+
+  - ReadPatient
+    - input field
+      - show result in container( ref: )
 
 - Delete
-    - Delete Patient
+  - Delete Patient
 
 ### <b>Doctor</b>
 
-- Create 
+- Create
 
-    - new_DocID
-    - emailId
-    - firstName
-    - lastName
-    - password
-    - age
-    - phoneNumber
-    - Fields
-    - <b> Submit</b>
+  - new_DocID
+  - emailId
+  - firstName
+  - lastName
+  - password
+  - age
+  - phoneNumber
+  - Fields
+  - <b> Submit</b>
 
 - View
-    - ReadDoctorByDoctorID
-        - input field
-            - show result in container( ref: )
+
+  - ReadDoctorByDoctorID
+    - input field
+      - show result in container( ref: )
 
 - Delete
-    - Delete Doctor
-    
-
+  - Delete Doctor
 
 ### <b>Admin Private Queries</b>
 
 <br></br>
 
 ## Patient Dashboard
+
 ---
+
 Primary details load with jwt help of emailID
 
     "org" : "hospital",
     "hospid": "1",
     "AdminID" : "hosp1apolloadmin",
     "patientId": "PID1"
-    
+
 load this (Patient_readPatient) function using useEffect hook to automatically pull the details of the current patient
 
 ### <b>Profile Details</b>
 
+    {
+        "firstName": "Monica",
+        "lastName": "Latte",
+        "age": "50",
+        "phoneNumber": "+4912345678",
+        "emergPhoneNumber": "+4912345678",
+        "address": "Albrechtstrasse 71, 86383 Stadtbergen",
+        "emailId" : "monicaLatte@gmail.com",
+        "permissionGranted": [],
+        "changedBy": "initLedger",
+        "password": "12345678",
+        "pwdTemp": true
+    },
+
 ### <b>Medical Details</b>
-    
+
+    {
+        "bloodGroup": "O+",
+        "allergies": "No",
+        "symptoms": "Cholesterol, Total 250 mg/dl",
+        "diagnosis": "High Cholesterol",
+        "treatment": "Vasolip 10 mg everyday",
+        "followUp": "6 Months",
+    }
+
 <br></br>
-*by Clicking the button load the function name
-    
+\*by Clicking the button load the function name
+
     "fun_name" : " ",
 
 <b>Patient_updatePatient</b>
@@ -133,7 +160,7 @@ load this (Patient_readPatient) function using useEffect hook to automatically p
     }
 
 <b>Patient_updatePatientPassword</b>
-    
+
     {
         "patientId":"PID1",
         "newPassword":"Heythere"
@@ -153,13 +180,15 @@ load this (Patient_readPatient) function using useEffect hook to automatically p
         "doctorId":"DOCTOR1"
     }
 
-Once any changes made reflect the changes by call the useEffect hook.     
+Once any changes made reflect the changes by call the useEffect hook.
 
 <br></br>
-## Doctor DashBoard
----
-Primary details load with jwt help of emailID
 
+## Doctor DashBoard
+
+---
+
+Primary details load with jwt help of emailID
 
     "org":"hospital",
     "hospid":"1",
@@ -167,16 +196,13 @@ Primary details load with jwt help of emailID
     "queryName":"Doctor_readDoctor",
     "doctorId":"DOCTOR1"
 
-    
 load this (Doctor_readDoctor) function using useEffect hook to automatically pull the details of the current Doctor
-
-
 
 ### <b>Profile Details</b>
 
 <br></br>
-*by Clicking the button load the function name
-    
+\*by Clicking the button load the function name
+
     "queryName" : " ",
 
 <b> doctor_update_details</b>
@@ -187,8 +213,8 @@ load this (Doctor_readDoctor) function using useEffect hook to automatically pul
         "DocID": "DOCTOR1",
         "function_Name":"doctor_update_details",
         "firstName" : "adhavan",
-        "lastName":"asdasdasd", 
-        "password": "asdsad", 
+        "lastName":"asdasdasd",
+        "password": "asdsad",
         "age": "32",
         "phoneNumber":"49849",
         "address": "asdkljhnsaiuohdasd",
@@ -251,7 +277,7 @@ Once any changes made reflect the changes by call the useEffect hook.
         adminid: ,
         Insurance_adminid: ,
         emailId : ,
-        password : 
+        password :
     }
 
 ## Quering PID
@@ -262,4 +288,3 @@ Once any changes made reflect the changes by call the useEffect hook.
         "queryName": "Ins_ReadPatients",
         "patientId": "PID1"
     }
-   
