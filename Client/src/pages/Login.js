@@ -49,11 +49,12 @@ function Login() {
 
                                 </div>
                                 <div class="buttons has-addons is-centered">
-                                    <button className="button is-primary ">Sign in</button>
+                                    <button className="button is-primary" style={{width:"50%"}}>Sign in</button>
                                 </div>
                             </form>
                         </div>
                     </div>
+                    
                 </div>
             </section>
         </>

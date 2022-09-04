@@ -2,7 +2,7 @@ import React from "react";
 
 function AdminDashboard() {
     return (
-        <section class="hero is-fullheight">
+        <section class="hero is-fullheight-with-navbar">
             <div class="hero-body">
                 <div class="container">
                     <div className="column is-half is-offset-3">
@@ -74,28 +74,6 @@ function AdminDashboard() {
                                 </div> */}
                             </div>
                         </div>
-
-
-
-
-                        <div class="field">
-                            <label for="" class="label">Name</label>
-                            <div class="control has-icons-left">
-                                <input type="email" placeholder="e.g Alex Smith" class="input" required />
-                                <span class="icon is-small is-left">
-                                    <i class="fas fa-user"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <p class="control has-icons-left">
-                                <input class="input" type="password" placeholder="Password" />
-                                <span class="icon is-small is-left">
-                                    <i class="fas fa-lock"></i>
-                                </span>
-                            </p>
-                        </div>
-
                     </div>
                 </div>
             </div>

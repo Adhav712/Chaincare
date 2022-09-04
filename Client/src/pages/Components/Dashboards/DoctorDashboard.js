@@ -2,7 +2,7 @@ import React from "react";
 
 function DoctorDashboard() {
     return(
-        <section class="hero is-fullheight">
+        <section class="hero is-fullheight-with-navbar">
             <div class="hero-body">
                 <div class="container">
                     <div className="column is-half is-offset-3">

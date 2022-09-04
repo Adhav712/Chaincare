@@ -2,7 +2,7 @@ import React from "react";
 
 function InsuranceDashboard() {
     return(
-        <section class="hero is-fullheight is-danger">
+        <section class="hero is-fullheight-with-navbar is-danger">
             <div class="hero-body">
                 <div class="container">
                     <div className="column is-half is-offset-3">

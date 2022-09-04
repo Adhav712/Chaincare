@@ -9,26 +9,23 @@ import DoctorDashboard from "./pages/Components/Dashboards/DoctorDashboard";
 import InsuranceDashboard from "./pages/Components/Dashboards/InsuranceDashboard";
 import CreatePatient from "./pages/Components/CreatePatient";
 import CreateDoctor from "./pages/Components/CreateDoctor";
+import Navbar from "./pages/Components/navbar";
+import ViewDoctor from "./pages/Components/viewDoctor";
 
 function App(){
-  
-  const [block, setblock] = useState("");
-
-  const renderblock = () => {
-    console.log("worked");
-    setblock("Vanakada mapla motherboard la irudhu!!!!");
-  }
 
   return (
     <div className="App">
 
-      {/* <Login/>
+      <Navbar/>
+      {/* <Login/> */}
       <AdminDashboard/>
-      <PatientDashboard/>
+      {/* <PatientDashboard/>
       <DoctorDashboard/>
       <InsuranceDashboard/>
-      <CreatePatient/> */}
-      <CreateDoctor/>    
+      <CreatePatient/>
+      <CreateDoctor/>   
+      <ViewDoctor/> */}
 
     </div>
   );
