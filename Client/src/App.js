@@ -3,9 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 import Login from "./pages/Login";
 import 'bulma/css/bulma.min.css';
-import AdminDashboard from "./pages/Components/AdminDashboard";
-import PatientDashboard from "./pages/Components/PatientDashboard";
-import DoctorDashboard from "./pages/Components/DoctorDashboard";
+import AdminDashboard from "./pages/Components/Dashboards/AdminDashboard";
+import PatientDashboard from "./pages/Components/Dashboards/PatientDashboard";
+import DoctorDashboard from "./pages/Components/Dashboards/DoctorDashboard";
+import InsuranceDashboard from "./pages/Components/Dashboards/InsuranceDashboard";
 
 function App(){
   
@@ -22,7 +23,8 @@ function App(){
       {/* <Login/> */}
       {/* <AdminDashboard/> */}
       {/* <PatientDashboard/> */}
-      <DoctorDashboard/>
+      {/* <DoctorDashboard/> */}
+      <InsuranceDashboard/>
 
     </div>
   );
