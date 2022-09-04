@@ -26,8 +26,8 @@ function App(){
       <AdminDashboard/>
       <PatientDashboard/>
       <DoctorDashboard/>
-      <InsuranceDashboard/> */}
-      {/* <CreatePatient/> */}
+      <InsuranceDashboard/>
+      <CreatePatient/> */}
       <CreateDoctor/>    
 
     </div>

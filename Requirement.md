@@ -1,4 +1,4 @@
-# Login page
+# Login page✅
 
 ### EmailID:
 
@@ -45,7 +45,7 @@ With the details form the mail id extract the details about <b>hospID</b> , <b>a
 
 # Dashboard
 
-## Admin Dashboard
+## Admin Dashboard✅
 
 ---
 
@@ -53,7 +53,7 @@ With the details form the mail id extract the details about <b>hospID</b> , <b>a
 
 ### <b>Patient</b>
 
-- Create
+- Create✅
 
   - patientId
   - emailId
@@ -75,7 +75,7 @@ With the details form the mail id extract the details about <b>hospID</b> , <b>a
 
 ### <b>Doctor</b>
 
-- Create
+- Create✅
 
   - new_DocID
   - emailId
@@ -100,7 +100,7 @@ With the details form the mail id extract the details about <b>hospID</b> , <b>a
 
 <br></br>
 
-## Patient Dashboard
+## Patient Dashboard✅
 
 ---
 
@@ -184,7 +184,7 @@ Once any changes made reflect the changes by call the useEffect hook.
 
 <br></br>
 
-## Doctor DashBoard
+## Doctor DashBoard✅
 
 ---
 
@@ -283,7 +283,7 @@ load this (Doctor_readDoctor) function using useEffect hook to automatically pul
 
 Once any changes made reflect the changes by call the useEffect hook.
 
-# Insurance Dashboard
+# Insurance Dashboard✅
 
     {
         choose_org: ,
