@@ -1,7 +1,14 @@
 import React, {useState} from "react";
 import logo from './logo.svg';
 import './App.css';
-// import query from'../../Server/hosp1apollo_server_files/query.js'
+import Login from "./pages/Login";
+import 'bulma/css/bulma.min.css';
+import AdminDashboard from "./pages/Components/Dashboards/AdminDashboard";
+import PatientDashboard from "./pages/Components/Dashboards/PatientDashboard";
+import DoctorDashboard from "./pages/Components/Dashboards/DoctorDashboard";
+import InsuranceDashboard from "./pages/Components/Dashboards/InsuranceDashboard";
+import CreatePatient from "./pages/Components/CreatePatient";
+import CreateDoctor from "./pages/Components/CreateDoctor";
 
 function App(){
   
@@ -14,22 +21,15 @@ function App(){
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          <h1> Hey this is Adhav </h1>
-          Click here to query the Block
-        </p>
-        <p
 
-          type = "button"
-          className="App-link"
-          onClick = {renderblock}
-        >
-          Query Lasted Block
-        </p>
-        <p>{block}</p>
-      </header>
+      {/* <Login/>
+      <AdminDashboard/>
+      <PatientDashboard/>
+      <DoctorDashboard/>
+      <InsuranceDashboard/> */}
+      {/* <CreatePatient/> */}
+      <CreateDoctor/>    
+
     </div>
   );
 }

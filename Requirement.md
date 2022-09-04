@@ -200,6 +200,19 @@ load this (Doctor_readDoctor) function using useEffect hook to automatically pul
 
 ### <b>Profile Details</b>
 
+{
+"firstName": "Karthi",
+"lastName": "keyan",
+"age": "50",
+"phoneNumber": "+1111111111",
+"emailID": "pnkgkarthi@gmail.com",
+"address": "Chennai",
+"bloodGroup": "AB+",
+"Fields":"Anesthesiologists",
+"password": "12345678",
+"pwdTemp": false
+},
+
 <br></br>
 \*by Clicking the button load the function name
 
