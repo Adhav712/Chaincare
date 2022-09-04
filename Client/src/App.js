@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import 'bulma/css/bulma.min.css';
 import AdminDashboard from "./pages/Components/AdminDashboard";
 import PatientDashboard from "./pages/Components/PatientDashboard";
+import DoctorDashboard from "./pages/Components/DoctorDashboard";
 
 function App(){
   
@@ -20,7 +21,8 @@ function App(){
 
       {/* <Login/> */}
       {/* <AdminDashboard/> */}
-      <PatientDashboard/>
+      {/* <PatientDashboard/> */}
+      <DoctorDashboard/>
 
     </div>
   );
