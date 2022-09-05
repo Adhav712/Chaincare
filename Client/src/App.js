@@ -12,7 +12,14 @@ import CreateDoctor from "./pages/Components/CreateDoctor";
 import Navbar from "./pages/Components/navbar";
 import ViewPatient from "./pages/Components/ViewPatient";
 import ViewDoctor from "./pages/Components/ViewDoctor";
-
+import UpdatePatients from "./pages/Components/Patient/UpdatePatient";
+import UpdateDoctors from "./pages/Components/Doctor/UpdateDoctor";
+import UpdatePatientPassword from "./pages/Components/Patient/UpdatePatientPassword";
+import GrantAccessToDoctor from "./pages/Components/Patient/GrantAccessToDoctor";
+import RevokeAccessToDoctor from "./pages/Components/Patient/RevokeAccessToDoctor";
+import UpdatePatient_medic from "./pages/Components/Doctor/UpdatePatient_medic";
+import DeletePatient from "./pages/Components/DeletePatient";
+import DeleteDoctor from "./pages/Components/DeleteDoctor";
 
 function App(){
 
@@ -20,15 +27,24 @@ function App(){
     <div className="App">
 
       <Navbar/>
-      {/* <Login/>
+      <Login/>
       <AdminDashboard/>
       <PatientDashboard/>
       <DoctorDashboard/>
       <InsuranceDashboard/>
       <CreatePatient/>
       <CreateDoctor/>   
-      <ViewPatient/> */}
+      <ViewPatient/>
       <ViewDoctor/>
+      <UpdatePatients/>
+      <UpdateDoctors/>
+      <UpdatePatientPassword/>
+      <GrantAccessToDoctor/>
+      <RevokeAccessToDoctor/>
+      <UpdatePatient_medic/>
+      <DeletePatient/>
+      <DeleteDoctor/>
+
 
     </div>
   );

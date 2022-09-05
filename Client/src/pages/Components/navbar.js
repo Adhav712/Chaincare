@@ -19,7 +19,7 @@ function Navbar() {
                 <div id="navbarExampleTransparentExample" class="navbar-menu">
                     <div class="navbar-start">
                         <a class="navbar-item" href="https://bulma.io/">
-                            Home
+                            Dashboard
                         </a>
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a class="navbar-link" href="https://bulma.io/documentation/overview/start/">
@@ -65,8 +65,8 @@ function Navbar() {
                                     </button>
                                 </p>
                                 <p class="control">
-                                    <a class="button is-light ">
-                                        Log in
+                                    <a class="button is-success ">
+                                        Log out
                                     </a>
                                 </p>
                             </div>
