@@ -102,13 +102,13 @@ async function enrollInsurance1AdminUser(){
 }
 
 async function main(){
-    await enrollAdmin.enrollAdminHosp1();
-    await enrollAdmin.enrollAdminHosp2();
-    await enrollAdmin.enrollAdminHosp3();
-    await enrollAdmin.enrollAdminIns1();
-    await enrollInsurance1AdminUser();
-    await initpatientLedger();
-    await initdoctorLedger();
+//     await enrollAdmin.enrollAdminHosp1();
+//     await enrollAdmin.enrollAdminHosp2();
+//     await enrollAdmin.enrollAdminHosp3();
+//     await enrollAdmin.enrollAdminIns1();
+//     await enrollInsurance1AdminUser();
+//     await initpatientLedger();
+//     await initdoctorLedger();
 }
 
 main();

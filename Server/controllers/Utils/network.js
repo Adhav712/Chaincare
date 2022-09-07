@@ -19,7 +19,7 @@
    const gateway = new Gateway();
    const hospitalId = parseInt(hospid);
     if(org == "hospital"){
-      if (hospitalId === 1) { 
+      if (hospitalId === "1") { 
         const ccpPath = path.resolve(__dirname, '..', '..' ,'..','test-network', 'organizations', 'peerOrganizations', 'hosp1apollo.chaincare.com', 'connection-hosp1apollo.json');
         const fileExists = fs.existsSync(ccpPath);
         if (!fileExists) {
@@ -70,7 +70,7 @@
         };
         console.log('Succesfully connected to the network.');
         return networkObj;
-      } else if (hospitalId === 2) 
+      } else if (hospitalId === "2") 
       
       {
         
@@ -126,7 +126,7 @@
         return networkObj;
 
         
-      }else if (hospitalId === 3) {
+      }else if (hospitalId === "3") {
         
         // load the common connection configuration file
         const ccpPath = path.resolve(__dirname, '..', '..', '..','test-network','organizations', 'peerOrganizations', 'hosp3stanley.chaincare.com', 'connection-hosp3stanley.json');
@@ -179,7 +179,7 @@
         console.log('Succesfully connected to the network.');
 
       }else{
-        res.stats(400).send("Unable to connect to network");
+        res.stats(400).json("Unable to connect to network");
       }
     }else if(org == "Insurance"){
       const ccpPath = path.resolve(__dirname, '..', '..', '..','test-network','organizations', 'peerOrganizations',
@@ -234,7 +234,7 @@
         return networkObj;
 
     }else{
-      res.status(400).send("Unable to connect to network");
+      res.status(400).json("Unable to connect to network");
     }
       
     
@@ -540,7 +540,7 @@
        return networkObj;
 
      }else{
-       res.stats(400).send("Unable to connect to network");
+       res.stats(400).json("Unable to connect to network");
      }
    }else if(org == "Insurance"){
      const ccpPath = path.resolve(__dirname, '..', '..', '..','test-network','organizations', 'peerOrganizations',
@@ -597,7 +597,7 @@
        return networkObj;
 
    }else{
-     res.status(400).send("Unable to connect to network");
+     res.status(400).json("Unable to connect to network");
    }
 }
 
