@@ -5,19 +5,19 @@ function ViewPatient() {
     const [query, setquery] = React.useState("Patient-ID");
 
     const queryfucntion = (query) => {
-        if (query == "Patient-ID") {
+        if (query === "Patient-ID") {
             document.getElementById("Patient-ID").className = "is-active";
             document.getElementById("Patientby-FirstName").className = "a";
             document.getElementById("Patientby-LastName").className = "a";
             setquery("Patient-ID");
 
-        } else if (query == "Patientby-FirstName") {
+        } else if (query === "Patientby-FirstName") {
             document.getElementById("Patient-ID").className = "a";
             document.getElementById("Patientby-FirstName").className = "is-active";
             document.getElementById("Patientby-LastName").className = "a";
             setquery("Patientby-FirstName");
 
-        } else if (query == "Patientby-LastName") {
+        } else if (query === "Patientby-LastName") {
             document.getElementById("Patient-ID").className = "a";
             document.getElementById("Patientby-FirstName").className = "a";
             document.getElementById("Patientby-LastName").className = "is-active";

@@ -1,14 +1,17 @@
 import React from "react";
 import chaincare_logo from "../../assets/logo.png";
+import {Link } from "react-router-dom";
 
 function Navbar() {
     return (
         <>
             <nav class="navbar is-transparent">
                 <div class="navbar-brand">
-                    <a class="navbar-item" href="https://bulma.io">
-                        <img src={chaincare_logo} alt="Bulma: a modern CSS framework based on Flexbox" style={{marginTop:"6px"}}/>
-                    </a>
+                    <Link to="/" class="navbar-item">
+                        <a class="navbar-item">
+                            <img src={chaincare_logo} alt="Bulma: a modern CSS framework based on Flexbox" style={{marginTop:"6px"}}/>
+                        </a>
+                    </Link>   
                     {/* <div class="navbar-burger" data-target="navbarExampleTransparentExample">
                         <span></span>
                         <span></span>
@@ -57,17 +60,21 @@ function Navbar() {
                         <div class="navbar-item">
                             <div class="field is-grouped">
                                 <p class="control">
-                                    <button class="button">
-                                        <span class="icon">
-                                            <i class="fab fa-github"></i>
-                                        </span>
-                                        <a href="https://github.com/Adhav712/Chaincare" target="_blank" rel="noopener noreferrer">GitHub</a>
-                                    </button>
+                                    <a href ="https://github.com/Adhav712/Chaincare" target="_blank" rel="noopener noreferrer">
+                                        <button class="button">
+                                            <span class="icon">
+                                                <i class="fab fa-github"></i>
+                                            </span>
+                                            <a>GitHub</a>
+                                        </button>
+                                    </a>
                                 </p>
                                 <p class="control">
-                                    <a class="button is-success ">
-                                        Log out
-                                    </a>
+                                    <Link to='/login' style={{width:'50%'}} >
+                                        <button class="button is-success ">
+                                            Log out
+                                        </button>
+                                    </Link>
                                 </p>
                             </div>
                         </div>

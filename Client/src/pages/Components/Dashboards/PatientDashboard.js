@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function PatientDashboard() {
     return(
@@ -55,18 +56,18 @@ function PatientDashboard() {
                                 <div class="card-content">
                                     <div className="columns is-half" >
                                         <div className="column">
-                                            <button class="button is-active is-fullwidth is-primary" value="Patient_updatePatient">UpdateDetails</button>
+                                            <Link to="/patient/updateDetails" className="button is-active is-primary is-fullwidth">Update Details</Link>
                                         </div>
                                         <div className="column">
-                                            <button class="button is-active is-fullwidth is-primary" value="Patient_updatePatientPassword" >UpdatePassword</button>
+                                            <Link to="/patient/updatePassword" className="button is-active is-primary is-fullwidth">UpdatePassword</Link>
                                         </div>
                                     </div>
                                     <div className="columns is-half" >
                                         <div className="column">
-                                            <button class="button is-active is-fullwidth is-primary" value="Patient_grantAccessToDoctor">Grant access to Doctor</button>
+                                            <Link to="/patient/grantAccessToDoctor" className="button is-active is-primary is-fullwidth">Grant access to Doctor</Link>
                                         </div>
                                         <div className="column">
-                                            <button class="button is-active is-fullwidth is-primary" value="Patient_revokeAccessFromDoctor" >Revoke access from Doctor</button>
+                                            <Link to="/patient/revokeAccessToDoctor" className="button is-active is-primary is-fullwidth">Revoke access from Doctor</Link>
                                         </div>
                                     </div>
                                 </div>

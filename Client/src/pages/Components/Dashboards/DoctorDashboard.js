@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 function DoctorDashboard() {
     return(
         <section class="hero is-fullheight-with-navbar">
@@ -34,15 +34,15 @@ function DoctorDashboard() {
                                 <div class="card-content">
                                     <div className="columns is-half" >
                                         <div className="column">
-                                            <button class="button is-active is-fullwidth is-primary" value="doctor_update_details">UpdateDetails</button>
+                                            <Link to="/doctor/updateDetails" className="button is-active is-primary is-fullwidth">Update Details</Link>
                                         </div>
                                         <div className="column">
-                                            <button class="button is-active is-fullwidth is-primary" value="Doctor_updatePatientDetails">UpdatePatientDetails</button>
+                                            <Link to="/doctor/updatePatient_medicalDetails" className="button is-active is-primary is-fullwidth">UpdatePatientDetails</Link>
                                         </div>
                                     </div>
                                     <div className="columns is-half" >
                                         <div className="column">
-                                            <button class="button is-active is-fullwidth is-primary" value="Doctor_ReadPatients">ViewPatient</button>
+                                            <Link to="/doctor/viewPatient" className="button is-active is-primary is-fullwidth">View Patient</Link>
                                         </div>
                                     </div>
                                 </div>
