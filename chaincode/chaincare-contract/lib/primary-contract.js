@@ -302,7 +302,7 @@ class PatientContract extends Contract {
     async readAdminDetails(ctx, adminId) {
         const exists = await this.AdminExists(ctx, adminId);
         if (!exists) {
-            throw new Error(`The patient ${adminId} does not exist`);
+            throw new Error(`The Admin ${adminId} does not exist`);
         }
         const buffer = await ctx.stub.getState(adminId);
         const asset = JSON.parse(buffer.toString());
@@ -331,7 +331,7 @@ class PatientContract extends Contract {
         phoneNumber,Fields) {
     const exists = await this.doctorExists(ctx, doctorId);
     if (exists) {
-        throw new Error(`The patient ${doctorId} already exists`);
+        throw new Error(`The Doctor ${doctorId} already exists`);
     }
         const patient = {
             emailId,
@@ -360,7 +360,7 @@ class PatientContract extends Contract {
     async Admin_readDoctor(ctx, doctorId) {
         const exists = await this.doctorExists(ctx, doctorId);
         if (!exists) {
-            throw new Error(`The patient ${doctorId} does not exist`);
+            throw new Error(`The doctor ${doctorId} does not exist`);
         }
         const buffer = await ctx.stub.getState(doctorId);
         const asset = JSON.parse(buffer.toString());
@@ -378,7 +378,7 @@ class PatientContract extends Contract {
     async Admin_deleteDoctor(ctx, doctorId) {
         const exists = await this.doctorExists(ctx, doctorId);
         if (!exists) {
-            throw new Error(`The patient ${doctorId} does not exist`);
+            throw new Error(`The doctor ${doctorId} does not exist`);
         }
         await ctx.stub.deleteState(doctorId);
     }

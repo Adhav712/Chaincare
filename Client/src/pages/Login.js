@@ -1,89 +1,39 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
+    let navigate = useNavigate();
     const [Role, setRole] = React.useState("");
     const [Organization, setOrganization] = React.useState("");
     const [HospName, setHospName] = React.useState("");
     const [Email, setEmail] = React.useState("");
     const [Password, setPassword] = React.useState("");
-    const [ID,setID] = React.useState("");
-    let adminid="",Insurance_adminid="";
+    const [ID, setID] = React.useState("");
+    let adminid = "";
 
 
 
-    // const handlingId = (e) => {
-    //     console.log("29");
-    //     if(Organization === "hospital"){
-    //         console.log("true"+"33");
-    //         if(Role === "admin"){
-    //             if(HospName === "Apollo"){
-    //                 console.log("true"+"36");
-    //                 setAdminID("hosp1apolloadmin");
-    //                 sethospid("1");
-    //                 console.log("true"+"39");
-    //             }else if(HospName === "Vijaya"){
-    //                 setAdminID("hosp2vijayaadmin");
-    //                 sethospid("2");
-    //             }else if(HospName === "Stanley"){
-    //                 setAdminID("hosp3stanleyadmin");
-    //                 sethospid("3");
-    //             }
-    //         }else if(Role === "doctor"){
-    //             if(HospName === "Apollo"){
-    //                 setAdminID("hosp1apolloadmin");
-    //                 sethospid("1");
-    //             }else if(HospName === "Vijaya"){
-    //                 setAdminID("hosp2vijayaadmin");
-    //                 sethospid("2");
-    //             }else if(HospName === "Stanley"){
-    //                 setAdminID("hosp3stanleyadmin");
-    //                 sethospid("3");
-    //             }
-    //         }else if(Role === "patient"){
-    //             console.log("true"+"59");
-    //             if(HospName === "Apollo"){
-    //                 setAdminID("hosp1apolloadmin");
-    //                 sethospid("1")
-    //             }else if(HospName === "Vijaya"){
-    //                 setAdminID("hosp2vijayaadmin");
-    //                 sethospid("2");
-    //             }else if(HospName === "Stanley"){
-    //                 setAdminID("hosp3stanleyadmin");
-    //                 sethospid("3");
-    //             }
 
-    //         }
-    //     }else if(Organization === "Insurance"){
-    //         adminid = "";
-    //     }
-    //     console.log("67");
-    //     console.log(hospid,AdminID,adminid);
-    // }
-
-    const Submit_Login_Value = async()  => {
+    const Submit_Login_Value = async () => {
         let AdminID = "";
         let hospid = "";
+        let Insurance_adminid = "";
         console.log("Its works post route  ")
-        // handlingId(Role);
-        if(HospName === "Apollo"){
+        if (HospName === "Apollo") {
             AdminID = "hosp1apolloadmin";
             hospid = "1";
-            // setAdminID("hosp1apolloadmin");
-            // sethospid("1")
-        }else if(HospName === "Vijaya"){
+        } else if (HospName === "Vijaya") {
             AdminID = "hosp2vijayaadmin";
             hospid = "2";
-            // setAdminID("hosp2vijayaadmin");
-            // sethospid("2");
-        }else if(HospName === "Stanley"){
+        } else if (HospName === "Stanley") {
             AdminID = "hospital3stanleyadmin";
             hospid = "3";
-            // setAdminID("hospital3stanleyadmin");
-            // sethospid("3");
+        } else if (Organization === "Insurance") {
+            Insurance_adminid = "hosp1apolloadmin";
         }
 
 
-        console.log(Role,Organization,hospid,AdminID,Email,Password,ID,ID,ID);
+        console.log(Role, Organization, hospid, AdminID, Email, Password, ID, ID, ID);
         const fetchs = await fetch("http://localhost:3000/login", {
             method: "POST",
             headers: {
@@ -92,20 +42,28 @@ function Login() {
             body: JSON.stringify({
                 login_role: Role,
                 choose_org: Organization,
-                hospid : hospid,
-                AdminID : AdminID,
+                hospid: hospid,
+                AdminID: AdminID,
                 emailId: Email,
                 password: Password,
-                adminid : ID,
-                PID : ID,
-                DocID : ID
+                adminid: ID,
+                PID: ID,
+                DocID: ID,
+                Insurance_adminid: Insurance_adminid
             }),
         })
-        try{
+        try {
             const data = await fetchs.json();
             console.log(data);
-        }   
-        catch(err){
+            if (data === 'authenticated') {
+                console.log("true");
+                if (Organization === "Insurance") {
+                    navigate(`/insurance`);
+                }
+                navigate(`/${Role}`);
+            }
+        }
+        catch (err) {
             console.log(err);
         }
     }
@@ -121,7 +79,7 @@ function Login() {
                                 <div className="field">
                                     <label className="label">Email</label>
                                     <div className="control">
-                                        <input className="input" type="email" placeholder="e.g. alex@example.com" onChange= {(event) => setEmail(event.target.value) } />
+                                        <input className="input" type="email" placeholder="e.g. alex@example.com" onChange={(event) => setEmail(event.target.value)} />
                                     </div>
                                 </div>
 
@@ -129,7 +87,7 @@ function Login() {
                                     <label className="label">Password</label>
                                     <div className="control">
                                         <div className="">
-                                            <input className="input" id="password-field" type="password" placeholder="********" onChange={(event) => setPassword(event.target.value)}/>
+                                            <input className="input" id="password-field" type="password" placeholder="********" onChange={(event) => setPassword(event.target.value)} />
                                             {/* <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span> */}
                                         </div>
                                     </div>
@@ -138,9 +96,9 @@ function Login() {
                                 <div className='field'>
                                     <div className='control is-expanded'>
                                         <div className='select is-fullwidth'>
-                                            <select onChange={(event) =>{
+                                            <select onChange={(event) => {
                                                 setOrganization(event.target.value)
-                                                }}>
+                                            }}>
                                                 <option value='' disabled selected>Organization</option>
                                                 <option value='hospital'>Hospital</option>
                                                 <option value='Insurance'>Insurance</option>
@@ -148,52 +106,60 @@ function Login() {
                                         </div>
                                     </div>
                                 </div>
-                                
-                                {(Organization === 'hospital') ? 
-                                (
-                                    <div className='field'>
-                                    <div className='control is-expanded'>
-                                        <div className='select is-fullwidth'>
-                                            <select onChange={(event) => setHospName(event.target.value)}>
-                                                <option value='' disabled selected>Hospital Name</option>
-                                                <option value='Apollo' >Apollo Hospital</option>
-                                                <option value='Vijaya'>Vijaya Hospital</option>
-                                                <option value='Stanley'>Stanley Hospital</option>
-                                            </select>
+
+                                {(Organization === 'hospital') ?
+                                    (
+                                        <div className='field'>
+                                            <div className='control is-expanded'>
+                                                <div className='select is-fullwidth'>
+                                                    <select onChange={(event) => setHospName(event.target.value)}>
+                                                        <option value='' disabled selected>Hospital Name</option>
+                                                        <option value='Apollo' >Apollo Hospital</option>
+                                                        <option value='Vijaya'>Vijaya Hospital</option>
+                                                        <option value='Stanley'>Stanley Hospital</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    </div>
-                                ) : 
+                                    ) :
                                     ''
                                 }
-                                <div className='field'>
-                                    <div className='control is-expanded'>
-                                        <div className='select is-fullwidth'>
-                                            <select onChange={(event) => {
-                                                setRole(event.target.value)
-                                            }}>
-                                                <option value='default value' disabled selected>Role</option>
-                                                <option value='admin'>Admin</option>
-                                                <option value='doctor'>Doctor</option>
-                                                <option value='patient'>Patient</option>
-                                            </select>
+
+                                {(Organization === 'hospital') ?
+                                    (
+                                        <div className='field'>
+                                            <div className='control is-expanded'>
+                                                <div className='select is-fullwidth'>
+                                                    <select onChange={(event) => {
+                                                        setRole(event.target.value)
+                                                    }}>
+                                                        <option value='default value' disabled selected>Role</option>
+                                                        <option value='admin'>Admin</option>
+                                                        <option value='doctor'>Doctor</option>
+                                                        <option value='patient'>Patient</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    ) :
+                                    ''
+                                }
+
+
 
                                 <div className="field">
                                     <div className="control">
-                                        <input className="input" type="text" placeholder={Role + "ID"} onChange= {(event) => setID(event.target.value) } />
+                                        <input className="input" type="text" placeholder={Role + "ID"} onChange={(event) => setID(event.target.value)} />
                                     </div>
                                 </div>
 
                                 <div className="buttons has-addons is-centered">
-                                    <button className="button is-primary" style={{width:"50%"}} onClick={Submit_Login_Value}>Sign in</button>
+                                    <button className="button is-primary" style={{ width: "50%" }} onClick={Submit_Login_Value}>Sign in</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </section>
         </>

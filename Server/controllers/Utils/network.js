@@ -30,7 +30,7 @@
     return ccpPath;
   }else{
     console.log("Error in connecting to network",37);
-    res.stats(400).json("Unable to connect to network");
+    res.status(400).json("Unable to connect to network");
   }
  }
  
