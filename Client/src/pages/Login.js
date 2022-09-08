@@ -7,63 +7,82 @@ function Login() {
     const [Email, setEmail] = React.useState("");
     const [Password, setPassword] = React.useState("");
     const [ID,setID] = React.useState("");
-    const [AdminID,setAdminID] = React.useState("");
-    const [hospid,sethospid] = React.useState("");
     let adminid="",Insurance_adminid="";
 
 
-    const handlingId = (e) => {
-        console.log("29");
-        if(Organization === "hospital"){
-            console.log("true"+"33");
-            if(Role === "admin"){
-                if(HospName === "Apollo"){
-                    console.log("true"+"36");
-                    setAdminID("hosp1apolloadmin");
-                    sethospid("1");
-                    console.log("true"+"39");
-                }else if(HospName === "Vijaya"){
-                    setAdminID("hosp2vijayaadmin");
-                    sethospid("2");
-                }else if(HospName === "Stanley"){
-                    setAdminID("hosp1apolloadmin");
-                    sethospid("3");
-                }
-            }else if(Role === "doctor"){
-                if(HospName === "Apollo"){
-                    setAdminID("hosp1apolloadmin");
-                    sethospid("1");
-                }else if(HospName === "Vijaya"){
-                    setAdminID("hosp2vijayaadmin");
-                    sethospid("2");
-                }else if(HospName === "Stanley"){
-                    setAdminID("hosp1apolloadmin");
-                    sethospid("3");
-                }
-            }else if(Role === "patient"){
-                console.log("true"+"59");
-                if(HospName === "Apollo"){
-                    setAdminID("hosp1apolloadmin");
-                    sethospid("1")
-                }else if(HospName === "Vijaya"){
-                    setAdminID("hosp2vijayaadmin");
-                    sethospid("2");
-                }else if(HospName === "Stanley"){
-                    setAdminID("hosp1apolloadmin");
-                    sethospid("3");
-                }
 
-            }
-        }else if(Organization === "Insurance"){
-            adminid = "";
-        }
-        console.log("67");
-        console.log(hospid,AdminID,adminid);
-    }
+    // const handlingId = (e) => {
+    //     console.log("29");
+    //     if(Organization === "hospital"){
+    //         console.log("true"+"33");
+    //         if(Role === "admin"){
+    //             if(HospName === "Apollo"){
+    //                 console.log("true"+"36");
+    //                 setAdminID("hosp1apolloadmin");
+    //                 sethospid("1");
+    //                 console.log("true"+"39");
+    //             }else if(HospName === "Vijaya"){
+    //                 setAdminID("hosp2vijayaadmin");
+    //                 sethospid("2");
+    //             }else if(HospName === "Stanley"){
+    //                 setAdminID("hosp3stanleyadmin");
+    //                 sethospid("3");
+    //             }
+    //         }else if(Role === "doctor"){
+    //             if(HospName === "Apollo"){
+    //                 setAdminID("hosp1apolloadmin");
+    //                 sethospid("1");
+    //             }else if(HospName === "Vijaya"){
+    //                 setAdminID("hosp2vijayaadmin");
+    //                 sethospid("2");
+    //             }else if(HospName === "Stanley"){
+    //                 setAdminID("hosp3stanleyadmin");
+    //                 sethospid("3");
+    //             }
+    //         }else if(Role === "patient"){
+    //             console.log("true"+"59");
+    //             if(HospName === "Apollo"){
+    //                 setAdminID("hosp1apolloadmin");
+    //                 sethospid("1")
+    //             }else if(HospName === "Vijaya"){
+    //                 setAdminID("hosp2vijayaadmin");
+    //                 sethospid("2");
+    //             }else if(HospName === "Stanley"){
+    //                 setAdminID("hosp3stanleyadmin");
+    //                 sethospid("3");
+    //             }
+
+    //         }
+    //     }else if(Organization === "Insurance"){
+    //         adminid = "";
+    //     }
+    //     console.log("67");
+    //     console.log(hospid,AdminID,adminid);
+    // }
 
     const Submit_Login_Value = async()  => {
+        let AdminID = "";
+        let hospid = "";
         console.log("Its works post route  ")
-        handlingId(Role);
+        // handlingId(Role);
+        if(HospName === "Apollo"){
+            AdminID = "hosp1apolloadmin";
+            hospid = "1";
+            // setAdminID("hosp1apolloadmin");
+            // sethospid("1")
+        }else if(HospName === "Vijaya"){
+            AdminID = "hosp2vijayaadmin";
+            hospid = "2";
+            // setAdminID("hosp2vijayaadmin");
+            // sethospid("2");
+        }else if(HospName === "Stanley"){
+            AdminID = "hospital3stanleyadmin";
+            hospid = "3";
+            // setAdminID("hospital3stanleyadmin");
+            // sethospid("3");
+        }
+
+
         console.log(Role,Organization,hospid,AdminID,Email,Password,ID,ID,ID);
         const fetchs = await fetch("http://localhost:3000/login", {
             method: "POST",
@@ -77,9 +96,9 @@ function Login() {
                 AdminID : AdminID,
                 emailId: Email,
                 password: Password,
-                // adminid : ID,
+                adminid : ID,
                 PID : ID,
-                // DocID : ID
+                DocID : ID
             }),
         })
         try{
@@ -109,7 +128,10 @@ function Login() {
                                 <div className="field">
                                     <label className="label">Password</label>
                                     <div className="control">
-                                        <input className="input" type="password" placeholder="********" onChange={(event) => setPassword(event.target.value)}/>
+                                        <div className="">
+                                            <input className="input" id="password-field" type="password" placeholder="********" onChange={(event) => setPassword(event.target.value)}/>
+                                            {/* <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span> */}
+                                        </div>
                                     </div>
                                 </div>
 

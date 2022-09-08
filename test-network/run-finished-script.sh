@@ -4,6 +4,18 @@ cd addInsurance/
 
 cd ../
 
+./network.sh down
+
+docker volume prune -f
+
+docker system prune -f
+
+cd ../Server/controllers/wallet
+
+rm *.id
+
+cd ../../../test-network
+
 # echo ${PWD}
 ./network.sh up createChannel -ca -s couchdb
 

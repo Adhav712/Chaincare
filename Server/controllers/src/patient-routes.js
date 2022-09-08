@@ -13,9 +13,9 @@ exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
         await networkObj.gateway.disconnect();  
       
         if (UpdatePatient_Detials_Res.error) {
-          res.status(400).send(UpdatePatient_Detials_Res.error);
+          res.status(400).json(UpdatePatient_Detials_Res.error);
         }
-        res.status(201).send(`Successfully updated patient details :${prettyJSONString(UpdatePatient_Detials_Res)}`);
+        res.status(201).json(`Successfully updated patient details :${prettyJSONString(UpdatePatient_Detials_Res)}`);
 
     }else if(fun_name == "Patient_updatePatientPassword"){
         
@@ -23,9 +23,9 @@ exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
         await networkObj.gateway.disconnect();  
     
         if (Update_Patient_Password_Res.error) {
-        res.status(400).send(Update_Patient_Password_Res.error);
+        res.status(400).json(Update_Patient_Password_Res.error);
         }
-        res.status(201).send(`Successfully updated Patient Password :${prettyJSONString(Update_Patient_Password_Res)}`);
+        res.status(201).json(`Successfully updated Patient Password :${prettyJSONString(Update_Patient_Password_Res)}`);
 
     }else if(fun_name == "Patient_grantAccessToDoctor"){
 
@@ -33,9 +33,9 @@ exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
         await networkObj.gateway.disconnect();  
     
         if (Patient_grantAccessToDoctor.error) {
-        res.status(400).send(Patient_grantAccessToDoctor.error);
+        res.status(400).json(Patient_grantAccessToDoctor.error);
         }
-        res.status(201).send(`Successfully Granted Permission : ${(doctorId)}`);
+        res.status(201).json(`Successfully Granted Permission : ${(doctorId)}`);
 
         
     }else if(fun_name == "Patient_revokeAccessFromDoctor"){
@@ -44,9 +44,9 @@ exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
         await networkObj.gateway.disconnect();  
     
         if (Patient_revokeAccessFromDoctor.error) {
-        res.status(400).send(Patient_revokeAccessFromDoctor.error);
+        res.status(400).json(Patient_revokeAccessFromDoctor.error);
         }
-        res.status(201).send(`Successfully Revoke Permission : ${prettyJSONString(doctorId)}`);
+        res.status(201).json(`Successfully Revoke Permission : ${prettyJSONString(doctorId)}`);
 
     }else{
 
@@ -57,21 +57,29 @@ exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
 //--------------------------------Patient Query transcations -----------------------------
 
 exports.Patient_query = async(req,res,org,hospid,AdminID) => {
-  const networkObj = await network.connectToNetwork(req,res,org,hospid,AdminID);
     const {queryName,patientId} = req.body;
+    console.log(org,hospid,AdminID,queryName,patientId);
+
+    const networkObj = await network.connectToNetwork(req,res,org,hospid,AdminID);
     
+    console.log("networkObj",networkObj);
     if(queryName == "Patient_readPatient"){
-        const response = await networkObj.contract.evaluateTransaction("Patient_readPatient",patientId);
-        
-        await networkObj.gateway.disconnect();  
-        
-        if (response.error) {
-            res.status(400).send(response.error);
-        }
-        console.log(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);
-        res.status(201).send(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);
-        console.log();
-    }else{
-      
+       
+           const response = await networkObj.contract.evaluateTransaction("Patient_readPatient",patientId);
+           
+           await networkObj.gateway.disconnect();  
+           
+           if (response.error) {
+               res.status(400).json(response.error);
+           }
+           console.log(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);
+           res.status(201).json(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);
+           console.log();
+
+           return response;
+       
+    //    catch{
+    //         res.status(400).json("Error");
+    //    } 
     }
 }
