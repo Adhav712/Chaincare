@@ -1,15 +1,15 @@
 {
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
     "express": "^4.17.3",
     "fabric-ca-client": "^2.2.4",
-    "fabric-network": "^2.2.4"
+    "fabric-network": "^2.2.4",
+    "jsonwebtoken": "^8.5.1"
   },
   "scripts": {
     "start": "nodemon script.js",
     "prestart": "node initServer.js"
-
-
   },
   "name": "server",
   "version": "1.0.0",

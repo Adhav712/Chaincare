@@ -15,7 +15,7 @@ exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
         if (UpdatePatient_Detials_Res.error) {
           res.status(400).json(UpdatePatient_Detials_Res.error);
         }
-        res.status(201).json(`Successfully updated patient details :${prettyJSONString(UpdatePatient_Detials_Res)}`);
+        res.status(201).json(`${prettyJSONString(UpdatePatient_Detials_Res)}`);
 
     }else if(fun_name == "Patient_updatePatientPassword"){
         
@@ -25,7 +25,7 @@ exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
         if (Update_Patient_Password_Res.error) {
         res.status(400).json(Update_Patient_Password_Res.error);
         }
-        res.status(201).json(`Successfully updated Patient Password :${prettyJSONString(Update_Patient_Password_Res)}`);
+        res.status(201).json(`${prettyJSONString(Update_Patient_Password_Res)}`);
 
     }else if(fun_name == "Patient_grantAccessToDoctor"){
 
@@ -35,7 +35,7 @@ exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
         if (Patient_grantAccessToDoctor.error) {
         res.status(400).json(Patient_grantAccessToDoctor.error);
         }
-        res.status(201).json(`Successfully Granted Permission : ${(doctorId)}`);
+        res.status(201).json(`${prettyJSONString(doctorId)}`);
 
         
     }else if(fun_name == "Patient_revokeAccessFromDoctor"){
@@ -46,7 +46,7 @@ exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
         if (Patient_revokeAccessFromDoctor.error) {
         res.status(400).json(Patient_revokeAccessFromDoctor.error);
         }
-        res.status(201).json(`Successfully Revoke Permission : ${prettyJSONString(doctorId)}`);
+        res.status(201).json(` ${prettyJSONString(doctorId)}`);
 
     }else{
 
@@ -73,7 +73,7 @@ exports.Patient_query = async(req,res,org,hospid,AdminID) => {
                res.status(400).json(response.error);
            }
            console.log(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);
-           res.status(201).json(`Transaction has been evaluated, result is: ${prettyJSONString(response)}`);
+           res.status(201).json(`${prettyJSONString(response)}`);
            console.log();
 
            return response;

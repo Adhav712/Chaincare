@@ -5,6 +5,8 @@
 //const walletPath = path.join(__dirname, '../wallet');
 const network = require('./network.js');
 const crypto = require('crypto');
+
+
 //const exp = require('constants');
 
 let caClient

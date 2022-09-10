@@ -71,7 +71,7 @@ function Login() {
 
     return (
         <>
-            <section className="hero is-fullheight is-danger">
+            <section className="hero is-fullheight is-black">
                 <div className="hero-body">
                     <div className='container'>
                         <div className='column is-half is-offset-3'>
@@ -96,10 +96,10 @@ function Login() {
                                 <div className='field'>
                                     <div className='control is-expanded'>
                                         <div className='select is-fullwidth'>
-                                            <select onChange={(event) => {
+                                            <select value={Organization} onChange={(event) => {
                                                 setOrganization(event.target.value)
                                             }}>
-                                                <option value='' disabled selected>Organization</option>
+                                                <option value='' disabled>Organization</option>
                                                 <option value='hospital'>Hospital</option>
                                                 <option value='Insurance'>Insurance</option>
                                             </select>
@@ -112,8 +112,8 @@ function Login() {
                                         <div className='field'>
                                             <div className='control is-expanded'>
                                                 <div className='select is-fullwidth'>
-                                                    <select onChange={(event) => setHospName(event.target.value)}>
-                                                        <option value='' disabled selected>Hospital Name</option>
+                                                    <select value={HospName} onChange={(event) => setHospName(event.target.value)}>
+                                                        <option value='' disabled >Hospital Name</option>
                                                         <option value='Apollo' >Apollo Hospital</option>
                                                         <option value='Vijaya'>Vijaya Hospital</option>
                                                         <option value='Stanley'>Stanley Hospital</option>
@@ -130,10 +130,10 @@ function Login() {
                                         <div className='field'>
                                             <div className='control is-expanded'>
                                                 <div className='select is-fullwidth'>
-                                                    <select onChange={(event) => {
+                                                    <select value = {Role} onChange={(event) => {
                                                         setRole(event.target.value)
                                                     }}>
-                                                        <option value='default value' disabled selected>Role</option>
+                                                        <option value='default value' disabled >Role</option>
                                                         <option value='admin'>Admin</option>
                                                         <option value='doctor'>Doctor</option>
                                                         <option value='patient'>Patient</option>

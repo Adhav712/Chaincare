@@ -25,6 +25,8 @@ external-chaincode/
 .classpath
 .settings
 
+/Server/.env
+
 /channel-artifacts/*.tx
 /channel-artifacts/*.block
 /ledgers

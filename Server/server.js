@@ -2,19 +2,15 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const cors = require('cors');
-// const enrollAdmin = require('./controllers/enrollAdmin');
-// const registerUser = require('./controllers/registerUser');
-// const query = require('./controllers/query');
-// const patientRoutes = require('./patient-routes');
-// const doctorRoutes = require('./doctor-routes');
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
+
 const adminRoutes = require('./controllers/src/admin-routes.js');
 const doctorRoutes = require('./controllers/src/doctor-routes.js');
 const patientRoutes = require('./controllers/src/patient-routes.js');
 const insuranceRoutes = require('./controllers/src/insurance-routes.js');
 const privateRoutes = require('./controllers/src/private-routes.js');
-//const wallet = require('./controllers/wallet');
-//const network = require('./controllers/Utils/app.js');
-//const crypto = require('crypto');
+
 const auth = require('./controllers/Utils/login.js');
 
 // app.use(app.json());
@@ -22,6 +18,48 @@ const auth = require('./controllers/Utils/login.js');
 // extended: false
 // }));
 
+//How to use jwt
+// app.use((req, res, next) => {
+//     const authHeader = req.headers['authorization'];//what it does is it takes the authorization header from the request and stores it in a variable called authHeader
+//     const token = authHeader && authHeader.split(' ')[1]; //what it does is it splits the authHeader at the space and stores the second element in a variable called token
+//     if (token == null) return res.sendStatus(401);//if the token is null then it returns a status code of 401 which means unauthorized
+//     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+//         if (err) return res.sendStatus(403);
+//         req.user = user;
+//         next();
+//     });
+// });
+
+
+//how to generate jwt and store it in cookie
+// app.get('/generatejwt', (req, res) => {
+//     generatejwttoken(res,req,"emailId","choose_org","hospid","AdminID","adminid","PID","DocID","Insurance_adminid");
+//     res.send("jwt generated");
+// }); 
+ 
+// app.post('/login', (req, res) => {
+//     //Authenticate User
+//     const username = req.body.username;
+//     const user = { name: username };
+//     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+//     res.json({ accessToken: accessToken });
+// });
+
+function generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid){
+    let payload = {
+        emailId: emailId,
+        choose_org: choose_org,
+        hospid: hospid,
+        AdminID: AdminID,
+        adminid: adminid,
+        PID: PID,
+        DocID: DocID,
+        Insurance_adminid: Insurance_adminid
+    }
+    const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { algorithm : 'HS256'} );
+    res.setHeader("set-cookie",[`JWT_TOKEN=${accessToken}; httponly; samesite=lax`]);
+    console.log("\naccessToken",accessToken);
+}
 
 async function main() {
 
@@ -36,32 +74,41 @@ async function main() {
 
         const{login_role,choose_org,hospid,AdminID,Insurance_adminid,PID,DocID,adminid,emailId,password} = req.body
         let isLoggedIn=false;
+        let accessToken = "";
         if(choose_org === 'hospital')
             switch (login_role){
                 case 'admin':
                     const authentication_admin = auth.adminLogin(res,res,choose_org,hospid,AdminID,adminid,emailId,password);
+                    accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid);
+                    console.log("accessToken",accessToken);
                     isLoggedIn = authentication_admin;
-            
                     break;
+
                 case 'doctor':
                     const authentication_doctor = auth.doctorLogin(res,res,choose_org,hospid,AdminID,DocID,emailId,password);
-                    (isLoggedIn = authentication_doctor);
+                    accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid);
+                    console.log("accessToken",accessToken);
+                    isLoggedIn = authentication_doctor;
                     break;   
+
                 case 'patient':
                     const authentication_patient = auth.patientLogin(res,res,choose_org,hospid,AdminID,PID,emailId,password);
+                    accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid);
+                    console.log("accessToken",accessToken);
                     isLoggedIn = authentication_patient;
                     break
+
         }else{
             //Insurance login
             const authentication_Insurance_admin = auth.InsuranceAdminLogin(req,res,choose_org,adminid,Insurance_adminid,emailId,password);
+            accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid);
+            console.log("accessToken",accessToken);
             isLoggedIn = authentication_Insurance_admin;
-        }
-        
+        }        
         return isLoggedIn;
     })
 
     //-------------------Admin Routes Starts---------------------
-    //app.get()
     
     app.post('/admin/register', (req,res) => {
        
