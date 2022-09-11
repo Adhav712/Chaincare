@@ -45,21 +45,7 @@ const auth = require('./controllers/Utils/login.js');
 //     res.json({ accessToken: accessToken });
 // });
 
-function generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid){
-    let payload = {
-        emailId: emailId,
-        choose_org: choose_org,
-        hospid: hospid,
-        AdminID: AdminID,
-        adminid: adminid,
-        PID: PID,
-        DocID: DocID,
-        Insurance_adminid: Insurance_adminid
-    }
-    const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { algorithm : 'HS256'} );
-    res.setHeader("set-cookie",[`JWT_TOKEN=${accessToken}; httponly; samesite=lax`]);
-    console.log("\naccessToken",accessToken);
-}
+
 
 async function main() {
 
@@ -79,30 +65,30 @@ async function main() {
             switch (login_role){
                 case 'admin':
                     const authentication_admin = auth.adminLogin(res,res,choose_org,hospid,AdminID,adminid,emailId,password);
-                    accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid);
-                    console.log("accessToken",accessToken);
+                    // accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid);
+                    // console.log("accessToken",accessToken);
                     isLoggedIn = authentication_admin;
                     break;
 
                 case 'doctor':
                     const authentication_doctor = auth.doctorLogin(res,res,choose_org,hospid,AdminID,DocID,emailId,password);
-                    accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid);
-                    console.log("accessToken",accessToken);
+                    // accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid);
+                    // console.log("accessToken",accessToken);
                     isLoggedIn = authentication_doctor;
                     break;   
 
                 case 'patient':
                     const authentication_patient = auth.patientLogin(res,res,choose_org,hospid,AdminID,PID,emailId,password);
-                    accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid);
-                    console.log("accessToken",accessToken);
+                    // accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid);
+                    // console.log("accessToken",accessToken);
                     isLoggedIn = authentication_patient;
                     break
 
         }else{
             //Insurance login
             const authentication_Insurance_admin = auth.InsuranceAdminLogin(req,res,choose_org,adminid,Insurance_adminid,emailId,password);
-            accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid);
-            console.log("accessToken",accessToken);
+            // accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid);
+            // console.log("accessToken",accessToken);
             isLoggedIn = authentication_Insurance_admin;
         }        
         return isLoggedIn;

@@ -1,4 +1,7 @@
 {
+    "editor.formatOnSave": true,
+	"xo.enable": true,
+	"xo.format.enable": true,
     "space": 2,
     "semicolon": false,
     "rules": {
