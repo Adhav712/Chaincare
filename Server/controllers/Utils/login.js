@@ -30,10 +30,14 @@ function generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,
     //print the cookie
     res.cookie(`Cookie token name`,`encrypted cookie string Value`);
     console.log("cookie",res.cookie);
+    //set the access token in the local storage
 
+    // localStorage.setItem('accessToken',accessToken);
+    const st =  sessionStorage.setItem("test1", "Lorem ipsum");
+    console.log("sessionStorage",st);
     // res.cookie('jwt', accessToken, { maxAge: 3600000 });
     // console.log("cookie",res.cookie);
-    // res.setHeader("set-cookie",[`JWT_TOKEN=${accessToken}; httponly; samesite=lax`]);
+    res.setHeader("set-cookie",[`JWT_TOKEN=${accessToken}; httponly; samesite=lax`]);
     // console.log("set-cookie",res.setHeader);
     console.log("\naccessToken in gjt func:        ",accessToken);
     return accessToken;
