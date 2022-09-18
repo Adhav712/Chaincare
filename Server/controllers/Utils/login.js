@@ -23,7 +23,7 @@ function generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,
         DocID: DocID,
         Insurance_adminid: Insurance_adminid
     }
-    const accessToken = jwt.sign(payload, process.env.JWT_SECRET, { algorithm : 'HS256'} );
+    const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '5m'},{ algorithm : 'HS256'} );
     // set the cookie as the token string, with a similar max age as the token
     // here, the max age is in milliseconds, so we multiply by 1000
     
@@ -33,11 +33,11 @@ function generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,
     //set the access token in the local storage
 
     // localStorage.setItem('accessToken',accessToken);
-    const st =  sessionStorage.setItem("test1", "Lorem ipsum");
-    console.log("sessionStorage",st);
+    // const st =  sessionStorage.setItem("test1", "Lorem ipsum");
+    // console.log("sessionStorage",st);
     // res.cookie('jwt', accessToken, { maxAge: 3600000 });
     // console.log("cookie",res.cookie);
-    res.setHeader("set-cookie",[`JWT_TOKEN=${accessToken}; httponly; samesite=lax`]);
+    // res.setHeader("set-cookie",[`JWT_TOKEN=${accessToken}; httponly; samesite=lax`]);
     // console.log("set-cookie",res.setHeader);
     console.log("\naccessToken in gjt func:        ",accessToken);
     return accessToken;
@@ -54,8 +54,12 @@ exports.auth = async(res,req,auth_check_res,password,emailId,choose_org,hospid,A
             accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid);
             console.log("accessToken",accessToken);
             console.log("Authenticated");
-            await res.status(200).json("authenticated");
-            return (isLoggedIn == true);
+            await res.status(200).json({
+                auth : "authenticated",
+                accessToken : accessToken
+            });
+            //does the below return statemnt work?
+            return accessToken;
             
         }else{
             if(password !== en_pass){

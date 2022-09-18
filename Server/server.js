@@ -26,7 +26,6 @@ async function main() {
 
         const{login_role,choose_org,hospid,AdminID,Insurance_adminid,PID,DocID,adminid,emailId,password} = req.body
         let isLoggedIn=false;
-        let accessToken = "";
         if(choose_org === 'hospital')
             switch (login_role){
                 case 'admin':
@@ -81,7 +80,7 @@ async function main() {
         const hospid = req.body.hospid;
         const AdminID = req.body.AdminID;
 
-        if(deleteRecord == "deleteDoctor"){
+        if(deleteRecord === "deleteDoctor"){
             adminRoutes.deleteDoctor(req,res,org,hospid, AdminID);
         }else if(deleteRecord == "deletePatient"){
             adminRoutes.deletePatient(req,res,org,hospid, AdminID);

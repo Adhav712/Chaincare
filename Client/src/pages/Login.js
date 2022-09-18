@@ -55,8 +55,11 @@ function Login() {
         try {
             const data = await fetchs.json();
             console.log(data);
-            if (data === 'authenticated') {
+            if (data.auth === 'authenticated') {
                 console.log("true");
+                console.log("ajsbdjvsajdbsdkbnsakdbkbadkjb",data.accessToken);
+                //how to set cookie 
+                document.cookie = `accessToken=${data.accessToken}`;
                 if (Organization === "Insurance") {
                     navigate(`/insurance`);
                 }

@@ -1,8 +1,24 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
+
 function PatientDashboard() {
     const [patient_details, setPatient_details] = React.useState([]);
+
+
+//how to decrypt jwt from cookie and access the resources
+// const cookie = document.cookie;
+// const jwt = cookie.split("=")[1];
+// const jwt_decode = require("jwt-decode");
+// const decoded = jwt_decode(jwt);
+// const patient_id = decoded.PID;
+// const emailId = decoded.emailId;
+// const choose_org = decoded.choose_org;
+// const hospid = decoded.hospid;
+// const AdminID = decoded.AdminID;
+// const adminid = decoded.adminid;
+// const DocID = decoded.DocID;
+// const Insurance_adminid = decoded.Insurance_adminid;
 
 useEffect (() => {
     const fetch_patient_details = async () => {
@@ -10,6 +26,7 @@ useEffect (() => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("token")
             },
             body: JSON.stringify({
                 org: "hospital",
