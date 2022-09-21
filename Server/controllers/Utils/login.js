@@ -13,33 +13,62 @@ const app = express()
 app.use(cookieParser())
 
 function generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid){
+    console.log({
+        emailId : emailId,
+        choose_org : choose_org,
+        hospid : hospid,
+        AdminID : AdminID,
+        ID : adminid
+    });
     let payload = {
         emailId: emailId,
         choose_org: choose_org,
         hospid: hospid,
         AdminID: AdminID,
-        adminid: adminid,
-        PID: PID,
-        DocID: DocID,
-        Insurance_adminid: Insurance_adminid
+        ID: adminid
     }
-    const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '5m'},{ algorithm : 'HS256'} );
+    const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '30m'},{ algorithm : 'HS256'} );
+    console.log("27 login server side page accessToken",accessToken);
     // set the cookie as the token string, with a similar max age as the token
     // here, the max age is in milliseconds, so we multiply by 1000
     
-    //print the cookie
-    res.cookie(`Cookie token name`,`encrypted cookie string Value`);
-    console.log("cookie",res.cookie);
-    //set the access token in the local storage
 
+
+    
     // localStorage.setItem('accessToken',accessToken);
     // const st =  sessionStorage.setItem("test1", "Lorem ipsum");
     // console.log("sessionStorage",st);
-    // res.cookie('jwt', accessToken, { maxAge: 3600000 });
-    // console.log("cookie",res.cookie);
+    
+    // if(PID !== null){
+    //     console.log("PID",PID);
+    //     cookieset(PID);
+    // }else if(DocID !== null){
+    //     console.log("DocID",DocID);
+    //     cookieset(DocID);
+    // }else if(Insurance_adminid !== null){
+    //     console.log("Insurance_adminid",Insurance_adminid);
+    //     cookieset(Insurance_adminid);
+    // }else if(AdminID !== null){
+    //     console.log("AdminID",AdminID);
+    //     cookieset(AdminID);
+    // }
+    
+    // const cookieset = async (name) => {
+    // }
+    
+    
+    res.cookie(`jwt`, accessToken, { maxAge: 90000000, httpOnly: true });
+    console.log("cookie set successfully");
+    
+    // if(PID !== "" || DocID !== ""  || Insurance_adminid !== "" || AdminID !== ""){
+    //     console.log(PID,DocID,Insurance_adminid,AdminID);    
+    //     res.cookie(`jwt-${DocID}`, accessToken, { maxAge: 3600000 });
+    //     console.log("jwt",res.cookie);
+    // }
+
     // res.setHeader("set-cookie",[`JWT_TOKEN=${accessToken}; httponly; samesite=lax`]);
     // console.log("set-cookie",res.setHeader);
-    console.log("\naccessToken in gjt func:        ",accessToken);
+    
     return accessToken;
 }
 
@@ -51,7 +80,7 @@ exports.auth = async(res,req,auth_check_res,password,emailId,choose_org,hospid,A
         const pass = crypto.createHash('sha256').update(password).digest('hex');
         const isLoggedIn = false;
         if(password == en_pass && emailId == mailId){
-            accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,DocID,Insurance_adminid);
+            accessToken = generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid);
             console.log("accessToken",accessToken);
             console.log("Authenticated");
             await res.status(200).json({

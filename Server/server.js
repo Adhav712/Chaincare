@@ -4,6 +4,7 @@ const port = 3000;
 const cors = require('cors');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser')
 
 const adminRoutes = require('./controllers/src/admin-routes.js');
 const doctorRoutes = require('./controllers/src/doctor-routes.js');
@@ -21,7 +22,41 @@ async function main() {
     app.use(express.urlencoded ({
     extended: false
     }));
+    app.use(cookieParser())
 
+    // app.get('/authentication', async (req, res) => {
+    //     //how to access cookie in express
+    //     const accessToken = req.cookies.jwt;
+    //     console.log("accessToken",accessToken);
+    //     if(accessToken == null) return res.sendStatus(401);
+    //     jwt.verify(accessToken, process.env.JWT_SECRET, (err, user) => {
+    //         if(err) return res.sendStatus(403);
+    //         console.log("user",user);
+    //         res.json(user);
+    //     });
+    // });
+
+
+    const authentication = async (req, res, next) => {
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1]
+        console.log("auth 43",token);
+        if (token == null) {
+            console.log("auth 45",token);
+            return res.sendStatus(401)
+        }
+        jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+            console.log("entered jwt verify");
+            if (err){
+                console.log("auth 50",err);
+                return res.sendStatus(403)
+            }
+            req.user = user
+            next()
+        })
+    }
+
+    
     app.post('/login',async (req,res) => {
 
         const{login_role,choose_org,hospid,AdminID,Insurance_adminid,PID,DocID,adminid,emailId,password} = req.body
@@ -54,7 +89,7 @@ async function main() {
     //-------------------Admin Routes Starts---------------------
     
     app.post('/admin/register', (req,res) => {
-       
+    
     const register = req.body.register;
     const org = req.body.org;
     const hospid = req.body.hospid;
@@ -90,10 +125,19 @@ async function main() {
     })
 
 
-    app.post('/admin/queries', (req,res) => {
-        const org = req.body.org;
-        const hospid = req.body.hospid;
-        const AdminID = req.body.AdminID;
+    app.get('/admin/queries',authentication,(req,res) => {
+        //how to get the return value from middleware
+        console.log("req.user",req.user);
+        
+        console.log("choose_org",req.user.choose_org);
+        console.log("hospid",req.user.hospid);
+        console.log("AdminID",req.user.AdminID);
+        const org = req.user.choose_org;
+        const hospid = req.user.hospid;
+        const AdminID = req.user.AdminID;
+        // const org = req.body.org;
+        // const hospid = req.body.hospid;
+        // const AdminID = req.body.AdminID;
         const result = adminRoutes.Admin_query(req,res,org,hospid,AdminID)
         console.log("Queried result:",result);
     })
@@ -114,10 +158,19 @@ async function main() {
         console.log("Submitted result:",result);
     })
 
-    app.post('/doctor/queries', (req,res) => {
-        const org = req.body.org;
-        const hospid = req.body.hospid;
-        const AdminID = req.body.AdminID;
+    app.get('/doctor/queries',authentication,(req,res) => {
+        console.log("req.user",req.user);
+        
+        console.log("choose_org",req.user.choose_org);
+        console.log("hospid",req.user.hospid);
+        console.log("AdminID",req.user.AdminID);
+        const org = req.user.choose_org;
+        const hospid = req.user.hospid;
+        const AdminID = req.user.AdminID;
+
+        // const org = req.body.org;
+        // const hospid = req.body.hospid;
+        // const AdminID = req.body.AdminID;
         const result = doctorRoutes.Doctor_query(req,res,org,hospid,AdminID)
         console.log("Queried result:",result);
     })
@@ -133,10 +186,19 @@ async function main() {
         console.log("Queried result:",result);
     })
 
-    app.post('/patient/queries',(req,res) =>{
-        const org = req.body.org;
-        const hospid = req.body.hospid;
-        const AdminID = req.body.AdminID;
+    app.get('/patient/queries',authentication,(req,res) =>{
+        console.log("req.user",req.user);
+        
+        console.log("choose_org",req.user.choose_org);
+        console.log("hospid",req.user.hospid);
+        console.log("AdminID",req.user.AdminID);
+        const org = req.user.choose_org;
+        const hospid = req.user.hospid;
+        const AdminID = req.user.AdminID;
+
+        // const org = req.body.org;
+        // const hospid = req.body.hospid;
+        // const AdminID = req.body.AdminID;
         const result = patientRoutes.Patient_query(req,res,org,hospid,AdminID)
         console.log("Queried result:",result);
     })

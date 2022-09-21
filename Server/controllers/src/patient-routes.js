@@ -57,15 +57,17 @@ exports.Patient_Submit_transcations = async(req,res,org,hospid,AdminID) => {
 //--------------------------------Patient Query transcations -----------------------------
 
 exports.Patient_query = async(req,res,org,hospid,AdminID) => {
-    const {queryName,patientId} = req.body;
-    console.log(org,hospid,AdminID,queryName,patientId);
+    // const {queryName,patientId} = req.body;
+    
+    const queryName = req.headers.query;
+    console.log(org,hospid,AdminID,queryName,req.user.ID);
 
     const networkObj = await network.connectToNetwork(req,res,org,hospid,AdminID);
     
     console.log("networkObj",networkObj);
     if(queryName == "Patient_readPatient"){
        
-           const response = await networkObj.contract.evaluateTransaction("Patient_readPatient",patientId);
+           const response = await networkObj.contract.evaluateTransaction("Patient_readPatient",req.user.ID);
            
            await networkObj.gateway.disconnect();  
            

@@ -58,7 +58,10 @@ function Login() {
             if (data.auth === 'authenticated') {
                 console.log("true");
                 console.log("ajsbdjvsajdbsdkbnsakdbkbadkjb",data.accessToken);
-                //how to set cookie 
+                //how to set headers
+                // const myheaders = new Headers();
+                // myheaders.append("Authorization", "Bearer " + data.accessToken);
+
                 document.cookie = `accessToken=${data.accessToken}`;
                 if (Organization === "Insurance") {
                     navigate(`/insurance`);

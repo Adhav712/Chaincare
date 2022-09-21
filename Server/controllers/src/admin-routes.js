@@ -102,11 +102,14 @@ exports.deleteDoctor = async(req,res,org,hospid,AdminID) => {
 //------------------------Admin Query Transcations-----------------------
 
 exports.Admin_query = async(req,res,org,hospid,AdminID) => {
-    const {patientId,doctorId,firstName,lastName,queryName} = req.body;
+    // const {patientId,doctorId,firstName,lastName,queryName} = req.body;
     const networkObj = await network.connectToNetwork(req,res,org,hospid,AdminID);
 
+    const queryName = req.headers.query;
+    console.log("queryName:",queryName);
+    console.log("req.user.PID:",req.user.ID);
     if(queryName == "Admin_readPatient"){
-      const response = await networkObj.contract.evaluateTransaction(queryName, patientId);
+      const response = await networkObj.contract.evaluateTransaction(queryName, req.user.ID);
       await networkObj.gateway.disconnect();
   
       if (response.error) {
@@ -117,7 +120,7 @@ exports.Admin_query = async(req,res,org,hospid,AdminID) => {
       return response
 
     }else if (queryName == "Admin_readDoctor"){
-      const response = await networkObj.contract.evaluateTransaction(queryName, doctorId);
+      const response = await networkObj.contract.evaluateTransaction(queryName, req.user.ID);
       await networkObj.gateway.disconnect();
       
       if (response.error) {
@@ -128,7 +131,7 @@ exports.Admin_query = async(req,res,org,hospid,AdminID) => {
       return response
 
     }else if(queryName == "Admin_queryPatientsByFirstName"){
-      const response = await networkObj.contract.evaluateTransaction(queryName, firstName);
+      const response = await networkObj.contract.evaluateTransaction(queryName, req.user.firstName);
       await networkObj.gateway.disconnect();
      
       if (response.error) {
@@ -139,7 +142,7 @@ exports.Admin_query = async(req,res,org,hospid,AdminID) => {
       return response
       
     }else if(queryName == "Admin_queryPatientsByLastName"){
-      const response = await networkObj.contract.evaluateTransaction(queryName, lastName);
+      const response = await networkObj.contract.evaluateTransaction(queryName, req.user.lastName);
       await networkObj.gateway.disconnect();
      
       if (response.error) {
