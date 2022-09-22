@@ -1,6 +1,10 @@
-import React from "react";
+import React,{useEffect} from "react";
+import Auth from "../../Auth";
 
 function UpdatePatientPassword() {
+    useEffect(async() => {
+        Auth();
+    }, []);
     return(
         <section className='hero has-background-white-bis is-fullheight-with-navbar'>
         <div className='hero-body is-flex is-align-items-flex-start mt-6'>

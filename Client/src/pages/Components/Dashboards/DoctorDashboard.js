@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import Auth from "../../Auth";
+
 
 
 function DoctorDashboard() {
     const [doctor_details, setDoctor_details] = React.useState([]);
   
     useEffect(() => {
+      Auth();
+      
       const fetch_doctor_details = async () => {
         //how to access cookie
         const cookie = document.cookie;

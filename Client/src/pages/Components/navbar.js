@@ -3,6 +3,14 @@ import chaincare_logo from "../../assets/logo.png";
 import {Link } from "react-router-dom";
 
 function Navbar() {
+   
+      
+    function setCookie()   
+    {  
+        //how to delete cookie
+        document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        console.log("cookie deleted");  
+    }   
     return (
         <>
             <nav class="navbar is-transparent">
@@ -71,7 +79,7 @@ function Navbar() {
                                 </p>
                                 <p class="control">
                                     <Link to='/login' style={{width:'50%'}} >
-                                        <button class="button is-success ">
+                                        <button class="button is-success " onClick={() => {setCookie()}}>
                                             Log out
                                         </button>
                                     </Link>

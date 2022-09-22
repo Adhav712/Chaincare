@@ -9,7 +9,7 @@
 
 # imports
 echo ${PWD}
-../utils.sh
+. scripts/utils.sh
 echo ${PWD}
 
 export CORE_PEER_TLS_ENABLED=true

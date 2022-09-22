@@ -57,7 +57,7 @@ function generatejwttoken(res,req,emailId,choose_org,hospid,AdminID,adminid,PID,
     // }
     
     
-    res.cookie(`jwt`, accessToken, { maxAge: 90000000, httpOnly: true });
+    res.cookie(`accessToken`, accessToken, { maxAge: 90000000, httpOnly: true });
     console.log("cookie set successfully");
     
     // if(PID !== "" || DocID !== ""  || Insurance_adminid !== "" || AdminID !== ""){

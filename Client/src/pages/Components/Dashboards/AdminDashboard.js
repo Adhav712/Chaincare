@@ -1,7 +1,11 @@
-import React from "react";
+import React,{useEffect} from "react";
+import Auth from "../../Auth";
 import { Link } from "react-router-dom";
 
 function AdminDashboard() {
+    useEffect(async() => {
+        Auth();
+    }, []);
     return (
         <section class="hero is-fullheight-with-navbar">
             <div class="hero-body">

@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import Auth from "../Auth";
 
 function ViewDoctor() {
     const [query, setquery] = React.useState("Doctor-ID");
@@ -24,6 +24,10 @@ function ViewDoctor() {
             setquery("Doctorby-LastName");
         }
     }
+    
+    useEffect(async() => {
+        Auth();
+    }, []);
 
     return (
         <section class="hero is-fullheight-with-navbar">

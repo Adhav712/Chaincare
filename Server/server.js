@@ -24,17 +24,23 @@ async function main() {
     }));
     app.use(cookieParser())
 
-    // app.get('/authentication', async (req, res) => {
-    //     //how to access cookie in express
-    //     const accessToken = req.cookies.jwt;
-    //     console.log("accessToken",accessToken);
-    //     if(accessToken == null) return res.sendStatus(401);
-    //     jwt.verify(accessToken, process.env.JWT_SECRET, (err, user) => {
-    //         if(err) return res.sendStatus(403);
-    //         console.log("user",user);
-    //         res.json(user);
-    //     });
-    // });
+    app.get('/authentication',async (req, res) => {
+        //how to access cookie in express
+        
+        const authHeader = req.headers['authorization'];
+        const accessToken = authHeader && authHeader.split(' ')[1]
+        console.log("32 /authentication route accessToken",accessToken);
+        if(accessToken == null) return res.sendStatus(401);
+        jwt.verify(accessToken, process.env.JWT_SECRET, (err, user) => {
+            if(err) {
+                console.log("37 /authentication route err",err);
+                return res.sendStatus(403);
+            }else{
+                console.log("40 /authentication route user",user);
+                return res.json(user);
+            }
+        });
+    });
 
 
     const authentication = async (req, res, next) => {
