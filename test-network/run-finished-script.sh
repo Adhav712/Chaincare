@@ -8,9 +8,11 @@ npm install
 cd ../Client
 npm install
 
+cd ../test-network
 
-
+PWD
 cd addInsurance/
+PWD
 #allways first remove some thing from Insurane and then up the network
 ./addInsurance.sh down
 
