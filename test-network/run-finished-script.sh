@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+#install dependencies
+
+
+cd ../Server
+npm install
+cd ../Client
+npm install
+
+
+
 cd addInsurance/
 #allways first remove some thing from Insurane and then up the network
 ./addInsurance.sh down
