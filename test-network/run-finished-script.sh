@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 cd addInsurance/
 #allways first remove some thing from Insurane and then up the network
 ./addInsurance.sh down
